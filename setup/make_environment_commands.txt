@@ -1,0 +1,5 @@
+# Run these commands:
+conda create --name Predictability_Limits
+conda activate Predictability_Limits
+conda install -c conda-forge ogb
+conda install -c conda-forge rdkit
