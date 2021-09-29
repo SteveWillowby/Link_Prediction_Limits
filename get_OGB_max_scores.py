@@ -10,7 +10,7 @@ from hopeful_canonicalizer import hopeful_canonicalizer
 #
 # [(class_ID, class_size, positives_in_class)]
 
-dataset_base = "/data/datasets/WAT"
+dataset_base = "/data/datasets/open_graph_benchmark_LSC_2021"
 
 graph_classification_root = dataset_base + "/PCQM4M"
 link_pred_root = dataset_base + "/WikiKG90M"
