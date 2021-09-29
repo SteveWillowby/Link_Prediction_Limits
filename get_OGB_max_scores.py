@@ -49,15 +49,14 @@ def link_pred_dataset():
 
     valid_task = dataset.valid_dict['h,r->t']
     hr = valid_task['hr']
-    t_candidate = valid_task['t_candidate']
-    t_correct_index = valid_task['t_correct_index']
+    t = valid_task['t']
     (num_predictions, _) = hr.shape
+    assert t.shape == (num_predictions,1)
 
     print("Num nodes before adding validation nodes: %d" % len(nodes))
     for i in range(0, num_predictions):
         nodes.add(hr[i,0])
-        for j in range(0, 1001):
-            nodes.add(t_candidate[i,j])
+        nodes.add(t[i,0])
 
     assert max(nodes) == len(nodes) - 1
     assert min(nodes) == 0
@@ -78,7 +77,7 @@ def link_pred_dataset():
     graph = (ons, ins, directed, edge_types)
     node_coloring = [0 for _ in nodes]
 
-    return (graph, node_coloring, hr, t_candidate, t_correct_index)
+    return (graph, node_coloring, hr, t)
 
 def node_classifier_dataset():
     dataset = MAG240MDataset(root=node_classification_root)
@@ -211,7 +210,7 @@ def get_max_score_for_node_classification(graph, node_colors, validation_node_la
 if __name__ == "__main__":
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
-        (graph, node_colors, hr, t_candidate, t_correct_idx) = link_pred_dataset()
+        (graph, node_colors, hr, t) = link_pred_dataset()
 
     elif task == "Node Classification":
         print("Loading MAG Graph (Node Classification Graph)...")
