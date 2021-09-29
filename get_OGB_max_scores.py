@@ -1,9 +1,10 @@
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90MDataset
 from ogb.lsc import PCQM4MDataset
-from Practical_Isomorphism_Alg.views import GraphView
-from Practical_Isomorphism_Alg.coloring import Coloring
-from Practical_Isomorphism_Alg.main_algorithm import hopeful_canonicalizer, canonical_representation
+# from Practical_Isomorphism_Alg.views import GraphView
+# from Practical_Isomorphism_Alg.coloring import Coloring
+# from Practical_Isomorphism_Alg.main_algorithm import hopeful_canonicalizer, canonical_representation
+from hopeful_canonicalizer import hopeful_canonicalizer
 
 # Class Info Format:
 #
@@ -84,17 +85,32 @@ def node_classifier_dataset():
 
         edges.append((author, institution))
 
-    node_colors = Coloring(node_colors)
     directed = True
     print("  ...Constructing GraphView...")
-    graph = GraphView(nodes, edges, directed, edge_types)
+    # New Way:
+    # node_colors = Coloring(node_colors)
+    # graph = GraphView(nodes, edges, directed, edge_types)
+    # Old Way:
+    ons = {n: set() for n in range(0, len(node_colors))}
+    ins = {n: set() for n in range(0, len(node_colors))}
+    for (a, b) in edges:
+        ons[a].add(b)
+        ins[b].add(a)
+    graph = (ons, ins, directed, edge_types)
 
     return (graph, node_colors, validation_node_labels)
 
 def get_max_score_for_node_classification(graph, node_colors, validation_node_labels):
     print("  Getting Automorphism Orbits...")
-    (new_colors, _) = hopeful_canonicalizer(graph, node_colors, \
-                                            return_canonical_order=False)
+    # New Way:
+    # (new_colors, _) = hopeful_canonicalizer(graph, node_colors, \
+    #                                         return_canonical_order=False)
+    # Old Way:
+    (out_neighbor_sets, in_neighbor_sets, _, edge_types) = graph
+    hopeful_canonicalizer(out_neighbor_sets, node_colors, edge_types=edge_types, \
+                          in_neighbor_sets=in_neighbor_sets, return_canon_order=False, \
+                          print_info=False, k_hop_graph_collections=None)
+    new_colors = node_colors
     print("    ...Obtained Automorphism Orbits.")
 
     if new_colors.num_singletons() == graph.num_nodes():
