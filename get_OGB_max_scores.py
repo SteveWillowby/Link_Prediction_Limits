@@ -1,3 +1,4 @@
+import numpy as nimport numpy as npp
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90MDataset
 from ogb.lsc import PCQM4MDataset
@@ -51,12 +52,12 @@ def node_classifier_dataset():
         paper = edge_index_writes[1,i]
 
         paper_type = (dataset.paper_label[paper], dataset.paper_year[paper])
-        if int(paper_type[1]) != 2019:
+        if int(paper_type[1]) != 2019 or np.isnan(paper_type[0]):
             if paper_type not in paper_type_map:
                 paper_type_map[paper_type] = next_paper_type_id
                 next_paper_type_id += 1
             node_colors[paper] = paper_type_map[paper_type]
-        else:
+        elif:
             validation_node_labels[paper] = int(paper_type[0])
 
         edges.append((author, paper))
