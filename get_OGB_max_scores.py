@@ -1,4 +1,4 @@
-import numpy as nimport numpy as npp
+import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90MDataset
 from ogb.lsc import PCQM4MDataset
