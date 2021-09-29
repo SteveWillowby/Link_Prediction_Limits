@@ -168,7 +168,7 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
 
     print("Code is not yet ready to handle the rest of the situation.")
 
-    elif len(messy_tasks) == 0:
+    if len(messy_tasks) == 0:
         sum_of_expected_RR = 0.0
         for v in multi_target_tasks:
             if v > 10:
