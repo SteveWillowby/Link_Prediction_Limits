@@ -2,8 +2,8 @@ import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90Mv2Dataset
 from ogb.lsc import PCQM4Mv2Dataset
-from Practical_Isomorphism_Alg.views import GraphView
-from Practical_Isomorphism_Alg.coloring import Coloring
+from .Practical_Isomorphism_Alg.coloring import Coloring
+from .Practical_Isomorphism_Alg.views import GraphView
 
 # Choose between the following two and update ISO_MODE() accordingly.
 
