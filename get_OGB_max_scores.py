@@ -1,7 +1,7 @@
 import numpy as np
 from ogb.lsc import MAG240MDataset
-from ogb.lsc import WikiKG90MDataset
-from ogb.lsc import PCQM4MDataset
+from ogb.lsc import WikiKG90Mv2Dataset
+from ogb.lsc import PCQM4Mv2Dataset
 # from Practical_Isomorphism_Alg.views import GraphView
 # from Practical_Isomorphism_Alg.coloring import Coloring
 # from Practical_Isomorphism_Alg.main_algorithm import hopeful_canonicalizer, canonical_representation
@@ -18,7 +18,7 @@ link_pred_root = dataset_base + "/WikiKG90M"
 node_classification_root = dataset_base + "/MAG240M"
 
 def link_pred_dataset():
-    dataset = WikiKG90MDataset(root=link_pred_root)
+    dataset = WikiKG90Mv2Dataset(root=link_pred_root)
 
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
