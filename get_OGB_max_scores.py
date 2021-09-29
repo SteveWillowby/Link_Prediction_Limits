@@ -2,14 +2,48 @@ import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90Mv2Dataset
 from ogb.lsc import PCQM4Mv2Dataset
-# from Practical_Isomorphism_Alg.views import GraphView
-# from Practical_Isomorphism_Alg.coloring import Coloring
+from Practical_Isomorphism_Alg.views import GraphView
+from Practical_Isomorphism_Alg.coloring import Coloring
+
+# Choose between the following two and update ISO_MODE() accordingly.
+
 # from Practical_Isomorphism_Alg.main_algorithm import hopeful_canonicalizer, canonical_representation
-from hopeful_canonicalizer import hopeful_canonicalizer
+from hopeful_canonicalizer import hopeful_canonicalizer, node_order_to_representation
+def ISO_MODE():
+    return "old"  # "old" or "new"
 
 # Class Info Format:
 #
 # [(class_ID, class_size, positives_in_class)]
+
+def orbits(graph, coloring):
+    if ISO_MODE() == "old":
+        (ons, ins, edge_types) = graph
+        hopeful_canonicalizer(ons, coloring, edge_types=edge_types, \
+                              in_neighbor_sets=ins, return_canon_order=False, \
+                              print_info=False, k_hop_graph_collections=None)
+    else:
+        (coloring, _) = hopeful_canonicalizer(graph, coloring, \
+                                              return_canonical_order=False)
+
+    return coloring
+
+def canonical_form(graph, coloring):
+    if ISO_MODE() == "old":
+        (ons, ins, edge_types) = graph
+        init_coloring = list(coloring)
+        canon_order = hopeful_canonicalizer(ons, coloring, \
+                                            edge_types=edge_types, \
+                                            in_neighbor_sets=ins, \
+                                            return_canon_order=True)
+        return node_order_to_representation(canon_order, ons, ins is not None, \
+                                            external_colors=init_coloring, \
+                                            edge_types=edge_types)
+    else:
+        init_coloring = Coloring(coloring)
+        (_, canon_order) = hopeful_canonicalizer(graph, coloring, \
+                                                 return_canonical_order=True)
+        return canonical_representation(graph, canon_order, init_coloring)
 
 dataset_base = "/data/datasets/open_graph_benchmark_LSC_2021"
 
@@ -65,19 +99,81 @@ def link_pred_dataset():
     directed = True
 
     # New Way:
-    # graph = GraphView(nodes, edges, directed, edge_types=edge_types)
-    # node_coloring = Coloring([0 for _ in nodes])
-
-    # Old Way:
-    ons = {n: set() for n in nodes}
-    ins = {n: set() for n in nodes}
-    for (a, b) in edges:
-        ons[a].add(b)
-        ins[b].add(a)
-    graph = (ons, ins, directed, edge_types)
-    node_coloring = [0 for _ in nodes]
+    if ISO_MODE() == "new":
+        graph = GraphView(nodes, edges, directed, edge_types=edge_types)
+        node_coloring = Coloring([0 for _ in nodes])
+    else:
+        # Old Way:
+        ons = {n: set() for n in nodes}
+        ins = {n: set() for n in nodes}
+        for (a, b) in edges:
+            ons[a].add(b)
+            ins[b].add(a)
+        graph = (ons, ins, directed, edge_types)
+        node_coloring = [0 for _ in nodes]
 
     return (graph, node_coloring, hr, t)
+
+def get_max_score_for_link_pred(graph, node_coloring, hr, t):
+    print("Getting ORBITS...")
+    base_orbits = orbits(graph, node_coloring)
+    print("  ...obtained orbits.")
+    if ISO_MODE() == "old":
+        base_orbits = Coloring(base_orbits)
+
+    (num_predictions, _) = hr.shape
+    hr_classes = {}
+    
+    print("    Getting classes raw info")
+    for i in range(0, num_predictions):
+        h = hr[i,0]
+        r = hr[i,1]
+
+        h_type = base_orbits[h]
+        if (h_type, r) not in hr_classes:
+            hr_classes[(h_type, r)] = []
+        hr_classes[(h_type, r)].append((h, t))
+
+    print("Now to look at classes...")
+
+    num_unique_tasks = 0
+    multi_target_tasks = []
+    messy_tasks = []
+    for (h_type, r), tasks in hr_classes.items():
+        if len(tasks) == 1 and \
+                len(base_orbits.get_cell(base_orbits[tasks[0][1]])) == 1:
+            num_unique_tasks += 1
+            continue
+        elif len(tasks) == 1:
+            (h, t) = tasks[0]
+            l = len(base_orbits.get_cell(base_orbits[h]))
+            if l == 1:
+                multi_target_tasks.append(len(base_orbits.get_cell(base_orbits[t])))
+                continue
+            print("Running a sub-iso call.")
+            sub_orbits = Coloring(base_orbits)
+            sub_orbits.make_singleton(h)
+            if ISO_MODE() == "old":
+                sub_orbits = list(sub_orbits.__list__)
+            sub_orbits = orbits(graph, sub_orbits)
+            multi_target_tasks.append(len(sub_orbits.get_cell(sub_orbits[t])))
+            print("   ...finished the sub-iso call.")
+        else:
+            messy_tasks.append((h_type, r), tasks)
+    del hr_classes
+
+    if len(messy_tasks) == 0 and len(multi_target_tasks) == 0:
+        print("The Max Possible MRR is a Perfect 1 on the Validation Task.")
+        return
+
+    print("Code is not yet ready to handle the rest of the situation.")
+
+    elif len(messy_tasks) == 0:
+        sum_of_expected_RR = 0.0
+        for v in multi_target_tasks:
+            if v > 10:
+                pass
+            sum_of_expected_RR += 2.0 / v
 
 def node_classifier_dataset():
     dataset = MAG240MDataset(root=node_classification_root)
@@ -151,29 +247,23 @@ def node_classifier_dataset():
     directed = True
     print("  ...Constructing GraphView...")
     # New Way:
-    # node_colors = Coloring(node_colors)
-    # graph = GraphView(nodes, edges, directed, edge_types)
-    # Old Way:
-    ons = {n: set() for n in range(0, len(node_colors))}
-    ins = {n: set() for n in range(0, len(node_colors))}
-    for (a, b) in edges:
-        ons[a].add(b)
-        ins[b].add(a)
-    graph = (ons, ins, directed, edge_types)
+    if ISO_MODE() == "new":
+        node_colors = Coloring(node_colors)
+        graph = GraphView(nodes, edges, directed, edge_types)
+    else:
+        # Old Way:
+        ons = {n: set() for n in range(0, len(node_colors))}
+        ins = {n: set() for n in range(0, len(node_colors))}
+        for (a, b) in edges:
+            ons[a].add(b)
+            ins[b].add(a)
+        graph = (ons, ins, edge_types)
 
     return (graph, node_colors, validation_node_labels)
 
 def get_max_score_for_node_classification(graph, node_colors, validation_node_labels):
     print("  Getting Automorphism Orbits...")
-    # New Way:
-    # (new_colors, _) = hopeful_canonicalizer(graph, node_colors, \
-    #                                         return_canonical_order=False)
-    # Old Way:
-    (out_neighbor_sets, in_neighbor_sets, _, edge_types) = graph
-    hopeful_canonicalizer(out_neighbor_sets, node_colors, edge_types=edge_types, \
-                          in_neighbor_sets=in_neighbor_sets, return_canon_order=False, \
-                          print_info=False, k_hop_graph_collections=None)
-    new_colors = node_colors
+    new_colors = orbits(graph, node_colors, iso_mode=ISO_MODE)
     print("    ...Obtained Automorphism Orbits.")
 
     if new_colors.num_singletons() == graph.num_nodes():
@@ -211,6 +301,8 @@ if __name__ == "__main__":
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         (graph, node_colors, hr, t) = link_pred_dataset()
+        print("Graph Loaded!!!!!! Now to process...")
+        get_max_score_for_link_pred(graph, node_colors, hr, t)
 
     elif task == "Node Classification":
         print("Loading MAG Graph (Node Classification Graph)...")
