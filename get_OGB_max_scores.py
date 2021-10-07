@@ -2,6 +2,7 @@ import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90Mv2Dataset
 from ogb.lsc import PCQM4Mv2Dataset
+import sys
 # from Practical_Isomorphism_Alg.coloring import Coloring
 # from Practical_Isomorphism_Alg.views import GraphView
 
@@ -60,10 +61,13 @@ def link_pred_dataset():
     nodes = set()
 
     # Get edges and flatten edge types.
-    print("Loading edges...")
-    edges = set([(train_hrt[i,0], train_hrt[i,2]) for i in range(0, num_triples)])
+    print_flush("Loading edges...")
+    edges = list(set([(train_hrt[i,0], train_hrt[i,2]) for i in range(0, num_triples)]))
+    print_flush("Edges loaded. %d raw edges vs. %d flattened edges." % \
+                    (num_triples, len(edges)))
+    print_flush("Initializing edge_types dict...")
     edge_types = {edge: set() for edge in edges}
-    print("Flattening edge types...")
+    print_flush("Flattening edge types...")
     for i in range(0, num_triples):
         edge = (train_hrt[i,0], train_hrt[i,2])
         t = train_hrt[i,1]
@@ -79,7 +83,7 @@ def link_pred_dataset():
             edge_type_combo_dict[types] = next_type_id
             next_type_id += 1
         edge_types[edge] = edge_type_combo_dict[types]
-    print("  ... %d total flattened edge types." % len(edge_type_combo_dict))
+    print_flush("  ... %d total flattened edge types." % len(edge_type_combo_dict))
 
     valid_task = dataset.valid_dict['h,r->t']
     hr = valid_task['hr']
@@ -87,17 +91,18 @@ def link_pred_dataset():
     (num_predictions, _) = hr.shape
     assert t.shape == (num_predictions,1)
 
-    print("Num nodes before adding validation nodes: %d" % len(nodes))
+    print_flush("Num nodes before adding validation nodes: %d" % len(nodes))
     for i in range(0, num_predictions):
         nodes.add(hr[i,0])
         nodes.add(t[i,0])
 
     assert max(nodes) == len(nodes) - 1
     assert min(nodes) == 0
-    print("  ... obtained %d nodes" % len(nodes))
+    print_flush("  ... obtained %d nodes" % len(nodes))
 
     directed = True
 
+    print_flush("Constructing graph...")
     # New Way:
     if ISO_MODE() == "new":
         graph = GraphView(nodes, edges, directed, edge_types=edge_types)
@@ -111,20 +116,21 @@ def link_pred_dataset():
             ins[b].add(a)
         graph = (ons, ins, directed, edge_types)
         node_coloring = [0 for _ in nodes]
+    print_flush(" ... graph constructed.")
 
     return (graph, node_coloring, hr, t)
 
 def get_max_score_for_link_pred(graph, node_coloring, hr, t):
-    print("Getting ORBITS...")
+    print_flush("Getting ORBITS...")
     base_orbits = orbits(graph, node_coloring)
-    print("  ...obtained orbits.")
+    print_flush("  ...obtained orbits.")
     if ISO_MODE() == "old":
         base_orbits = Coloring(base_orbits)
 
     (num_predictions, _) = hr.shape
     hr_classes = {}
     
-    print("    Getting classes raw info")
+    print_flush("    Getting classes raw info")
     for i in range(0, num_predictions):
         h = hr[i,0]
         r = hr[i,1]
@@ -134,7 +140,7 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
             hr_classes[(h_type, r)] = []
         hr_classes[(h_type, r)].append((h, t))
 
-    print("Now to look at classes...")
+    print_flush("Now to look at classes...")
 
     num_unique_tasks = 0
     multi_target_tasks = []
@@ -150,23 +156,23 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
             if l == 1:
                 multi_target_tasks.append(len(base_orbits.get_cell(base_orbits[t])))
                 continue
-            print("Running a sub-iso call.")
+            print_flush("Running a sub-iso call.")
             sub_orbits = Coloring(base_orbits)
             sub_orbits.make_singleton(h)
             if ISO_MODE() == "old":
                 sub_orbits = list(sub_orbits.__list__)
             sub_orbits = orbits(graph, sub_orbits)
             multi_target_tasks.append(len(sub_orbits.get_cell(sub_orbits[t])))
-            print("   ...finished the sub-iso call.")
+            print_flush("   ...finished the sub-iso call.")
         else:
             messy_tasks.append((h_type, r), tasks)
     del hr_classes
 
     if len(messy_tasks) == 0 and len(multi_target_tasks) == 0:
-        print("The Max Possible MRR is a Perfect 1 on the Validation Task.")
+        print_flush("The Max Possible MRR is a Perfect 1 on the Validation Task.")
         return
 
-    print("Code is not yet ready to handle the rest of the situation.")
+    print_flush("Code is not yet ready to handle the rest of the situation.")
 
     if len(messy_tasks) == 0:
         sum_of_expected_RR = 0.0
@@ -178,16 +184,19 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
 def node_classifier_dataset():
     dataset = MAG240MDataset(root=node_classification_root)
 
-    print("  Dataset Info:")
-    print("  %d" % dataset.num_papers) # number of paper nodes
-    print("  %d" % dataset.num_authors) # number of author nodes
-    print("  %d" % dataset.num_institutions) # number of institution nodes
-    print("  %d" % dataset.num_paper_features) # dimensionality of paper features
-    print("  %d" % dataset.num_classes) # number of subject area classes
+    print_flush("  Dataset Info:")
+    print_flush("  %d" % dataset.num_papers) # number of paper nodes
+    print_flush("  %d" % dataset.num_authors) # number of author nodes
+    print_flush("  %d" % dataset.num_institutions) # number of institution nodes
+    print_flush("  %d" % dataset.num_paper_features) # dimensionality of paper features
+    print_flush("  %d" % dataset.num_classes) # number of subject area classes
 
     edge_index_writes = dataset.edge_index('author', 'paper')
     edge_index_cites = dataset.edge_index('paper', 'paper')
     edge_index_affiliated_with = dataset.edge_index('author', 'institution')
+
+    print_flush("  Loaded base data matrices.")
+    print_flush("  Setting blank node colors...")
 
     # Combine all indices.
     author_node_offset = int(dataset.num_papers)
@@ -204,8 +213,16 @@ def node_classifier_dataset():
 
     validation_node_labels = {}
 
+    print_flush("  Getting author-paper edges...")
+
     # Author-Paper Edges
-    for i in range(0, edge_index_writes.shape[1]):
+    percent = 0
+    size = edge_index_writes.shape[1]
+    for i in range(0, size):
+        if int((100 * i) / size) > percent:
+            percent = int((100 * i) / size)
+            print_flush("    ... %d percent done" % percent) 
+
         author = edge_index_writes[0,i] + author_node_offset
         paper = edge_index_writes[1,i]
 
@@ -220,8 +237,15 @@ def node_classifier_dataset():
 
         edges.append((author, paper))
 
+    print_flush("  Getting paper-paper edges...")
     # Paper-Paper Edges
-    for i in range(0, edge_index_cites.shape[1]):
+    percent = 0
+    size = edge_index_cites.shape[1]
+    for i in range(0, size):
+        if int((100 * i) / size) > percent:
+            percent = int((100 * i) / size)
+            print_flush("    ... %d percent done" % percent) 
+
         paper_A = edge_index_cites[0,i]
         paper_B = edge_index_cites[1,i]
 
@@ -237,15 +261,25 @@ def node_classifier_dataset():
 
         edges.append((paper_A, paper_B))
 
+    print_flush("  There are a total of %d validation nodes." % \
+                    len(validation_node_labels))
+
+    print_flush("  Getting author-institution edges...")
     # Author-Institution Edges
-    for i in range(0, edge_index_affiliated_with.shape[1]):
+    percent = 0
+    size = edge_index_affiliated_with.shape[1]
+    for i in range(0, size):
+        if int((100 * i) / size) > percent:
+            percent = int((100 * i) / size)
+            print_flush("    ... %d percent done" % percent) 
+
         author = edge_index_affiliated_with[0,i] + author_node_offset
         institution = edge_index_affiliated_with[1,i] + institution_node_offset
 
         edges.append((author, institution))
 
     directed = True
-    print("  ...Constructing GraphView...")
+    print_flush("  ...Constructing GraphView...")
     # New Way:
     if ISO_MODE() == "new":
         node_colors = Coloring(node_colors)
@@ -262,15 +296,15 @@ def node_classifier_dataset():
     return (graph, node_colors, validation_node_labels)
 
 def get_max_score_for_node_classification(graph, node_colors, validation_node_labels):
-    print("  Getting Automorphism Orbits...")
+    print_flush("  Getting Automorphism Orbits...")
     new_colors = orbits(graph, node_colors, iso_mode=ISO_MODE)
-    print("    ...Obtained Automorphism Orbits.")
+    print_flush("    ...Obtained Automorphism Orbits.")
 
     if new_colors.num_singletons() == graph.num_nodes():
-        print("ALL NODES ARE SINGLETONS! MAX PERFORMANCE IS OPTIMAL!")
+        print_flush("ALL NODES ARE SINGLETONS! MAX PERFORMANCE IS OPTIMAL!")
         return
 
-    print("  Computing Max Accuracy Validation Score...")
+    print_flush("  Computing Max Accuracy Validation Score...")
     observed_cells = {}
     for node, label in validation_node_labels.items():
         node_color = new_colors[node]
@@ -295,21 +329,25 @@ def get_max_score_for_node_classification(graph, node_colors, validation_node_la
     for _, (m, s) in observed_cells.items():
         M += m
         S += s
-    print("  Max Possible Validation Accuracy is: %f   (%d / %d)" % (float(M) / float(S), M, S))
+    print_flush("  Max Possible Validation Accuracy is: %f   (%d / %d)" % (float(M) / float(S), M, S))
+
+def print_flush(s):
+    print(s)
+    sys.stdout.flush()
 
 if __name__ == "__main__":
-    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
+    task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         (graph, node_colors, hr, t) = link_pred_dataset()
-        print("Graph Loaded!!!!!! Now to process...")
+        print_flush("Graph Loaded!!!!!! Now to process...")
         exit()
         get_max_score_for_link_pred(graph, node_colors, hr, t)
 
     elif task == "Node Classification":
-        print("Loading MAG Graph (Node Classification Graph)...")
+        print_flush("Loading MAG Graph (Node Classification Graph)...")
         (graph, node_colors, validation_node_labels) = node_classifier_dataset()
-        print("...Graph Loaded")
-        print("Getting Max Possible Validation Score...")
+        print_flush("...Graph Loaded")
+        print_flush("Getting Max Possible Validation Score...")
         get_max_score_for_node_classification(graph, node_colors, validation_node_labels)
     elif task == "Graph Classification":
         pass
