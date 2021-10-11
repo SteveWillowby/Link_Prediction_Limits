@@ -213,11 +213,34 @@ def node_classifier_dataset():
 
     validation_node_labels = {}
 
+    print_flush("  Loading paper labels and years...")
+
+    percent = 0
+    paper_years = dataset.paper_year
+    paper_labels = dataset.paper_label
+    size = paper_years.shape[0]
+    for i in range(0, paper_years.shape[0]):
+        if int((100 * i) / size) > percent:
+            percent = int((100 * i) / size)
+            print_flush("    ... %d percent done" % percent) 
+
+        paper_type = (paper_labels[i], paper_years[i])
+        if int(paper_type[1]) != 2019 or np.isnan(paper_type[0]):
+            if paper_type not in paper_type_map:
+                paper_type_map[paper_type] = next_paper_type_id
+                next_paper_type_id += 1
+            node_colors[i] = paper_type_map[paper_type]
+        else:
+            validation_node_labels[i] = int(paper_type[0])
+    print("    %d total papers." % paper_years.shape[0])
+        
+
     print_flush("  Getting author-paper edges...")
 
     # Author-Paper Edges
     percent = 0
     size = edge_index_writes.shape[1]
+    paper_observed = [False for _ in range(0, dataset.num_papers)]
     for i in range(0, size):
         if int((100 * i) / size) > percent:
             percent = int((100 * i) / size)
@@ -225,15 +248,8 @@ def node_classifier_dataset():
 
         author = edge_index_writes[0,i] + author_node_offset
         paper = edge_index_writes[1,i]
-
-        paper_type = (dataset.paper_label[paper], dataset.paper_year[paper])
-        if int(paper_type[1]) != 2019 or np.isnan(paper_type[0]):
-            if paper_type not in paper_type_map:
-                paper_type_map[paper_type] = next_paper_type_id
-                next_paper_type_id += 1
-            node_colors[paper] = paper_type_map[paper_type]
-        else:
-            validation_node_labels[paper] = int(paper_type[0])
+        if not paper_observed[paper]:
+            paper_observed[paper] = True
 
         edges.append((author, paper))
 
@@ -250,19 +266,17 @@ def node_classifier_dataset():
         paper_B = edge_index_cites[1,i]
 
         for paper in [paper_A, paper_B]:
-            paper_type = (dataset.paper_label[paper], dataset.paper_year[paper])
-            if int(paper_type[1]) != 2019:
-                if paper_type not in paper_type_map:
-                    paper_type_map[paper_type] = next_paper_type_id
-                    next_paper_type_id += 1
-                node_colors[paper] = paper_type_map[paper_type]
-            else:
-                validation_node_labels[paper] = int(paper_type[0])
+            if not paper_observed[paper]:
+                paper_observed[paper] = True
 
         edges.append((paper_A, paper_B))
 
     print_flush("  There are a total of %d validation nodes." % \
                     len(validation_node_labels))
+
+    if False in paper_observed:
+        print_flush("  !!!! There is at least one paper with no edges !!!!")
+    del paper_observed
 
     print_flush("  Getting author-institution edges...")
     # Author-Institution Edges
