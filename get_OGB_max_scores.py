@@ -241,9 +241,9 @@ def node_classifier_dataset():
         else:
             label = int(label) - label_min
 
-        paper_type_map[label][year] = True
+        paper_type_map[year][label] = True
         node_colors[i] = label * num_labels + year
-        if int(paper_type[1]) == 2019 and not np.isnan(paper_type[0]):
+        if year == 2019 and not label == num_labels - 1:
             validation_node_labels[i] = int(paper_type[0])
 
     print("    %d total labels." % sum([sum([int[v] for v in arr]) for arr in paper_type_map]))
