@@ -217,13 +217,12 @@ def node_classifier_dataset():
     percent = 0
     paper_years = dataset.paper_year
     paper_labels = dataset.paper_label
-    (year_min, year_max) = (paper_years.min(), paper_years.max())
+    (year_min, year_max) = (int(paper_years.min()), int(paper_years.max()))
     print("Year  min/max: %d/%d" % (year_min, year_max))
-    (label_min, label_max) = (np.nanmin(paper_labels), np.nanmax(paper_labels))
+    (label_min, label_max) = (int(np.nanmin(paper_labels)), int(np.nanmax(paper_labels)))
 
     num_years = int(year_max - year_min) + 1
     num_labels = int(label_max - label_min) + 1 + 1  # The extra +1 is because of NaN
-
 
     paper_type_map = [[False for _ in range(0, num_labels)] for _ in range(0, num_years)]
 
