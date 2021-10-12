@@ -235,11 +235,11 @@ def node_classifier_dataset():
             print_flush("    ... %d percent done" % percent) 
 
         label = paper_labels[i]
-        year = int(paper_years[i])
+        year = int(paper_years[i]) - year_min
         if np.isnan(label):
             label = num_labels - 1
         else:
-            label = int(label)
+            label = int(label) - label_min
 
         paper_type_map[label][year] = True
         node_colors[i] = label * num_labels + year
