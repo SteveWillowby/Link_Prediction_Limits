@@ -209,7 +209,6 @@ def node_classifier_dataset():
     edge_types = None  # Can be inferred from node types.
 
     next_paper_type_id = 3  # 2 is preserved for validation nodes
-    paper_type_map = {}
 
     validation_node_labels = {}
 
@@ -218,21 +217,38 @@ def node_classifier_dataset():
     percent = 0
     paper_years = dataset.paper_year
     paper_labels = dataset.paper_label
+    (year_min, year_max) = (paper_years.min(), paper_years.max())
+    print("Year  min/max: %d/%d" % (year_min, year_max))
+    (label_min, label_max) = (np.nanmin(paper_labels), np.nanmax(paper_labels))
+
+    num_years = int(year_max - year_min) + 1
+    num_labels = int(label_max - label_min) + 1 + 1  # The extra +1 is because of NaN
+
+
+    paper_type_map = [[False for _ in range(0, num_labels)] for _ in range(0, num_years)]
+
+    print("Label min/max: %d/%d" % (label_min, label_max))
     size = paper_years.shape[0]
     for i in range(0, paper_years.shape[0]):
         if int((100 * i) / size) > percent:
             percent = int((100 * i) / size)
             print_flush("    ... %d percent done" % percent) 
 
-        paper_type = (paper_labels[i], paper_years[i])
-        if int(paper_type[1]) != 2019 or np.isnan(paper_type[0]):
-            if paper_type not in paper_type_map:
-                paper_type_map[paper_type] = next_paper_type_id
-                next_paper_type_id += 1
-            node_colors[i] = paper_type_map[paper_type]
+        label = paper_labels[i]
+        year = int(paper_years[i])
+        if np.isnan(label):
+            label = num_labels - 1
         else:
+            label = int(label)
+
+        paper_type_map[label][year] = True
+        node_colors[i] = label * num_labels + year
+        if int(paper_type[1]) == 2019 and not np.isnan(paper_type[0]):
             validation_node_labels[i] = int(paper_type[0])
+
+    print("    %d total labels." % sum([sum([int[v] for v in arr]) for arr in paper_type_map]))
     print("    %d total papers." % paper_years.shape[0])
+    print("    %d validation papers." % len(validation_node_labels))
         
 
     print_flush("  Getting author-paper edges...")
