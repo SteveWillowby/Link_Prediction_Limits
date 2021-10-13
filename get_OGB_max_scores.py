@@ -245,7 +245,7 @@ def node_classifier_dataset():
         if year == 2019 and not label == num_labels - 1:
             validation_node_labels[i] = label
 
-    print("    %d total labels." % sum([sum([int[v] for v in arr]) for arr in paper_type_map]))
+    print("    %d total labels." % sum([sum([int(v) for v in arr]) for arr in paper_type_map]))
     print("    %d total papers." % paper_years.shape[0])
     print("    %d validation papers." % len(validation_node_labels))
         
