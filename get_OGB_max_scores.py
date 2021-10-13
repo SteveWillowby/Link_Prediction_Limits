@@ -246,7 +246,7 @@ def node_classifier_dataset():
             validation_node_labels[i] = label
 
     next_label = PAPER_TYPE_BASE
-    relabel_map = {i: i for i in range(0: PAPER_TYPE_BASE)}
+    relabel_map = {i: i for i in range(0, PAPER_TYPE_BASE)}
     for year in range(year_min, year_max + 1):
         y_idx = year - year_min
         for label in range(label_min, label_max + 1):
