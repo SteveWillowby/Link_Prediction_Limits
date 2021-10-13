@@ -208,7 +208,7 @@ def node_classifier_dataset():
     edges = []
     edge_types = None  # Can be inferred from node types.
 
-    next_paper_type_id = 3  # 2 is preserved for validation nodes
+    PAPER_TYPE_BASE = 3  # 2 is preserved for validation nodes
 
     validation_node_labels = {}
 
@@ -241,11 +241,25 @@ def node_classifier_dataset():
             label = int(label) - label_min
 
         paper_type_map[year][label] = True
-        node_colors[i] = label * num_labels + year
+        node_colors[i] = PAPER_TYPE_BASE + year * num_years + label
         if year == 2019 and not label == num_labels - 1:
             validation_node_labels[i] = label
 
-    print("    %d total labels." % sum([sum([int(v) for v in arr]) for arr in paper_type_map]))
+    next_label = PAPER_TYPE_BASE
+    relabel_map = {i: i for i in range(0: PAPER_TYPE_BASE)}
+    for year in range(year_min, year_max + 1):
+        y_idx = year - year_min
+        for label in range(label_min, label_max + 1):
+            l_idx = label - label_min
+            if not paper_type_map[y_idx][l_idx]:
+                continue
+            old_label = PAPER_TYPE_BASE + y_idx * num_years + l_idx
+            relabel_map[old_label] = next_label
+            next_label += 1
+    for n in range(0, paper_years.shape[0]):
+        node_colors[i] = relabel_map[node_colors[i]]
+
+    print("    %d total labels." % len(relabel_map))
     print("    %d total papers." % paper_years.shape[0])
     print("    %d validation papers." % len(validation_node_labels))
         
