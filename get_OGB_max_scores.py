@@ -245,7 +245,7 @@ def node_classifier_dataset():
         if year == 2019 and not label == num_labels - 1:
             validation_node_labels[i] = label
 
-    next_label = PAPER_TYPE_BASE
+    next_label = int(PAPER_TYPE_BASE)
     relabel_map = {i: i for i in range(0, PAPER_TYPE_BASE)}
     for year in range(year_min, year_max + 1):
         y_idx = year - year_min
@@ -256,10 +256,18 @@ def node_classifier_dataset():
             old_label = PAPER_TYPE_BASE + y_idx * num_years + l_idx
             relabel_map[old_label] = next_label
             next_label += 1
-    for n in range(0, paper_years.shape[0]):
-        node_colors[i] = relabel_map[node_colors[i]]
 
     print("    %d total labels." % len(relabel_map))
+
+    for n in range(0, paper_years.shape[0]):
+        old_color = node_colors[i]
+        if old_color not in relabel_map:
+            print("Missing Colors for year, label: %d, %d" % \
+                (int((old_color - PAPER_BASE_TYPE) / num_years), \
+                 int((old_color - PAPER_BASE_TYPE) % num_years)))
+            exit(0)
+        node_colors[i] = relabel_map[old_color]
+
     print("    %d total papers." % paper_years.shape[0])
     print("    %d validation papers." % len(validation_node_labels))
         
