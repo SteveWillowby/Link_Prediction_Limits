@@ -260,14 +260,14 @@ def node_classifier_dataset():
     print("    %d total labels." % len(relabel_map))
 
     for n in range(0, paper_years.shape[0]):
-        old_color = node_colors[i]
+        old_color = node_colors[n]
         if old_color not in relabel_map:
             print("%d of %d" % (n, paper_years.shape[0]))
             print("Missing Colors for year, label: %d, %d" % \
                 (int((old_color - PAPER_TYPE_BASE) / num_years), \
                  int((old_color - PAPER_TYPE_BASE) % num_years)))
             exit(0)
-        node_colors[i] = relabel_map[old_color]
+        node_colors[n] = relabel_map[old_color]
 
     print("    %d total papers." % paper_years.shape[0])
     print("    %d validation papers." % len(validation_node_labels))
