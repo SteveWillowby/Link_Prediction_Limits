@@ -266,6 +266,7 @@ def node_classifier_dataset():
             print("Missing Colors for year, label: %d, %d" % \
                 (int((old_color - PAPER_TYPE_BASE) / num_years), \
                  int((old_color - PAPER_TYPE_BASE) % num_years)))
+            print("old_color: %d" % old_color)
             exit(0)
         node_colors[n] = relabel_map[old_color]
 
