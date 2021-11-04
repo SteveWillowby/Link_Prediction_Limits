@@ -2,7 +2,7 @@ from format_kg_for_nauty import *
 from format_kg_for_JH_special import *
 from hopeful_canonicalizer import hopeful_canonicalizer
 import math
-from nauty_session import NautyTracesSession
+from nauty_traces_session import NautyTracesSession
 from weisfeiler_lehman import WL, zero_indexed_and_map 
 
 # Functions:
