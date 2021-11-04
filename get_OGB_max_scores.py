@@ -2,16 +2,23 @@ import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90Mv2Dataset
 from ogb.lsc import PCQM4Mv2Dataset
+import os
 import sys
-# from Practical_Isomorphism_Alg.coloring import Coloring
-# from Practical_Isomorphism_Alg.views import GraphView
 
 # Choose between the following two and update ISO_MODE() accordingly.
+res = os.system("cp Practical_Isomorphism_Alg/*.py ./")
+if res != 0:
+    print(res)
+    exit(0)
 
-# from Practical_Isomorphism_Alg.main_algorithm import hopeful_canonicalizer, canonical_representation
-from hopeful_canonicalizer import hopeful_canonicalizer, node_order_to_representation
+from coloring import Coloring
+from views import GraphView
+from main_algorithm import hopeful_canonicalizer, canonical_representation
+
+exit(0)
+
 def ISO_MODE():
-    return "old"  # "old" or "new"
+    return "new"  # "old" or "new"
 
 # Class Info Format:
 #
