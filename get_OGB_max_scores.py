@@ -247,10 +247,8 @@ def node_classifier_dataset():
 
     next_label = int(PAPER_TYPE_BASE)
     relabel_map = {i: i for i in range(0, PAPER_TYPE_BASE)}
-    for year in range(year_min, year_max + 1):
-        y_idx = year - year_min
-        for label in range(label_min, label_max + 1):
-            l_idx = label - label_min
+    for y_idx in range(0, num_years):
+        for l_idx in range(0, num_labels):
             if not paper_type_map[y_idx][l_idx]:
                 continue
             old_label = PAPER_TYPE_BASE + y_idx * num_years + l_idx
