@@ -226,17 +226,17 @@ def node_classifier_dataset():
     print("Year  min/max: %d/%d" % (year_min, year_max))
     (label_min, label_max) = (int(np.nanmin(paper_labels)), int(np.nanmax(paper_labels)))
 
+    num_papers = int(paper_years.shape[0])
     num_years = int(year_max - year_min) + 1
     num_labels = int(label_max - label_min) + 1 + 1  # The extra +1 is because of NaN
 
     paper_type_map = [[False for _ in range(0, num_labels)] for _ in range(0, num_years)]
 
     print("Label min/max: %d/%d" % (label_min, label_max))
-    size = paper_years.shape[0]
-    for i in range(0, paper_years.shape[0]):
-        if int((100 * i) / size) > percent:
-            percent = int((100 * i) / size)
-            print_flush("    ... %d percent done" % percent) 
+    for i in range(0, num_papers):
+        # if int((100 * i) / num_papers) > percent:
+        #     percent = int((100 * i) / num_papers)
+        #     print_flush("    ... %d percent done" % percent) 
 
         label = paper_labels[i]
         year = int(paper_years[i]) - year_min
@@ -250,6 +250,9 @@ def node_classifier_dataset():
         if year == 2019 and not label == num_labels - 1:
             validation_node_labels[i] = label
 
+    del paper_years
+    del paper_labels
+
     next_label = int(PAPER_TYPE_BASE)
     relabel_map = {i: i for i in range(0, PAPER_TYPE_BASE)}
     for y_idx in range(0, num_years):
@@ -262,10 +265,10 @@ def node_classifier_dataset():
 
     print("    %d total labels." % len(relabel_map))
 
-    for n in range(0, paper_years.shape[0]):
+    for n in range(0, num_papers):
         old_color = node_colors[n]
         if old_color not in relabel_map:
-            print("%d of %d" % (n, paper_years.shape[0]))
+            print("%d of %d" % (n, num_papers))
             print("Missing Colors for year, label: %d, %d" % \
                 (int((old_color - PAPER_TYPE_BASE) / num_years), \
                  int((old_color - PAPER_TYPE_BASE) % num_years)))
@@ -273,7 +276,9 @@ def node_classifier_dataset():
             exit(0)
         node_colors[n] = relabel_map[old_color]
 
-    print("    %d total papers." % paper_years.shape[0])
+    del relabel_map
+
+    print("    %d total papers." % num_papers)
     print("    %d validation papers." % len(validation_node_labels))
         
 
@@ -286,7 +291,8 @@ def node_classifier_dataset():
     for i in range(0, size):
         if int((100 * i) / size) > percent:
             percent = int((100 * i) / size)
-            print_flush("    ... %d percent done" % percent) 
+            if percent % 10 == 0:
+                print_flush("    ... %d percent done" % percent) 
 
         author = edge_index_writes[0,i] + author_node_offset
         paper = edge_index_writes[1,i]
@@ -295,6 +301,8 @@ def node_classifier_dataset():
 
         edges.append((author, paper))
 
+    del edge_index_writes
+
     print_flush("  Getting paper-paper edges...")
     # Paper-Paper Edges
     percent = 0
@@ -302,7 +310,8 @@ def node_classifier_dataset():
     for i in range(0, size):
         if int((100 * i) / size) > percent:
             percent = int((100 * i) / size)
-            print_flush("    ... %d percent done" % percent) 
+            if percent % 10 == 0:
+                print_flush("    ... %d percent done" % percent) 
 
         paper_A = edge_index_cites[0,i]
         paper_B = edge_index_cites[1,i]
@@ -312,6 +321,8 @@ def node_classifier_dataset():
                 paper_observed[paper] = True
 
         edges.append((paper_A, paper_B))
+
+    del edge_index_cites
 
     print_flush("  There are a total of %d validation nodes." % \
                     len(validation_node_labels))
@@ -327,12 +338,15 @@ def node_classifier_dataset():
     for i in range(0, size):
         if int((100 * i) / size) > percent:
             percent = int((100 * i) / size)
-            print_flush("    ... %d percent done" % percent) 
+            if percent % 10 == 0:
+                print_flush("    ... %d percent done" % percent) 
 
         author = edge_index_affiliated_with[0,i] + author_node_offset
         institution = edge_index_affiliated_with[1,i] + institution_node_offset
 
         edges.append((author, institution))
+
+    del edge_index_affiliated_with
 
     directed = True
     print_flush("  ...Constructing GraphView...")
@@ -348,6 +362,7 @@ def node_classifier_dataset():
             ons[a].add(b)
             ins[b].add(a)
         graph = (ons, ins, edge_types)
+    print_flush("  ...GraphView constructed.")
 
     return (graph, node_colors, validation_node_labels)
 
