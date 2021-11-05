@@ -15,8 +15,6 @@ from coloring import Coloring
 from views import GraphView
 from main_algorithm import hopeful_canonicalizer, canonical_representation
 
-exit(0)
-
 def ISO_MODE():
     return "new"  # "old" or "new"
 

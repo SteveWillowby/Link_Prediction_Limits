@@ -1,3 +1,14 @@
 __pycache__/
 FB15K-237/text_*
 Practical_Isomorphism_Alg/
+coloring.py
+file_utils.py
+main_algorithm.py
+views.py
+print_debugging.py
+prep_for_NT.py
+proven_equivalences.py
+relabeling.py
+sampling.py
+testing.py
+pre_collapse.py
