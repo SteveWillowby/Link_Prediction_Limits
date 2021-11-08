@@ -8,4 +8,4 @@ graph_obj = smiles2graph('O=C1C=CC(O1)C(c1ccccc1C)O')
 
 # convert each SMILES string into a molecular graph object by calling smiles2graph
 # This takes a while (a few hours) for the first run
-dataset = PCQM4Mv2Dataset(root = "/data/datasets/open_graph_benchmark_LSC_2021/PCQM4M", smiles2graph = smiles2graph)
+dataset = PCQM4Mv2Dataset(root = "/nfs/datasets/open_graph_benchmark_LSC_2021/PCQM4M", smiles2graph = smiles2graph)

@@ -51,7 +51,7 @@ def canonical_form(graph, coloring):
                                                  return_canonical_order=True)
         return canonical_representation(graph, canon_order, init_coloring)
 
-dataset_base = "/data/datasets/open_graph_benchmark_LSC_2021"
+dataset_base = "/nfs/datasets/open_graph_benchmark_LSC_2021"
 
 graph_classification_root = dataset_base + "/PCQM4M"
 link_pred_root = dataset_base + "/WikiKG90M"
