@@ -267,7 +267,7 @@ def node_classifier_dataset():
 
     next_label = int(PAPER_TYPE_BASE)
     relabel_map = default_dict()
-    for i in range(0, PAPER_BASE_TYPE):
+    for i in range(0, PAPER_TYPE_BASE):
         relabel_map[i] = i
 
     for y_idx in range(0, num_years):
