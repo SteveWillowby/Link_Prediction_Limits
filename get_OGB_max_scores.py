@@ -259,7 +259,7 @@ def node_classifier_dataset():
 
         paper_type_map[year][label] = True
         node_colors[i] = PAPER_TYPE_BASE + year * num_years + label
-        if year == 2019 and not label == num_labels - 1:
+        if year == (2019 - year_min) and not (label == num_labels - 1):
             validation_node_labels[i] = label
 
     del paper_years
