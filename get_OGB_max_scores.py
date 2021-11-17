@@ -11,9 +11,13 @@ if res != 0:
     print(res)
     exit(0)
 
+from basic_container_types import default_set, default_dict, Set, Dict, \
+                                  set_default_set_type, set_default_dict_type
 from coloring import Coloring
-from views import GraphView
+from list_containers import ListSet, ListDict
 from main_algorithm import hopeful_canonicalizer, canonical_representation
+from sampling import set_default_sample_set_type, SampleListSet, SampleSet
+from views import GraphView
 
 def ISO_MODE():
     return "new"  # "old" or "new"
@@ -63,15 +67,20 @@ def link_pred_dataset():
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
 
-    nodes = set()
+    nodes = default_set()
 
     # Get edges and flatten edge types.
     print_flush("Loading edges...")
-    edges = list(set([(train_hrt[i,0], train_hrt[i,2]) for i in range(0, num_triples)]))
+    edges = default_set()
+    for i in range(0, num_triples):
+        edges.add((train_hrt[i,0], train_hrt[i,2]))
+
     print_flush("Edges loaded. %d raw edges vs. %d flattened edges." % \
                     (num_triples, len(edges)))
     print_flush("Initializing edge_types dict...")
-    edge_types = {edge: set() for edge in edges}
+    edge_types = default_dict()
+    for edge in edges:
+        edge_types[edge] = default_set()
     print_flush("Flattening edge types...")
     for i in range(0, num_triples):
         edge = (train_hrt[i,0], train_hrt[i,2])
@@ -79,7 +88,7 @@ def link_pred_dataset():
         edge_types[edge].add(t)
 
     next_type_id = 0
-    edge_type_combo_dict = {}
+    edge_type_combo_dict = default_dict()
     for edge in edges:
         nodes.add(edge[0])
         nodes.add(edge[1])
@@ -110,12 +119,16 @@ def link_pred_dataset():
     print_flush("Constructing graph...")
     # New Way:
     if ISO_MODE() == "new":
-        graph = GraphView(nodes, edges, directed, edge_types=edge_types)
+        graph = GraphView(directed=directed, nodes=nodes, edges=edges, \
+                          edge_types=edge_types)
         node_coloring = Coloring([0 for _ in nodes])
     else:
         # Old Way:
-        ons = {n: set() for n in nodes}
-        ins = {n: set() for n in nodes}
+        ons = default_dict()
+        ins = default_dict()
+        for n in nodes:
+            ons[n] = default_set()
+            ins[n] = default_set()
         for (a, b) in edges:
             ons[a].add(b)
             ins[b].add(a)
@@ -133,7 +146,7 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
         base_orbits = Coloring(base_orbits)
 
     (num_predictions, _) = hr.shape
-    hr_classes = {}
+    hr_classes = default_dict()
     
     print_flush("    Getting classes raw info")
     for i in range(0, num_predictions):
@@ -210,12 +223,11 @@ def node_classifier_dataset():
     node_colors = [2 for _ in range(0, int(dataset.num_papers))] + \
                   [1 for _ in range(0, int(dataset.num_authors))] + \
                   [0 for _ in range(0, int(dataset.num_institutions))]
-    edges = []
     edge_types = None  # Can be inferred from node types.
 
     PAPER_TYPE_BASE = 3  # 2 is preserved for validation nodes
 
-    validation_node_labels = {}
+    validation_node_labels = default_dict()
 
     print_flush("  Loading paper labels and years...")
 
@@ -254,7 +266,10 @@ def node_classifier_dataset():
     del paper_labels
 
     next_label = int(PAPER_TYPE_BASE)
-    relabel_map = {i: i for i in range(0, PAPER_TYPE_BASE)}
+    relabel_map = default_dict()
+    for i in range(0, PAPER_BASE_TYPE):
+        relabel_map[i] = i
+
     for y_idx in range(0, num_years):
         for l_idx in range(0, num_labels):
             if not paper_type_map[y_idx][l_idx]:
@@ -282,6 +297,7 @@ def node_classifier_dataset():
     print("    %d validation papers." % len(validation_node_labels))
         
 
+    neighbors_list = [default_set() for _ in node_colors]
     print_flush("  Getting author-paper edges...")
 
     # Author-Paper Edges
@@ -299,7 +315,7 @@ def node_classifier_dataset():
         if not paper_observed[paper]:
             paper_observed[paper] = True
 
-        edges.append((author, paper))
+        neighbors_list[author].add(paper)
 
     del edge_index_writes
 
@@ -320,7 +336,7 @@ def node_classifier_dataset():
             if not paper_observed[paper]:
                 paper_observed[paper] = True
 
-        edges.append((paper_A, paper_B))
+        neighbors_list[paper_A].add(paper_B)
 
     del edge_index_cites
 
@@ -344,7 +360,7 @@ def node_classifier_dataset():
         author = edge_index_affiliated_with[0,i] + author_node_offset
         institution = edge_index_affiliated_with[1,i] + institution_node_offset
 
-        edges.append((author, institution))
+        neighbors_list[author].add(institution)
 
     del edge_index_affiliated_with
 
@@ -353,11 +369,16 @@ def node_classifier_dataset():
     # New Way:
     if ISO_MODE() == "new":
         node_colors = Coloring(node_colors)
-        graph = GraphView(nodes, edges, directed, edge_types)
+        graph = GraphView(directed=directed, neighbors_list=neighbors_list, \
+                          edge_types=edge_types)
     else:
+        raise RuntimeError("Error! Old way no longer implemented correctly.")
         # Old Way:
-        ons = {n: set() for n in range(0, len(node_colors))}
-        ins = {n: set() for n in range(0, len(node_colors))}
+        ons = default_dict()
+        ins = default_dict()
+        for n in range(0, len(node_colors)):
+            ons[n] = default_set()
+            ins[n] = default_set()
         for (a, b) in edges:
             ons[a].add(b)
             ins[b].add(a)
@@ -376,14 +397,14 @@ def get_max_score_for_node_classification(graph, node_colors, validation_node_la
         return
 
     print_flush("  Computing Max Accuracy Validation Score...")
-    observed_cells = {}
+    observed_cells = default_dict()
     for node, label in validation_node_labels.items():
         node_color = new_colors[node]
         if node_color in observed_cells:
             continue
 
         cell = new_colors.get_cell(node_color)
-        labels_in_cell = {}
+        labels_in_cell = default_dict()
         for n in cell:
             label = validation_node_labels[n]
             if label not in labels_in_cell:
@@ -407,6 +428,10 @@ def print_flush(s):
     sys.stdout.flush()
 
 if __name__ == "__main__":
+    set_default_set_type(ListSet)
+    set_default_dict_type(Dict)
+    set_default_sample_set_type(SampleListSet)
+
     task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         (graph, node_colors, hr, t) = link_pred_dataset()
