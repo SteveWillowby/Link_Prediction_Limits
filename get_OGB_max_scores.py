@@ -47,37 +47,37 @@ def link_pred_dataset():
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
 
-    nodes = default_set()
-
     # Get edges and flatten edge types.
     print_flush("Loading edges...")
-    edges = default_set()
-    for i in range(0, num_triples):
-        edges.add((train_hrt[i,0], train_hrt[i,2]))
-
-    print_flush("Edges loaded. %d raw edges vs. %d flattened edges." % \
-                    (num_triples, len(edges)))
-    print_flush("Initializing edge_types dict...")
     edge_types = default_dict()
-    for edge in edges:
-        edge_types[edge] = default_set()
-    print_flush("Flattening edge types...")
     for i in range(0, num_triples):
         edge = (train_hrt[i,0], train_hrt[i,2])
-        t = train_hrt[i,1]
-        edge_types[edge].add(t)
+        if edge in edge_types:
+            edge_types[edge].add(train_hrt[i,1])
+        else:
+            edge_types[edge] = default_set([train_hrt[i,1]])
+
+    del train_hrt
+
+    print_flush("Edges loaded. %d raw edges vs. %d flattened edges." % \
+                    (num_triples, len(edge_types)))
+    print_flush("Flattening edge types...")
 
     next_type_id = 0
     edge_type_combo_dict = default_dict()
-    for edge in edges:
-        nodes.add(edge[0])
-        nodes.add(edge[1])
-        types = sorted(tuple(edge_types[edge]))
+    for edge, types_set in edge_types.items():
+        types = tuple(sorted(list(types_set)))
         if types not in edge_type_combo_dict:
             edge_type_combo_dict[types] = next_type_id
             next_type_id += 1
-        edge_types[edge] = edge_type_combo_dict[types]
     print_flush("  ... %d total flattened edge types." % len(edge_type_combo_dict))
+
+    for edge in edge_types:
+        edge_types[edge] = \
+            edge_type_combo_dict[tuple(sorted(list(edge_types[edge])))]
+    print_flush("  ...Edge Types Flattened")
+
+    exit(0)
 
     valid_task = dataset.valid_dict['h,r->t']
     hr = valid_task['hr']
