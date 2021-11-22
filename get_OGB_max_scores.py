@@ -47,11 +47,15 @@ def link_pred_dataset():
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
 
+    nodes = default_set()
+
     # Get edges and flatten edge types.
     print_flush("Loading edges...")
     edge_types = default_dict()
     for i in range(0, num_triples):
         edge = (train_hrt[i,0], train_hrt[i,2])
+        nodes.add(edge[0])
+        nodes.add(edge[1])
         if edge in edge_types:
             edge_types[edge].add(train_hrt[i,1])
         else:
@@ -77,7 +81,7 @@ def link_pred_dataset():
             edge_type_combo_dict[tuple(sorted(list(edge_types[edge])))]
     print_flush("  ...Edge Types Flattened")
 
-    exit(0)
+    del edge_type_combo_dict
 
     valid_task = dataset.valid_dict['h,r->t']
     hr = valid_task['hr']
@@ -388,7 +392,9 @@ if __name__ == "__main__":
 
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
+        set_default_dict_type(ListDict)
         (graph, node_colors, hr, t) = link_pred_dataset()
+        set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
         exit()
         get_max_score_for_link_pred(graph, node_colors, hr, t)
