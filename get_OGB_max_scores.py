@@ -1,10 +1,13 @@
+from list_containers import ListSet, ListDict
 import numpy as np
 from ogb.lsc import MAG240MDataset
 from ogb.lsc import WikiKG90Mv2Dataset
 from ogb.lsc import PCQM4Mv2Dataset
 import os
+from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
 
+"""
 # Choose between the following two and update ISO_MODE() accordingly.
 res = os.system("cp Practical_Isomorphism_Alg/*.py ./")
 if res != 0:
@@ -34,6 +37,7 @@ def canonical_form(graph, coloring):
     (_, canon_order) = hopeful_canonicalizer(graph, coloring, \
                                              return_canonical_order=True)
     return canonical_representation(graph, canon_order, init_coloring)
+"""
 
 dataset_base = "/nfs/datasets/open_graph_benchmark_LSC_2021"
 
@@ -47,41 +51,14 @@ def link_pred_dataset():
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
 
-    nodes = default_set()
 
     # Get edges and flatten edge types.
-    print_flush("Loading edges...")
-    edge_types = default_dict()
+    print_flush("Loading nodes and validation data...")
+    nodes = set()
     for i in range(0, num_triples):
         edge = (train_hrt[i,0], train_hrt[i,2])
         nodes.add(edge[0])
         nodes.add(edge[1])
-        if edge in edge_types:
-            edge_types[edge].add(train_hrt[i,1])
-        else:
-            edge_types[edge] = default_set([train_hrt[i,1]])
-
-    del train_hrt
-
-    print_flush("Edges loaded. %d raw edges vs. %d flattened edges." % \
-                    (num_triples, len(edge_types)))
-    print_flush("Flattening edge types...")
-
-    next_type_id = 0
-    edge_type_combo_dict = default_dict()
-    for edge, types_set in edge_types.items():
-        types = tuple(sorted(list(types_set)))
-        if types not in edge_type_combo_dict:
-            edge_type_combo_dict[types] = next_type_id
-            next_type_id += 1
-    print_flush("  ... %d total flattened edge types." % len(edge_type_combo_dict))
-
-    for edge in edge_types:
-        edge_types[edge] = \
-            edge_type_combo_dict[tuple(sorted(list(edge_types[edge])))]
-    print_flush("  ...Edge Types Flattened")
-
-    del edge_type_combo_dict
 
     valid_task = dataset.valid_dict['h,r->t']
     hr = valid_task['hr']
@@ -94,23 +71,67 @@ def link_pred_dataset():
         nodes.add(hr[i,0])
         nodes.add(t[i,0])
 
-    assert max(nodes) == len(nodes) - 1
-    assert min(nodes) == 0
-    print_flush("  ... obtained %d nodes" % len(nodes))
+    N = len(nodes)
+    assert min(nodes) == 0 and max(nodes) == N - 1
+    del nodes
 
-    directed = True
+    print_flush("  ... obtained %d nodes" % N)
 
-    print_flush("Constructing graph...")
-    graph = GraphView(directed=directed, nodes=nodes, edges=edges, \
-                      edge_types=edge_types)
-    print_flush("    ...Graph Constructed")
+    print_flush("Loading edges...")
+    neighbors_dicts = [{} for _ in range(0, N)]
+    for i in range(0, num_triples):
+        (a, b) = (train_hrt[i,0], train_hrt[i,2])
+        if b not in neighbors_dicts[a]:
+            neighbors_dicts[a][b] = []
+        neighbors_dicts[a][b].append(train_hrt[i,1])
+
+    del train_hrt
+
+    print_flush("Edges Loaded. Recasting Container Types.")
+    for n in range(0, N):
+        elements = [(a, b) for (a, b) in neighbors_dicts[n].items()]
+        elements.sort()
+        new_dict = ListDict()
+        for (a, b) in elements:
+            new_dict[a] = b
+        neighbors_dicts[n] = new_dict
+    print_flush("Container Types Recasted.")
+
+    print_flush("Flattening edge types...")
+
+    edge_type_combo_set = {}
+    for n in range(0, N):
+        nd = neighbors_dicts[n]
+        neighbors = [n2 for n2, _ in nd.items()]
+        for neighbor in neighbors:
+            types = tuple(sorted(list(nd[neighbor])))
+            nd[neighbor] = types
+            edge_type_combo_set.add(types)
+    print_flush("  ... %d total flattened edge types." % len(edge_type_combo_set))
+    edge_type_combo_set = list(edge_type_combo_set)
+    edge_type_combo_set.sort()
+
+    edge_type_combo_set = {edge_type_combo_set[i]: i \
+                            for i in range(0, len(edge_type_combo_set))}
+
+    for n in range(0, N):
+        nd = neighbors_dicts[n]
+        neighbors = [n2 for n2, _ in nd.items()]
+        for neighbor in neighbors:
+            nd[neighbor] = edge_type_combo_set[nd[neighbor]]
+    print_flush("  ...Edge Types Flattened")
+
+    del edge_type_combo_set
+
     print_flush("Making Base Coloring...")
-    node_coloring = Coloring([0 for _ in nodes])
+    node_coloring = [0 for _ in nodes]
     print_flush("    ...Made Base Coloring")
 
-    return (graph, node_coloring, hr, t)
+    return (neighbors_dicts, node_coloring, hr, t)
 
-def get_max_score_for_link_pred(graph, node_coloring, hr, t):
+def get_max_score_for_link_pred(neighbors_dicts, node_coloring, hr, t):
+    # TODO: Update
+    raise RuntimeError("This part not yet updated.")
     print_flush("Getting ORBITS...")
     base_orbits = orbits(graph, node_coloring)
     print_flush("  ...obtained orbits.")
@@ -145,7 +166,7 @@ def get_max_score_for_link_pred(graph, node_coloring, hr, t):
                 multi_target_tasks.append(len(base_orbits.get_cell(base_orbits[t])))
                 continue
             print_flush("Running a sub-iso call.")
-            sub_orbits = Coloring(base_orbits)
+            sub_orbits = list(base_orbits)
             sub_orbits.make_singleton(h)
             sub_orbits = orbits(graph, sub_orbits)
             multi_target_tasks.append(len(sub_orbits.get_cell(sub_orbits[t])))
@@ -191,7 +212,6 @@ def node_classifier_dataset():
     node_colors = [2 for _ in range(0, int(dataset.num_papers))] + \
                   [1 for _ in range(0, int(dataset.num_authors))] + \
                   [0 for _ in range(0, int(dataset.num_institutions))]
-    edge_types = None  # Can be inferred from node types.
 
     PAPER_TYPE_BASE = 3  # 2 is preserved for validation nodes
 
@@ -267,7 +287,7 @@ def node_classifier_dataset():
     print("    %d validation papers." % len(validation_node_labels))
         
 
-    neighbors_list = [default_set() for _ in node_colors]
+    neighbors_collections = [[] for _ in node_colors]
     print_flush("  Getting author-paper edges...")
 
     # Author-Paper Edges
@@ -285,7 +305,7 @@ def node_classifier_dataset():
         if not paper_observed[paper]:
             paper_observed[paper] = True
 
-        neighbors_list[author].add(paper)
+        neighbors_collections[author].append(paper)
 
     del edge_index_writes
 
@@ -306,7 +326,7 @@ def node_classifier_dataset():
             if not paper_observed[paper]:
                 paper_observed[paper] = True
 
-        neighbors_list[paper_A].add(paper_B)
+        neighbors_collections[paper_A].append(paper_B)
 
     del edge_index_cites
 
@@ -330,29 +350,41 @@ def node_classifier_dataset():
         author = edge_index_affiliated_with[0,i] + author_node_offset
         institution = edge_index_affiliated_with[1,i] + institution_node_offset
 
-        neighbors_list[author].add(institution)
+        neighbors_collections[author].append(institution)
 
     del edge_index_affiliated_with
 
-    directed = True
-    print_flush("   ...Converting node_colors to type Coloring...")
-    node_colors = Coloring(node_colors)
-    print_flush("   ...Conversion complete")
-    print_flush("  ...Constructing GraphView...")
-    graph = GraphView(directed=directed, neighbors_list=neighbors_list, \
-                      edge_types=edge_types)
-    print_flush("  ...GraphView constructed.")
+    print_flush("  ... Recasting neighbors lists to ListSets ...")
+    for n in range(0, len(node_colors)):
+        neighbors_collections[n] = ListSet(neighbors_collections[n])
 
-    return (graph, node_colors, validation_node_labels)
+    return (neighbors_collections, node_colors, validation_node_labels)
 
-def get_max_score_for_node_classification(graph, node_colors, validation_node_labels):
+def get_max_score_for_node_classification(neighbors_collections, \
+                                          node_colors, \
+                                          validation_node_labels):
+    N = len(node_colors)
+
     print_flush("  Getting Automorphism Orbits...")
-    new_colors = orbits(graph, node_colors, iso_mode=ISO_MODE)
+    session = RAMFriendlyNTSession(directed=True, \
+                                   has_edge_types=False, \
+                                   neighbors_collections=neighbors_collections, \
+                                   kill_py_graph=True, \
+                                   only_one_call=True)
+    session.set_colors_by_coloring(node_colors)
+    del node_colors
+    new_colors = session.get_automorphism_orbits()
+    session.run()
+    session.end_session()
+    new_colors = new_colors.get()
     print_flush("    ...Obtained Automorphism Orbits.")
 
-    if new_colors.num_singletons() == graph.num_nodes():
+    if len(new_colors) == N:
         print_flush("ALL NODES ARE SINGLETONS! MAX PERFORMANCE IS OPTIMAL!")
         return
+
+    # TODO: Finish
+    raise RuntimeError("Rest of code is not yet implemented.")
 
     print_flush("  Computing Max Accuracy Validation Score...")
     observed_cells = default_dict()
