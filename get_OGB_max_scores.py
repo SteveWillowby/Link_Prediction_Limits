@@ -64,7 +64,7 @@ def link_pred_dataset():
     hr = valid_task['hr']
     t = valid_task['t']
     (num_predictions, _) = hr.shape
-    assert t.shape == (num_predictions,1)
+    assert t.shape == (num_predictions,)
 
     print_flush("Num nodes before adding validation nodes: %d" % len(nodes))
     for i in range(0, num_predictions):
@@ -418,15 +418,15 @@ def print_flush(s):
     sys.stdout.flush()
 
 if __name__ == "__main__":
-    set_default_set_type(ListSet)
-    set_default_dict_type(Dict)
-    set_default_sample_set_type(SampleListSet)
+    # set_default_set_type(ListSet)
+    # set_default_dict_type(Dict)
+    # set_default_sample_set_type(SampleListSet)
 
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
-        set_default_dict_type(ListDict)
+        # set_default_dict_type(ListDict)
         (graph, node_colors, hr, t) = link_pred_dataset()
-        set_default_dict_type(Dict)
+        # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
         exit()
         get_max_score_for_link_pred(graph, node_colors, hr, t)
