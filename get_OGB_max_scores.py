@@ -233,7 +233,7 @@ def node_classifier_dataset():
 
     PAPER_TYPE_BASE = 3  # 2 is preserved for validation nodes
 
-    validation_node_labels = default_dict()
+    validation_node_labels = {}
 
     print_flush("  Loading paper labels and years...")
 
@@ -274,7 +274,7 @@ def node_classifier_dataset():
     del paper_labels
 
     next_label = int(PAPER_TYPE_BASE)
-    relabel_map = default_dict()
+    relabel_map = {}
     for i in range(0, PAPER_TYPE_BASE):
         relabel_map[i] = i
 
@@ -446,7 +446,7 @@ if __name__ == "__main__":
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
 
-    task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
+    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
         (graph, hr, t) = link_pred_dataset()
