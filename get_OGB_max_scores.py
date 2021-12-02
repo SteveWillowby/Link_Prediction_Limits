@@ -51,7 +51,6 @@ def link_pred_dataset():
     train_hrt = dataset.train_hrt
     (num_triples, _) = train_hrt.shape
 
-
     # Get edges and flatten edge types.
     print_flush("Loading nodes and validation data...")
     nodes = set()
@@ -69,7 +68,7 @@ def link_pred_dataset():
     print_flush("Num nodes before adding validation nodes: %d" % len(nodes))
     for i in range(0, num_predictions):
         nodes.add(hr[i,0])
-        nodes.add(t[i,0])
+        nodes.add(t[i])
 
     N = len(nodes)
     assert min(nodes) == 0 and max(nodes) == N - 1
@@ -129,34 +128,58 @@ def link_pred_dataset():
 
     return (neighbors_dicts, node_coloring, hr, t)
 
-def get_max_score_for_link_pred(neighbors_dicts, node_coloring, hr, t):
-    # TODO: Update
-    raise RuntimeError("This part not yet updated.")
-    print_flush("Getting ORBITS...")
-    base_orbits = orbits(graph, node_coloring)
-    print_flush("  ...obtained orbits.")
+def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
+    N = len(neighbors_dicts)
+
+    print_flush("Getting base ORBITS...")
+    session = RAMFriendlyNTSession(directed=True, \
+                                   has_edge_types=False, \
+                                   neighbors_collections=neighbors_collections, \
+                                   kill_py_graph=True, \
+                                   only_one_call=False)
+    session.set_colors_by_coloring(node_colors)
+    base_orbits = session.get_automorphism_orbits()
+    session.run()
+    session.end_session()
+    base_orbits = base_orbits.get()
+    print_flush("  ...obtained base orbits.")
+
+    if len(base_orbits) == N:
+        print_flush("All nodes are singletons! Perfect accuracy is possible!")
+        return
+
+    print_flush("  Converting base orbits to base coloring.")
+    base_colors = [0 for _ in range(0, N)]
+    for i in range(0, len(base_orbits)):
+        orbit = base_orbits[i]
+        for n in orbit:
+            base_colors[n] = i
 
     (num_predictions, _) = hr.shape
-    hr_classes = default_dict()
-    
+    hr_classes = {}
+
     print_flush("    Getting classes raw info")
     for i in range(0, num_predictions):
         h = hr[i,0]
         r = hr[i,1]
 
-        h_type = base_orbits[h]
+        h_type = base_colors[h]
         if (h_type, r) not in hr_classes:
             hr_classes[(h_type, r)] = []
         hr_classes[(h_type, r)].append((h, t))
 
     print_flush("Now to look at classes...")
 
+
     num_unique_tasks = 0
     multi_target_tasks = []
     messy_tasks = []
     for (h_type, r), tasks in hr_classes.items():
-        if len(tasks) == 1 and \
-                len(base_orbits.get_cell(base_orbits[tasks[0][1]])) == 1:
+        # TODO: Consider whether the `or` should be `and` or `or`.
+        # TODO: Update
+        raise RuntimeError("This part not yet updated.")
+        if len(tasks) == 1 or \
+                len(base_orbits[base_colors[tasks[0][1]]]) == 1:
             num_unique_tasks += 1
             continue
         elif len(tasks) == 1:
@@ -373,28 +396,34 @@ def get_max_score_for_node_classification(neighbors_collections, \
                                    only_one_call=True)
     session.set_colors_by_coloring(node_colors)
     del node_colors
-    new_colors = session.get_automorphism_orbits()
+    orbits = session.get_automorphism_orbits()
     session.run()
     session.end_session()
-    new_colors = new_colors.get()
+    orbits = orbits.get()
     print_flush("    ...Obtained Automorphism Orbits.")
 
-    if len(new_colors) == N:
+    if len(orbits) == N:
         print_flush("ALL NODES ARE SINGLETONS! MAX PERFORMANCE IS OPTIMAL!")
         return
 
-    # TODO: Finish
-    raise RuntimeError("Rest of code is not yet implemented.")
+    print_flush("  Converting Orbits Partition to Colors...")
+    node_colors = [0 for _ in range(0, N)]
+    for i in range(0, len(orbits)):
+        orbit = orbits[i]
+        for n in orbit:
+            node_colors[n] = i
 
     print_flush("  Computing Max Accuracy Validation Score...")
-    observed_cells = default_dict()
+    observed_cells = {}
     for node, label in validation_node_labels.items():
-        node_color = new_colors[node]
+        node_color = node_colors[node]
         if node_color in observed_cells:
             continue
 
-        cell = new_colors.get_cell(node_color)
-        labels_in_cell = default_dict()
+        # We can assume that all nodes within the cell of `node` are validation
+        #   nodes because they were colored differently originally.
+        cell = orbits[node_color]
+        labels_in_cell = {}
         for n in cell:
             label = validation_node_labels[n]
             if label not in labels_in_cell:
@@ -428,7 +457,6 @@ if __name__ == "__main__":
         (graph, node_colors, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
-        exit()
         get_max_score_for_link_pred(graph, node_colors, hr, t)
 
     elif task == "Node Classification":
