@@ -122,13 +122,9 @@ def link_pred_dataset():
 
     del edge_type_combo_set
 
-    print_flush("Making Base Coloring...")
-    node_coloring = [0 for _ in nodes]
-    print_flush("    ...Made Base Coloring")
+    return (neighbors_dicts, hr, t)
 
-    return (neighbors_dicts, node_coloring, hr, t)
-
-def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
+def get_max_score_for_link_pred(neighbors_dicts, hr, t):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
@@ -137,7 +133,6 @@ def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
                                    only_one_call=False)
-    session.set_colors_by_coloring(node_colors)
     base_orbits = session.get_automorphism_orbits()
     session.run()
     session.end_session()
@@ -451,13 +446,13 @@ if __name__ == "__main__":
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
 
-    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
+    task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
-        (graph, node_colors, hr, t) = link_pred_dataset()
+        (graph, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
-        get_max_score_for_link_pred(graph, node_colors, hr, t)
+        get_max_score_for_link_pred(graph, hr, t)
 
     elif task == "Node Classification":
         print_flush("Loading MAG Graph (Node Classification Graph)...")
