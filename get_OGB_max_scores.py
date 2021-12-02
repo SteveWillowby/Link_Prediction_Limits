@@ -98,7 +98,7 @@ def link_pred_dataset():
 
     print_flush("Flattening edge types...")
 
-    edge_type_combo_set = {}
+    edge_type_combo_set = set()
     for n in range(0, N):
         nd = neighbors_dicts[n]
         neighbors = [n2 for n2, _ in nd.items()]
