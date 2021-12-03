@@ -122,13 +122,9 @@ def link_pred_dataset():
 
     del edge_type_combo_set
 
-    print_flush("Making Base Coloring...")
-    node_coloring = [0 for _ in nodes]
-    print_flush("    ...Made Base Coloring")
+    return (neighbors_dicts, hr, t)
 
-    return (neighbors_dicts, node_coloring, hr, t)
-
-def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
+def get_max_score_for_link_pred(neighbors_dicts, hr, t):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
@@ -137,10 +133,8 @@ def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
                                    only_one_call=False)
-    session.set_colors_by_coloring(node_colors)
     base_orbits = session.get_automorphism_orbits()
     session.run()
-    session.end_session()
     base_orbits = base_orbits.get()
     print_flush("  ...obtained base orbits.")
 
@@ -175,41 +169,70 @@ def get_max_score_for_link_pred(neighbors_dicts, node_colors, hr, t):
     multi_target_tasks = []
     messy_tasks = []
     for (h_type, r), tasks in hr_classes.items():
-        # TODO: Consider whether the `or` should be `and` or `or`.
-        # TODO: Update
-        raise RuntimeError("This part not yet updated.")
-        if len(tasks) == 1 or \
+        if len(tasks) == 1 and \
                 len(base_orbits[base_colors[tasks[0][1]]]) == 1:
             num_unique_tasks += 1
             continue
         elif len(tasks) == 1:
             (h, t) = tasks[0]
-            l = len(base_orbits.get_cell(base_orbits[h]))
+            l = len(base_orbits[base_colors[h]])
             if l == 1:
-                multi_target_tasks.append(len(base_orbits.get_cell(base_orbits[t])))
+                multi_target_tasks.append(len(base_orbits[base_colors[t]]))
                 continue
             print_flush("Running a sub-iso call.")
-            sub_orbits = list(base_orbits)
-            sub_orbits.make_singleton(h)
-            sub_orbits = orbits(graph, sub_orbits)
-            multi_target_tasks.append(len(sub_orbits.get_cell(sub_orbits[t])))
+
+            # Make h a singleton.
+            base_orbits[base_colors[h]].remove(h)
+            base_orbits.append([h])
+            # Get sub-orbits.
+            session.set_colors_by_partitions(base_orbits)
+            sub_orbits = session.get_automorphism_orbits()
+            session.run()
+            sub_orbits = sub_orbits.get()
+            # Restore base_orbits.
+            sub_orbits.pop()
+            sub_orbits[base_colors[h]].append(h)
+            # Analyze sub-orbits.
+            for o in sub_orbits:
+                if t in o:
+                    multi_target_tasks.append(len(o))
+                    break
             print_flush("   ...finished the sub-iso call.")
         else:
-            messy_tasks.append((h_type, r), tasks)
+            messy_tasks.append(((h_type, r), tasks))
     del hr_classes
 
     if len(messy_tasks) == 0 and len(multi_target_tasks) == 0:
         print_flush("The Max Possible MRR is a Perfect 1 on the Validation Task.")
         return
 
-    print_flush("Code is not yet ready to handle the rest of the situation.")
+    num_tasks = 0
+    sum_of_best_expected_RR = 0.0
 
-    if len(messy_tasks) == 0:
-        sum_of_expected_RR = 0.0
-        for v in multi_target_tasks:
-            if v > 10:
-                pass
-            sum_of_expected_RR += 2.0 / v
+    # A completely unique task (unique h-r-type and unique t-type) can
+    #   hypothetically be dealt with ideal expected performance.
+    num_tasks = num_unique_tasks
+    sum_of_best_expected_RR += num_unique_tasks
+
+    # In this context a "multi-target-task" means there is only one requested
+    #   prediction, but it has multiple target options. 
+    l_to_expected_RR = [None] + \
+        [sum([1.0 / v for v in range(1, d+1)]) / float(d) for d in range(1, 11)]
+
+    num_tasks += len(multi_target_tasks)
+    for l in multi_target_tasks:
+        if l <= 10:
+            sum_of_best_expected_RR += l_to_expected_RR[l]
+        else:
+            sum_of_best_expected_RR += (10.0 / float(l)) * l_to_expected_RR[10]
+
+    print_flush("MRR on unique_tasks and unique-multi-target-tasks only: %f" % \
+                    (sum_of_best_expected_RR / float(num_tasks)))
+
+    # With the remaining, "messy tasks", the predictor is given multiple
+    #   distinct tasks of various sizes.
+
+    print_flush("Code is not yet ready to handle the rest of the situation.")
 
 def node_classifier_dataset():
     dataset = MAG240MDataset(root=node_classification_root)
@@ -454,10 +477,10 @@ if __name__ == "__main__":
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
-        (graph, node_colors, hr, t) = link_pred_dataset()
+        (graph, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
-        get_max_score_for_link_pred(graph, node_colors, hr, t)
+        get_max_score_for_link_pred(graph, hr, t)
 
     elif task == "Node Classification":
         print_flush("Loading MAG Graph (Node Classification Graph)...")
