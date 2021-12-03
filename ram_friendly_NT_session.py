@@ -7,6 +7,8 @@ import time
 # This file contains the class RAMFriendlyNTSession
 #
 # NOTE: Requires that the nodes are numbered 0 through |V| - 1.
+# NOTE: Requires that nodes are of type int, and no other type, not even
+#   int-like types.
 #
 # The init function for MemEfficientNTSession takes the following arguments:
 #   `directed` -- True or False
@@ -167,7 +169,9 @@ class RAMFriendlyNTSession:
                 neighbors = self.__neighbors_collections__[n]
                 if len(neighbors) > 0:
                     for n2 in neighbors:
-                        assert type(n2) is int
+                        if type(n2) is not int:
+                            raise ValueError("Error! Neighbors must be of " + \
+                                             "type int, not %s." % type(n2))
                         break
                     break
 
