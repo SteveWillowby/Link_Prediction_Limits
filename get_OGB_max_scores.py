@@ -98,7 +98,7 @@ def link_pred_dataset():
 
     print_flush("Flattening edge types...")
 
-    edge_type_combo_set = {}
+    edge_type_combo_set = set()
     for n in range(0, N):
         nd = neighbors_dicts[n]
         neighbors = [n2 for n2, _ in nd.items()]
@@ -261,7 +261,7 @@ def node_classifier_dataset():
 
     PAPER_TYPE_BASE = 3  # 2 is preserved for validation nodes
 
-    validation_node_labels = default_dict()
+    validation_node_labels = {}
 
     print_flush("  Loading paper labels and years...")
 
@@ -302,7 +302,7 @@ def node_classifier_dataset():
     del paper_labels
 
     next_label = int(PAPER_TYPE_BASE)
-    relabel_map = default_dict()
+    relabel_map = {}
     for i in range(0, PAPER_TYPE_BASE):
         relabel_map[i] = i
 
