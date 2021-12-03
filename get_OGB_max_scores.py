@@ -79,21 +79,16 @@ def link_pred_dataset():
     print_flush("Loading edges...")
     neighbors_dicts = [{} for _ in range(0, N)]
     for i in range(0, num_triples):
-        (a, b) = (train_hrt[i,0], train_hrt[i,2])
+        (a, b) = (int(train_hrt[i,0]), int(train_hrt[i,2]))
         if b not in neighbors_dicts[a]:
             neighbors_dicts[a][b] = []
-        neighbors_dicts[a][b].append(train_hrt[i,1])
+        neighbors_dicts[a][b].append(int(train_hrt[i,1]))
 
     del train_hrt
 
     print_flush("Edges Loaded. Recasting Container Types.")
     for n in range(0, N):
-        elements = [(a, b) for (a, b) in neighbors_dicts[n].items()]
-        elements.sort()
-        new_dict = ListDict()
-        for (a, b) in elements:
-            new_dict[a] = b
-        neighbors_dicts[n] = new_dict
+        neighbors_dicts[n] = ListDict(neighbors_dicts[n])
     print_flush("Container Types Recasted.")
 
     print_flush("Flattening edge types...")
@@ -130,7 +125,7 @@ def get_max_score_for_link_pred(neighbors_dicts, hr, t):
     print_flush("Getting base ORBITS...")
     session = RAMFriendlyNTSession(directed=True, \
                                    has_edge_types=False, \
-                                   neighbors_collections=neighbors_collections, \
+                                   neighbors_collections=neighbors_dicts, \
                                    kill_py_graph=True, \
                                    only_one_call=False)
     base_orbits = session.get_automorphism_orbits()
@@ -346,8 +341,8 @@ def node_classifier_dataset():
             if percent % 10 == 0:
                 print_flush("    ... %d percent done" % percent) 
 
-        author = edge_index_writes[0,i] + author_node_offset
-        paper = edge_index_writes[1,i]
+        author = int(edge_index_writes[0,i] + author_node_offset)
+        paper = int(edge_index_writes[1,i])
         if not paper_observed[paper]:
             paper_observed[paper] = True
 
@@ -365,8 +360,8 @@ def node_classifier_dataset():
             if percent % 10 == 0:
                 print_flush("    ... %d percent done" % percent) 
 
-        paper_A = edge_index_cites[0,i]
-        paper_B = edge_index_cites[1,i]
+        paper_A = int(edge_index_cites[0,i])
+        paper_B = int(edge_index_cites[1,i])
 
         for paper in [paper_A, paper_B]:
             if not paper_observed[paper]:
@@ -393,8 +388,9 @@ def node_classifier_dataset():
             if percent % 10 == 0:
                 print_flush("    ... %d percent done" % percent) 
 
-        author = edge_index_affiliated_with[0,i] + author_node_offset
-        institution = edge_index_affiliated_with[1,i] + institution_node_offset
+        author = int(edge_index_affiliated_with[0,i] + author_node_offset)
+        institution = \
+            int(edge_index_affiliated_with[1,i] + institution_node_offset)
 
         neighbors_collections[author].append(institution)
 
@@ -474,7 +470,7 @@ if __name__ == "__main__":
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
 
-    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
+    task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
         (graph, hr, t) = link_pred_dataset()
