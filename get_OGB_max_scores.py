@@ -1,8 +1,8 @@
 from list_containers import ListSet, ListDict
 import numpy as np
-from ogb.lsc import MAG240MDataset
-from ogb.lsc import WikiKG90Mv2Dataset
-from ogb.lsc import PCQM4Mv2Dataset
+# from ogb.lsc import MAG240MDataset
+# from ogb.lsc import WikiKG90Mv2Dataset
+# from ogb.lsc import PCQM4Mv2Dataset
 import os
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
@@ -119,7 +119,7 @@ def link_pred_dataset():
 
     return (neighbors_dicts, hr, t)
 
-def get_max_score_for_link_pred(neighbors_dicts, hr, t):
+def get_max_score_for_link_pred(neighbors_dicts, HR, T):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
@@ -144,13 +144,14 @@ def get_max_score_for_link_pred(neighbors_dicts, hr, t):
         for n in orbit:
             base_colors[n] = i
 
-    (num_predictions, _) = hr.shape
+    (num_predictions, _) = HR.shape
     hr_classes = {}
 
     print_flush("    Getting classes raw info")
     for i in range(0, num_predictions):
-        h = hr[i,0]
-        r = hr[i,1]
+        h = int(HR[i,0])
+        r = int(HR[i,1])
+        t = int(T[i])
 
         h_type = base_colors[h]
         if (h_type, r) not in hr_classes:
@@ -225,9 +226,89 @@ def get_max_score_for_link_pred(neighbors_dicts, hr, t):
                     (sum_of_best_expected_RR / float(num_tasks)))
 
     # With the remaining, "messy tasks", the predictor is given multiple
-    #   distinct tasks of various sizes.
+    #   distinct tasks of various sizes. That is to say, there are multiple
+    #   nodes with the same orbit as t AND there are multiple different t's.
 
-    print_flush("Code is not yet ready to handle the rest of the situation.")
+    l_to_expected_RR = [None] + [\
+        [None] + [sum([(1.0 / v) for v in range(e, e + r)]) / float(r) \
+                    for r in range(1, 12 - e)] \
+                        for e in range(1, 11)]
+
+    for (h_type, r), tasks in messy_tasks:
+        h_color = h_type
+        h_orbit = base_orbits[h_color]
+
+        # Contains the number of isomorphically equivalent candidates.
+        task_sizes = {}
+        # Contains the number of times a task is asked.
+        task_occurrences = {}
+        A = 0
+        B = 1
+        C = 2
+        for (h, t) in tasks:
+            t_color = base_colors[t]
+            t_orbit = base_orbits[t_color]
+            if len(h_orbit) == 1:
+                task_type = (t_color, A)
+                task_size = len(t_orbit)
+            elif len(t_orbit) == 1:
+                task_type = (t_color, B)
+                task_size = 1
+            else:
+                # Find out what relation t has to h.
+
+                # Make h a singleton.
+                base_orbits[base_colors[h]].remove(h)
+                base_orbits.append([h])
+                # Get sub-orbits.
+                session.set_colors_by_partitions(base_orbits)
+                sub_orbits = session.get_automorphism_orbits()
+                sub_order = session.get_canonical_order()
+                session.run()
+                sub_orbits = sub_orbits.get()
+                sub_order = sub_order.get()
+                # Restore base_orbits.
+                sub_orbits.pop()
+                sub_orbits[base_colors[h]].append(h)
+                # Analyze results.
+                # Find the "canonical" color.
+                for orbit in sub_orbits:
+                    if t not in orbit:
+                        continue
+                    task_size = len(orbit)
+                    for i in range(0, len(sub_order)):
+                        if sub_order[i] in orbit:
+                            task_type = (i, C)
+                            break
+                    break
+
+            if task_type not in task_occurrences:
+                task_sizes[task_type] = task_size
+                task_occurrences[task_type] = 0
+            task_occurences[task_type] += 1
+        tasks_info = [(size, task_occurrences[t_type]) \
+                            for size, t_type in task_sizes.items()]
+        tasks_info = [(num_occ / size, size, num_occ) \
+                            for (size, num_occ) in tasks_info]
+        # Sort by expectation that a task can give points.
+        tasks_info.sort(reverse=True)
+        already_selected = 0
+        expected_RR = 0.0
+        for (_, size, num_occ) in tasks_info:
+            if size + already_selected <= 10:
+                expected_RR += l_to_expected_RR[already_selected][size]
+            else:
+                expected_RR += ((10.0 - already_selected) / float(size)) * \
+                    l_to_expected_RR[already_selected][10 - already_selected]
+
+            already_selected += size
+            if already_selected >= 10:
+                break
+
+        sum_of_best_expected_RR += expected_RR
+
+    print_flush("Overall MRR: %f" % \
+                    (sum_of_best_expected_RR / float(num_tasks)))
 
 def node_classifier_dataset():
     dataset = MAG240MDataset(root=node_classification_root)
@@ -466,6 +547,20 @@ def print_flush(s):
     sys.stdout.flush()
 
 if __name__ == "__main__":
+    """
+    l_to_expected_RR = [None] + \
+        [sum([1.0 / v for v in range(1, d+1)]) / float(d) for d in range(1, 11)]
+    print("1d")
+    print(l_to_expected_RR)
+    l_to_expected_RR = [None] + [\
+        [None] + [sum([(1.0 / v) for v in range(e, e + r)]) / float(r) \
+                    for r in range(1, 12 - e)] \
+                        for e in range(1, 11)]
+    print("2d")
+    for arr in l_to_expected_RR:
+        print(arr)
+    """
+
     # set_default_set_type(ListSet)
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
