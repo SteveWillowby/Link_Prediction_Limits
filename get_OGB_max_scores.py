@@ -127,7 +127,8 @@ def get_max_score_for_link_pred(neighbors_dicts, HR, T):
                                    has_edge_types=False, \
                                    neighbors_collections=neighbors_dicts, \
                                    kill_py_graph=True, \
-                                   only_one_call=False)
+                                   only_one_call=False, \
+                                   tmp_base_path="/nfs/tmp")
     base_orbits = session.get_automorphism_orbits()
     session.run()
     base_orbits = base_orbits.get()
@@ -493,7 +494,8 @@ def get_max_score_for_node_classification(neighbors_collections, \
                                    has_edge_types=False, \
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
-                                   only_one_call=True)
+                                   only_one_call=False, \
+                                   tmp_base_path="/nfs/tmp")
     session.set_colors_by_coloring(node_colors)
     del node_colors
     orbits = session.get_automorphism_orbits()

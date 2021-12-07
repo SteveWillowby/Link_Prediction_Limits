@@ -46,7 +46,7 @@ import time
 #   `sparse` -- True or False, only relevant if mode = "Nauty"
 #
 #   `tmp_path_base` -- part of a path for temporary files
-#       default is "/tmp/<pid>_dreadnaut"
+#       default is "/tmp"
 #
 #   `dreadnaut_call` -- path to (and including) the dreadnaut binary
 #       default is "Nauty_n_Traces/nauty26r12/dreadnaut"
@@ -117,8 +117,8 @@ class RAMFriendlyNTSession:
                     mode="Traces", sparse=True, \
                     kill_py_graph=False, \
                     only_one_call=False, \
-                    tmp_path_base="/tmp/%d_dreadnaut" % os.getpid(), \
                     dreadnaut_call="Nauty_n_Traces/nauty26r12/dreadnaut", \
+                    tmp_path_base="/tmp", \
                     flush_threshold=None):
 
         if mode != "Traces" and mode != "Nauty":
@@ -126,6 +126,10 @@ class RAMFriendlyNTSession:
         if mode == "Traces" and not sparse:
             raise ValueError("Error! Cannot run with mode 'Traces' on a " + \
                              "dense graph. Set `sparse` to True.")
+
+        if "/" != tmp_path_base[-1]:
+            tmp_path_base = tmp_path_base + "/"
+        tmp_path_base = tmp_path_base + ("dreadnaut_%d" % os.getpid())
 
         self.__n__ = len(neighbors_collections)
 
@@ -319,7 +323,8 @@ class RAMFriendlyNTSession:
         if not self.__only_one_call__:
             os.remove(self.__intro_filename__)
         os.remove(self.__input_filename__)
-        os.remove(self.__output_filename__)
+        if os.path.exists(self.__output_filename__):
+            os.remove(self.__output_filename__)
 
 
     ########################## Result Functions ##########################
@@ -586,12 +591,15 @@ class RAMFriendlyNTSession:
                 current_result_value.__set_result__(orbits)
 
             else:
+                self.__output_file__.close()
+                os.remove(self.__output_filename__)
                 raise ValueError("Error! Unknown result type %d." % \
                         current_result_type)
 
             current_result += 1
 
         self.__output_file__.close()
+        os.remove(self.__output_filename__)
 
     def __has_edge__(self, a, b, t=None):
         if t is None:
