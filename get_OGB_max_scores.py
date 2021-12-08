@@ -128,7 +128,7 @@ def get_max_score_for_link_pred(neighbors_dicts, HR, T):
                                    neighbors_collections=neighbors_dicts, \
                                    kill_py_graph=True, \
                                    only_one_call=False, \
-                                   tmp_base_path="/nfs/jhibshma/tmp")
+                                   tmp_path_base="/nfs/jhibshma/tmp")
     base_orbits = session.get_automorphism_orbits()
     session.run()
     base_orbits = base_orbits.get()
@@ -495,7 +495,7 @@ def get_max_score_for_node_classification(neighbors_collections, \
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
                                    only_one_call=False, \
-                                   tmp_base_path="/nfs/jhibshma/tmp")
+                                   tmp_path_base="/nfs/jhibshma/tmp")
     print_flush("     (loaded graph)")
     session.set_colors_by_coloring(node_colors)
     print_flush("     (set node colors)")
@@ -569,7 +569,7 @@ if __name__ == "__main__":
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
 
-    task = "Node Classification"  # "Link Pred", "Node Classification", and "Graph Classification"
+    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
         (graph, hr, t) = link_pred_dataset()
