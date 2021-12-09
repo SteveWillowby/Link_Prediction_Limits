@@ -78,8 +78,15 @@ def link_pred_dataset():
 
     print_flush("Loading edges...")
     neighbors_dicts = [{} for _ in range(0, N)]
+    has_self_loop = [0 for _ in range(0, N)]
     for i in range(0, num_triples):
         (a, b) = (int(train_hrt[i,0]), int(train_hrt[i,2]))
+        if a == b:
+            if has_self_loop[a] == 1:
+                print("Found _multiple_ self-loops for node %d" % a)
+            has_self_loop[a] = 1
+            continue
+
         if b not in neighbors_dicts[a]:
             neighbors_dicts[a][b] = []
         neighbors_dicts[a][b].append(int(train_hrt[i,1]))
@@ -117,9 +124,17 @@ def link_pred_dataset():
 
     del edge_type_combo_set
 
-    return (neighbors_dicts, hr, t)
+    print_flush("  Converting `has_self_loop` to partitions...")
+    sl = has_self_loop
+    has_self_loop = [[], []]
+    for i in range(0, N):
+        has_self_loop[sl[i]].append(i)
+    del sl
+    print_flush("    ...converted.")
 
-def get_max_score_for_link_pred(neighbors_dicts, HR, T):
+    return (neighbors_dicts, has_self_loop, hr, t)
+
+def get_max_score_for_link_pred(neighbors_dicts, has_self_loop, HR, T):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
@@ -129,6 +144,7 @@ def get_max_score_for_link_pred(neighbors_dicts, HR, T):
                                    kill_py_graph=True, \
                                    only_one_call=False, \
                                    tmp_path_base="/nfs/jhibshma/tmp")
+    session.set_colors_by_partitions(has_self_loop)
     base_orbits = session.get_automorphism_orbits()
     session.run()
     base_orbits = base_orbits.get()
@@ -572,10 +588,10 @@ if __name__ == "__main__":
     task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
     if task == "Link Pred":
         # set_default_dict_type(ListDict)
-        (graph, hr, t) = link_pred_dataset()
+        (graph, has_self_loop, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
-        get_max_score_for_link_pred(graph, hr, t)
+        get_max_score_for_link_pred(graph, has_self_loop, hr, t)
 
     elif task == "Node Classification":
         print_flush("Loading MAG Graph (Node Classification Graph)...")
