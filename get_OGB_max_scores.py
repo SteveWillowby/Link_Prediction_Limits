@@ -511,7 +511,8 @@ def get_max_score_for_node_classification(neighbors_collections, \
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
                                    only_one_call=False, \
-                                   tmp_path_base="/nfs/jhibshma/tmp")
+                                   tmp_path_base="/nfs/jhibshma/tmp", \
+                                   announce_launch=True)
     print_flush("     (loaded graph)")
     session.set_colors_by_coloring(node_colors)
     print_flush("     (set node colors)")

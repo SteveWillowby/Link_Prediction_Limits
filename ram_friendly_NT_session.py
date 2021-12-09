@@ -119,7 +119,8 @@ class RAMFriendlyNTSession:
                     only_one_call=False, \
                     dreadnaut_call="Nauty_n_Traces/nauty26r12/dreadnaut", \
                     tmp_path_base="/tmp", \
-                    flush_threshold=None):
+                    flush_threshold=None, \
+                    announce_launch=False):
 
         if mode != "Traces" and mode != "Nauty":
             raise ValueError("Error! `mode` must be 'Traces' or 'Nauty'.")
@@ -154,6 +155,7 @@ class RAMFriendlyNTSession:
         self.__chars_flushed__ = 0
         self.__scrap_chars_flushed__ = 0
         self.__FLUSH_THRESHOLD__ = flush_threshold
+        self.__announce_launch__ = announce_launch
 
         # Augment to add direction to edges.
         self.__dir_augment__ = self.__mode__ == "Traces" and self.__directed__
@@ -306,12 +308,16 @@ class RAMFriendlyNTSession:
         self.__finish_result_collection__()
 
         # call dreadnaut
+        if self.__announce_launch__:
+            print("Nauty/Traces input has been written. Calling dreadnaut...")
         start_t = time.time()
         # os.system("cat %s" % self.__input_filename__)
         os.system(self.__dreadnaut_call__ + " < " + self.__input_filename__ + \
                   " > " + self.__output_filename__)
         # os.system("cat %s" % self.__output_filename__)
         total_t = time.time() - start_t
+        if self.__announce_launch__:
+            print("    ...dreadnaut finished. Now to parse the results.")
 
         self.__populate_results__(total_t)
 
