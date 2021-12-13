@@ -1,8 +1,8 @@
 from list_containers import ListSet, ListDict
 import numpy as np
-# from ogb.lsc import MAG240MDataset
-# from ogb.lsc import WikiKG90Mv2Dataset
-# from ogb.lsc import PCQM4Mv2Dataset
+from ogb.lsc import MAG240MDataset
+from ogb.lsc import WikiKG90Mv2Dataset
+from ogb.lsc import PCQM4Mv2Dataset
 import os
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
