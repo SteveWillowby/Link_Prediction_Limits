@@ -1,8 +1,8 @@
 from list_containers import ListSet, ListDict
 import numpy as np
-from ogb.lsc import MAG240MDataset
-from ogb.lsc import WikiKG90Mv2Dataset
-from ogb.lsc import PCQM4Mv2Dataset
+# from ogb.lsc import MAG240MDataset
+# from ogb.lsc import WikiKG90Mv2Dataset
+# from ogb.lsc import PCQM4Mv2Dataset
 import os
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
@@ -568,6 +568,28 @@ def print_flush(s):
     sys.stdout.flush()
 
 if __name__ == "__main__":
+    args = sys.argv
+    if len(args) <= 1:
+        print("Must pass an argument to say which task to run.")
+        print("For Node Classification:  NC")
+        print("For Link Prediction:      LP")
+        print("For Graph Classification: GC")
+        exit(1)
+    elif len(args) > 2:
+        print("Code takes only ONE argument to say which task to run -- was given " +\
+                str(args[1:]))
+        print("For Node Classification:  NC")
+        print("For Link Prediction:      LP")
+        print("For Graph Classification: GC")
+        exit(1)
+    arg = args[1]
+    if arg not in ["NC", "LP", "GC"]:
+        print("Incorrect argument value '%s'." % arg)
+        print("For Node Classification:  NC")
+        print("For Link Prediction:      LP")
+        print("For Graph Classification: GC")
+        exit(1)
+
     """
     l_to_expected_RR = [None] + \
         [sum([1.0 / v for v in range(1, d+1)]) / float(d) for d in range(1, 11)]
@@ -586,21 +608,20 @@ if __name__ == "__main__":
     # set_default_dict_type(Dict)
     # set_default_sample_set_type(SampleListSet)
 
-    task = "Link Pred"  # "Link Pred", "Node Classification", and "Graph Classification"
-    if task == "Link Pred":
+    if arg == "LP":
         # set_default_dict_type(ListDict)
         (graph, has_self_loop, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
         get_max_score_for_link_pred(graph, has_self_loop, hr, t)
 
-    elif task == "Node Classification":
+    elif arg == "NC":
         print_flush("Loading MAG Graph (Node Classification Graph)...")
         (graph, node_colors, validation_node_labels) = node_classifier_dataset()
         print_flush("...Graph Loaded")
         print_flush("Getting Max Possible Validation Score...")
         get_max_score_for_node_classification(graph, node_colors, validation_node_labels)
-    elif task == "Graph Classification":
+    elif arg == "GC":
         pass
     else:
-        raise ValueError("Error! Unknown task '%s'" % task)
+        raise ValueError("Error! Unknown task '%s'" % arg)
