@@ -1,0 +1,50 @@
+Loading MAG Graph (Node Classification Graph)...
+  Dataset Info:
+  121751666
+  122383112
+  25721
+  768
+  153
+  Loaded base data matrices.
+  Setting blank node colors...
+  Loading paper labels and years...
+Year  min/max: 1901/2021
+Label min/max: -1/152
+    2851 total labels.
+    121751666 total papers.
+    138949 validation papers.
+  Getting author-paper edges...
+    ... 10 percent done
+    ... 20 percent done
+    ... 30 percent done
+    ... 40 percent done
+    ... 50 percent done
+    ... 60 percent done
+    ... 70 percent done
+    ... 80 percent done
+    ... 90 percent done
+  Getting paper-paper edges...
+    ... 10 percent done
+    ... 20 percent done
+    ... 30 percent done
+    ... 40 percent done
+    ... 50 percent done
+    ... 60 percent done
+    ... 70 percent done
+    ... 80 percent done
+    ... 90 percent done
+  There are a total of 138949 validation nodes.
+  Getting author-institution edges...
+    ... 10 percent done
+    ... 20 percent done
+    ... 30 percent done
+    ... 40 percent done
+    ... 50 percent done
+    ... 60 percent done
+    ... 70 percent done
+    ... 80 percent done
+    ... 90 percent done
+  ... Recasting neighbors lists to ListSets ...
+...Graph Loaded
+Getting Max Possible Validation Score...
+  Getting Automorphism Orbits...
