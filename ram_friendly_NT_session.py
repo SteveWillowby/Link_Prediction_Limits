@@ -1,4 +1,5 @@
 import os
+import sys  # TODO: Remove -- just for debugging
 import time
 
 # TODO: Add security checks to ensure that the given filepath really is a
@@ -302,14 +303,31 @@ class RAMFriendlyNTSession:
         return self.__get_result__(RAMFriendlyNTSession.NUM_AUTOMORPHISMS)
 
     def run(self):
+        if self.__announce_launch__:
+            print("Calling run.")
+            sys.stdout.flush()
+
         if not self.__coloring_set__:
             self.blank_coloring()
 
+            if self.__announce_launch__:
+                print("Set a blank coloring.")
+                sys.stdout.flush()
+
+        if self.__announce_launch__:
+            print("Beginning __finish_result_collection__()")
+            sys.stdout.flush()
+
         self.__finish_result_collection__()
+
+        if self.__announce_launch__:
+            print("Finished __finish_result_collection__()")
+            sys.stdout.flush()
 
         # call dreadnaut
         if self.__announce_launch__:
             print("Nauty/Traces input has been written. Calling dreadnaut...")
+            sys.stdout.flush()
         start_t = time.time()
         # os.system("cat %s" % self.__input_filename__)
         os.system(self.__dreadnaut_call__ + " < " + self.__input_filename__ + \
@@ -318,6 +336,7 @@ class RAMFriendlyNTSession:
         total_t = time.time() - start_t
         if self.__announce_launch__:
             print("    ...dreadnaut finished. Now to parse the results.")
+            sys.stdout.flush()
 
         self.__populate_results__(total_t)
 
@@ -626,6 +645,9 @@ class RAMFriendlyNTSession:
         return (b, t) in self.__neighbors_collections__[a]
 
     def __write_graph__(self):
+        if self.__announce_launch__:
+            print("Beginning __write_graph__()")
+            sys.stdout.flush()
         # Add graph to session
         #
         # Example input for an undirected triangle with a dangler from node 1:
@@ -797,6 +819,10 @@ class RAMFriendlyNTSession:
         self.__write__("n %d\n" % (self.__n__ + self.__extra_n__))
         self.__write__("g ")
 
+        if self.__announce_launch__:
+            print("Calculated the total n to be %d + %d." % (self.__n__, self.__extra_n__))
+            sys.stdout.flush()
+
         # Now do the same checks all over again but this time write the graph.
         next_node = self.__n__
         if self.__dir_augment__ and self.__et_augment__:
@@ -923,6 +949,10 @@ class RAMFriendlyNTSession:
             # A simple del is not enough due to external references.
             del self.__neighbors_collections__
 
+        if self.__announce_launch__:
+            print("Finished __write_graph__()")
+            sys.stdout.flush()
+
 class __RAMFriendlyNautyTracesResult__:
     def __init__(self):
         self.__result__ = None
@@ -992,7 +1022,8 @@ if __name__ == "__main__":
                                        mode="Traces", \
                                        only_one_call=False, \
                                        kill_py_graph=False, \
-                                       sparse=True)
+                                       sparse=True, \
+                                       announce_launch=True)
 
         rt_3 = session.get_runtime()
         # session.set_colors_by_partitions([[1], [2, 0, 3]])
