@@ -249,6 +249,9 @@ class RAMFriendlyNTSession:
     #
     # Thus coloring can be a list or a dict, or some other such class.
     def set_colors_by_coloring(self, coloring):
+        if self.__announce_launch__:
+            print("Setting a coloring via colors.")
+            sys.stdout.flush()
         self.__doing_coloring__()
 
         if len(coloring) != self.__n__:
@@ -274,6 +277,10 @@ class RAMFriendlyNTSession:
 
         self.__write_partition_for_lists_of_nodes__(partitions)
 
+        if self.__announce_launch__:
+            print("Coloring set.")
+            sys.stdout.flush()
+
     # O(1)
     def blank_coloring(self):
         self.set_colors_by_partitions([[i for i in range(0, self.__n__)]])
@@ -281,8 +288,16 @@ class RAMFriendlyNTSession:
     # Will override coloring. Requires a list of lists.
     # O(input)
     def set_colors_by_partitions(self, lists_of_nodes):
+        if self.__announce_launch__:
+            print("Setting a coloring via partitions.")
+            sys.stdout.flush()
+
         self.__doing_coloring__()
         self.__write_partition_for_lists_of_nodes__(lists_of_nodes)
+
+        if self.__announce_launch__:
+            print("Coloring set.")
+            sys.stdout.flush()
 
     def get_automorphism_orbits(self):
         return self.__get_result__(RAMFriendlyNTSession.AUTOMORPHISM_ORBITS)
@@ -308,10 +323,13 @@ class RAMFriendlyNTSession:
             sys.stdout.flush()
 
         if not self.__coloring_set__:
+            if self.__announce_launch__:
+                print("Setting a blank coloring...")
+                sys.stdout.flush()
             self.blank_coloring()
 
             if self.__announce_launch__:
-                print("Set a blank coloring.")
+                print("...Set a blank coloring.")
                 sys.stdout.flush()
 
         if self.__announce_launch__:
