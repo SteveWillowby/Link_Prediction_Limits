@@ -1040,7 +1040,14 @@ class RAMFriendlyNTSession:
                         continue
                     self.__write__("%d " % neighbor)
 
+        if self.__announce_launch__:
+            print("    Wrote edges.")
+            sys.stdout.flush()
+
         if self.__et_augment__ or self.__dir_augment__:
+            if self.__announce_launch__:
+                print("    Copying augment nodes and edges.")
+                sys.stdout.flush()
             # If we used the augment file, now append it to the main file.
             self.__augment_file__.close()
             self.__augment_file__ = open(self.__augment_filename__, "r")
@@ -1052,6 +1059,10 @@ class RAMFriendlyNTSession:
             os.remove(self.__augment_filename__)
 
         self.__write__(";\n")
+
+        if self.__announce_launch__:
+            print("    Killing py graph.")
+            sys.stdout.flush()
 
         if self.__kill_py_graph__:
             for _ in range(0, self.__n__):
