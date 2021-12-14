@@ -154,7 +154,7 @@ class RAMFriendlyNTSession:
         self.__only_one_call__ = only_one_call
         self.__sub_session_num__ = 0
         self.__chars_flushed__ = 0
-        self.__scrap_chars_flushed__ = 0
+        self.__augment_chars_flushed__ = 0
         self.__FLUSH_THRESHOLD__ = flush_threshold
         self.__announce_launch__ = announce_launch
 
@@ -191,14 +191,19 @@ class RAMFriendlyNTSession:
 
         if not self.__only_one_call__:
             self.__intro_filename__ = tmp_path_base + "_intro.txt"
+        if self.__et_augment__ or self.__dir_augment__:
+            self.__augment_filename__ = tmp_path_base + "_augment_nodes.txt"
+
         self.__input_filename__ = tmp_path_base + "_input.txt"
         self.__output_filename__ = tmp_path_base + "_output.txt"
-        self.__scrap_filename__ = tmp_path_base + "_scrap.txt"
 
         if not self.__only_one_call__:
             self.__input_file__ = open(self.__intro_filename__, "w")
         else:
             self.__input_file__ = open(self.__input_filename__, "w")
+
+        if self.__et_augment__ or self.__dir_augment__:
+            self.__augment_file__ = open(self.__augment_filename__, "w")
 
         if mode == "Traces":
             self.__write__("At\n")
@@ -446,15 +451,15 @@ class RAMFriendlyNTSession:
             self.__input_file__.flush()
             self.__chars_flushed__ = curr_size
 
-    def __scrap_write__(self, s):
-        self.__scrap_file__.write(s)
+    def __augment_write__(self, s):
+        self.__augment_file__.write(s)
         if self.__FLUSH_THRESHOLD__ is None:
             return
 
-        curr_size = self.__scrap_file__.tell()
-        if curr_size >= self.__scrap_chars_flushed__ + self.__FLUSH_THRESHOLD__:
-            self.__scrap_file__.flush()
-            self.__scrap_chars_flushed__ = curr_size
+        curr_size = self.__augment_file__.tell()
+        if curr_size >= self.__augment_chars_flushed__ + self.__FLUSH_THRESHOLD__:
+            self.__augment_file__.flush()
+            self.__augment_chars_flushed__ = curr_size
 
     def __doing_coloring__(self):
         if self.__session_ended__:
@@ -475,22 +480,61 @@ class RAMFriendlyNTSession:
 
         self.__write__("f=[")
         for i in range(0, len(lists)):
+
+            # If unsorted, sort to enable the use of colons.
+            for j in range(1, len(lists[i])):
+                if lists[i][j] < lists[i][j - 1]:
+                    lists[i].sort()
+                    break
+
+            start_n = None
+            prev_n = None
             for j in range(0, len(lists[i])):
-                self.__write__("%d" % lists[i][j])
-                if j < len(lists[i]) - 1:
-                    self.__write__(", ")
+                if prev_n is None:
+                    self.__write__("%d" % lists[i][j])
+                    prev_n = lists[i][j]
+                    start_n = prev_n
+                elif lists[i][j] == prev_n + 1:
+                    if j == len(lists[i]) - 1:
+                        self.__write__(":%d" % lists[i][j])
+                    prev_n += 1
+                else:
+                    if prev_n == start_n:
+                        self.__write__(", %d" % lists[i][j])
+                    else:
+                        self.__write__(":%d, %d" % (prev_n, lists[i][j]))
+                    prev_n = lists[i][j]
+                    start_n = prev_n
+
             if i < len(lists) - 1 or edge_colors:
-                self.__write__("|")
+                self.__write__("|\n")
 
         if edge_colors:
             added_lists = self.__additional_color_partitions__
             for i in range(0, len(added_lists)):
+                # added_lists[i] is already sorted due to its construction
+
+                start_n = None
+                prev_n = None
                 for j in range(0, len(added_lists[i])):
-                    self.__write__("%d" % added_lists[i][j])
-                    if j < len(added_lists[i]) - 1:
-                        self.__write__(", ")
+                    if prev_n is None:
+                        self.__write__("%d" % added_lists[i][j])
+                        prev_n = added_lists[i][j]
+                        start_n = prev_n
+                    elif added_lists[i][j] == prev_n + 1:
+                        if j == len(added_lists[i]) - 1:
+                            self.__write__(":%d" % added_lists[i][j])
+                        prev_n += 1
+                    else:
+                        if prev_n == start_n:
+                            self.__write__(", %d" % added_lists[i][j])
+                        else:
+                            self.__write__(":%d, %d" % (prev_n, added_lists[i][j]))
+                        prev_n = added_lists[i][j]
+                        start_n = prev_n
+
                 if i < len(added_lists) - 1:
-                    self.__write__("|")
+                    self.__write__("|\n")
 
         self.__write__("]\n")
 
@@ -756,7 +800,7 @@ class RAMFriendlyNTSession:
         #            g -- t
         #
         # 9. Input = a <-t-> b and mode = Nauty
-        #   Output = a --> t <-- b
+        #   Output = a <-- t --> b
         #
         # 10. Input = a <-t-> b and mode = Traces
         #   Output  = a -- t -- b
@@ -835,7 +879,7 @@ class RAMFriendlyNTSession:
 
 
         self.__write__("n %d\n" % (self.__n__ + self.__extra_n__))
-        self.__write__("g ")
+        self.__write__("g \n")
 
         if self.__announce_launch__:
             print("Calculated the total n to be %d + %d." % (self.__n__, self.__extra_n__))
@@ -845,6 +889,9 @@ class RAMFriendlyNTSession:
         next_node = self.__n__
         if self.__dir_augment__ and self.__et_augment__:
             for n in range(0, self.__n__):
+                if n > 0:
+                    self.__write__(";\n")
+
                 if self.__dictlike_collections__:
                     neighbors = self.__neighbors_collections__[n].items()
                 else:
@@ -856,8 +903,11 @@ class RAMFriendlyNTSession:
                         if n >= neighbor:
                             continue
 
-                        self.__write__("; %d : %d " % (n, next_node))
-                        self.__write__("; %d : %d " % (neighbor, next_node))
+                        # n -- next_node
+                        self.__write__("%d " % next_node)
+                        # next_node -- neighbor
+                        self.__augment_write__(";\n%d " % neighbor)
+
                         if edge_type_relabeling is None:
                             self.__additional_color_partitions__[t].append(next_node)
                         else:
@@ -866,11 +916,14 @@ class RAMFriendlyNTSession:
                         next_node += 1
                     else:
                         # Cases 8 and 12
-                        self.__write__("; %d : %d " % (n, next_node))
-                        self.__write__("; %d : %d " % \
-                                        (neighbor, next_node + 1))
-                        self.__write__("; %d : %d " % \
-                                        (next_node, next_node + 1))
+
+                        # n -- next_node
+                        self.__write__("%d " % next_node)
+                        # next_node -- next_node + 1
+                        self.__augment_write__(";\n%d " % (next_node + 1))
+                        # next_node + 1 -- neighbor
+                        self.__augment_write__(";\n%d " % neighbor)
+
                         if edge_type_relabeling is None:
                             self.__additional_color_partitions__[-1].append(next_node)
                             self.__additional_color_partitions__[t].append(next_node + 1)
@@ -883,22 +936,35 @@ class RAMFriendlyNTSession:
 
         elif self.__dir_augment__:
             for n in range(0, self.__n__):
+                if n > 0:
+                    self.__write__(";\n")
+
                 for neighbor in self.__neighbors_collections__[n]:
                     if not self.__has_edge__(neighbor, n):
                         # Case 3
-                        self.__write__("; %d : %d " % (n, next_node))
-                        self.__write__("; %d : %d " % (neighbor, next_node + 1))
-                        self.__write__("; %d : %d " % (next_node, next_node + 1))
+
+                        # n -- next_node
+                        self.__write__("%d " % next_node)
+                        # next_node -- next_node + 1
+                        self.__augment_write__(";\n%d " % (next_node + 1))
+                        # next_node + 1 -- neighbor
+                        self.__augment_write__(";\n%d " % neighbor)
+
                         self.__additional_color_partitions__[0].append(next_node)
                         self.__additional_color_partitions__[1].append(next_node + 1)
                         next_node += 2
                     else:
                         # Case 5 -- no extra nodes
-                        self.__write__("; %d : %d " % (n, neighbor))
+
+                        # n -- next_node
+                        self.__write__("%d " % neighbor)
 
         elif self.__et_augment__:
             if self.__directed__:
                 for n in range(0, self.__n__):
+                    if n > 0:
+                        self.__write__(";\n")
+
                     if self.__dictlike_collections__:
                         neighbors = self.__neighbors_collections__[n].items()
                     else:
@@ -908,8 +974,12 @@ class RAMFriendlyNTSession:
                             # Case 9
                             if n >= neighbor:
                                 continue
-                            self.__write__("; %d : %d " % (n, next_node))
-                            self.__write__("; %d : %d " % (neighbor, next_node))
+
+                            # next_node --> n
+                            self.__augment_write__(";\n%d " % n)
+                            # next_node --> neighbor
+                            self.__augment_write__("%d " % neighbor)
+
                             if edge_type_relabeling is None:
                                 self.__additional_color_partitions__[\
                                     t].append(next_node)
@@ -919,8 +989,12 @@ class RAMFriendlyNTSession:
                             next_node += 1
                         else:
                             # Cases 7 and 11
-                            self.__write__("; %d : %d " % (n, next_node))
-                            self.__write__("; %d : %d " % (next_node, neighbor))
+
+                            # n --> next_node
+                            self.__write__("%d " % next_node)
+                            # next_node --> neighbor
+                            self.__augment_write__(";\n%d " % neighbor)
+
                             if edge_type_relabeling is None:
                                 self.__additional_color_partitions__[\
                                     t].append(next_node)
@@ -931,6 +1005,9 @@ class RAMFriendlyNTSession:
             else:
                 # Case 6
                 for n in range(0, self.__n__):
+                    if n > 0:
+                        self.__write__(";\n")
+
                     if self.__dictlike_collections__:
                         neighbors = self.__neighbors_collections__[n].items()
                     else:
@@ -938,8 +1015,11 @@ class RAMFriendlyNTSession:
                     for (neighbor, t) in neighbors:
                         if n >= neighbor:
                             continue
-                        self.__write__("; %d : %d " % (n, next_node))
-                        self.__write__("; %d : %d " % (neighbor, next_node))
+
+                        # n -- next_node
+                        self.__write__("%d " % next_node)
+                        # next_node -- neighbor
+                        self.__augment_write__(";\n%d " % neighbor)
 
                         if edge_type_relabeling is None:
                             self.__additional_color_partitions__[\
@@ -953,13 +1033,25 @@ class RAMFriendlyNTSession:
         else:
             # Cases 1, 2, and 4 -- no extra nodes
             for n in range(0, self.__n__):
-                self.__write__("; %d : " % n)
+                if n > 0:
+                    self.__write__(";\n")
                 for neighbor in self.__neighbors_collections__[n]:
                     if (not self.__directed__) and n >= neighbor:
                         continue
                     self.__write__("%d " % neighbor)
 
-        self.__write__(".\n")
+        if self.__et_augment__ or self.__dir_augment__:
+            # If we used the augment file, now append it to the main file.
+            self.__augment_file__.close()
+            self.__augment_file__ = open(self.__augment_filename__, "r")
+            l = self.__augment_file__.readline()
+            while l != "":
+                self.__write__(l)
+                l = self.__augment_file__.readline()
+            self.__augment_file__.close()
+            os.remove(self.__augment_filename__)
+
+        self.__write__(";\n")
 
         if self.__kill_py_graph__:
             for _ in range(0, self.__n__):
@@ -1041,7 +1133,7 @@ if __name__ == "__main__":
                                        only_one_call=False, \
                                        kill_py_graph=False, \
                                        sparse=True, \
-                                       announce_launch=True)
+                                       announce_launch=False)
 
         rt_3 = session.get_runtime()
         # session.set_colors_by_partitions([[1], [2, 0, 3]])
@@ -1053,3 +1145,5 @@ if __name__ == "__main__":
         print("Num Aut 3:    %s" % num_aut_3.get())
         print("Orbits 3:     %s" % orbits_3.get())
         print("Node Order 3: %s" % node_order_3.get())
+
+    session.end_session()
