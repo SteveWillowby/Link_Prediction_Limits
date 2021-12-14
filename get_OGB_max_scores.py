@@ -163,7 +163,8 @@ def get_max_score_for_link_pred(neighbors_dicts, self_loop_types, HR, T):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
-    session = RAMFriendlyNTSession(directed=True, \
+    session = RAMFriendlyNTSession(mode="Traces", \
+                                   directed=True, \
                                    has_edge_types=False, \
                                    neighbors_collections=neighbors_dicts, \
                                    kill_py_graph=True, \
@@ -531,7 +532,8 @@ def get_max_score_for_node_classification(neighbors_collections, \
     N = len(node_colors)
 
     print_flush("  Getting Automorphism Orbits...")
-    session = RAMFriendlyNTSession(directed=True, \
+    session = RAMFriendlyNTSession(mode="Traces", \
+                                   directed=True, \
                                    has_edge_types=False, \
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
