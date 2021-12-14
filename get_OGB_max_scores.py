@@ -78,13 +78,15 @@ def link_pred_dataset():
 
     print_flush("Loading edges...")
     neighbors_dicts = [{} for _ in range(0, N)]
-    has_self_loop = [0 for _ in range(0, N)]
+    self_loop_types = [None for _ in range(0, N)]
     for i in range(0, num_triples):
         (a, b) = (int(train_hrt[i,0]), int(train_hrt[i,2]))
         if a == b:
-            if has_self_loop[a] == 1:
-                print("Found _multiple_ self-loops for node %d" % a)
-            has_self_loop[a] = 1
+            if self_loop_types[a] is None:
+                self_loop_types[a] = []
+            # else:
+            #     print("Found _multiple_ self-loops for node %d" % a)
+            self_loop_types[a].append(int(train_hrt[i,1]))
             continue
 
         if b not in neighbors_dicts[a]:
@@ -97,6 +99,37 @@ def link_pred_dataset():
     for n in range(0, N):
         neighbors_dicts[n] = ListDict(neighbors_dicts[n])
     print_flush("Container Types Recasted.")
+
+    print_flush("Converting self-loop combos to node partitioning.")
+    distinct_self_loop_types = set()
+    a_node_has_no_self_loops = False  # Used to decide between 0- and 1-indexing
+    for i in range(0, self_loop_types):
+        l = self_loop_types[i]
+        if l is None:
+            a_node_has_no_self_loops = True
+            continue
+        l.sort()
+        l = tuple(l)
+        self_loop_types[i] = l
+        distinct_self_loop_types.add(l)
+    distinct_self_loop_types = list(distinct_self_loop_types)
+    distinct_self_loop_types.sort()
+    distinct_self_loop_types = \
+        {distinct_self_loop_types[i] : i + int(a_node_has_no_self_loops) for \
+            i in range(0, len(distinct_self_loop_types))}
+    sl = self_loop_types
+    self_loop_types = [[] for _ in range(0, len(distinct_self_loop_types) + \
+                                            int(a_node_has_no_self_loops))]
+    for i in range(0, sl):
+        if sl[i] is None:
+            self_loop_types[0].append(i)
+        else:
+            self_loop_types[distinct_self_loop_types[sl[i]]].append(i)
+    del distinct_self_loop_types
+    del sl
+    print_flush(("  ...self loops converted. There were %d distinct " % \
+                        len(self_loop_types)) + \
+                "self-loop combo types, including the 'no loop' 'combo'")
 
     print_flush("Flattening edge types...")
 
@@ -124,17 +157,9 @@ def link_pred_dataset():
 
     del edge_type_combo_set
 
-    print_flush("  Converting `has_self_loop` to partitions...")
-    sl = has_self_loop
-    has_self_loop = [[], []]
-    for i in range(0, N):
-        has_self_loop[sl[i]].append(i)
-    del sl
-    print_flush("    ...converted.")
+    return (neighbors_dicts, self_loop_types, hr, t)
 
-    return (neighbors_dicts, has_self_loop, hr, t)
-
-def get_max_score_for_link_pred(neighbors_dicts, has_self_loop, HR, T):
+def get_max_score_for_link_pred(neighbors_dicts, self_loop_types, HR, T):
     N = len(neighbors_dicts)
 
     print_flush("Getting base ORBITS...")
@@ -144,7 +169,7 @@ def get_max_score_for_link_pred(neighbors_dicts, has_self_loop, HR, T):
                                    kill_py_graph=True, \
                                    only_one_call=False, \
                                    tmp_path_base="/nfs/jhibshma/tmp")
-    session.set_colors_by_partitions(has_self_loop)
+    session.set_colors_by_partitions(self_loop_types)
     base_orbits = session.get_automorphism_orbits()
     session.run()
     base_orbits = base_orbits.get()
@@ -610,10 +635,10 @@ if __name__ == "__main__":
 
     if arg == "LP":
         # set_default_dict_type(ListDict)
-        (graph, has_self_loop, hr, t) = link_pred_dataset()
+        (graph, self_loop_types, hr, t) = link_pred_dataset()
         # set_default_dict_type(Dict)
         print_flush("Graph Loaded!!!!!! Now to process...")
-        get_max_score_for_link_pred(graph, has_self_loop, hr, t)
+        get_max_score_for_link_pred(graph, self_loop_types, hr, t)
 
     elif arg == "NC":
         print_flush("Loading MAG Graph (Node Classification Graph)...")
