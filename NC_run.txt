@@ -48,3 +48,6 @@ Label min/max: -1/152
 ...Graph Loaded
 Getting Max Possible Validation Score...
   Getting Automorphism Orbits...
+NOTE: Running Traces with a directed graph -- this system will augment the graph accordingly.
+Beginning __write_graph__()
+Calculated the total n to be 244160499 + 3452215184.
