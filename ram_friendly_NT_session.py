@@ -133,6 +133,10 @@ class RAMFriendlyNTSession:
             tmp_path_base = tmp_path_base + "/"
         tmp_path_base = tmp_path_base + ("dreadnaut_%d" % os.getpid())
 
+        if announce_launch:
+            print("PID is %d" % os.getpid())
+            sys.stdout.flush()
+
         self.__n__ = len(neighbors_collections)
 
         # Number of extra nodes used to express things like edge types and
