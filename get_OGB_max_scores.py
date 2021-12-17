@@ -103,7 +103,7 @@ def link_pred_dataset():
     print_flush("Converting self-loop combos to node partitioning.")
     distinct_self_loop_types = set()
     a_node_has_no_self_loops = False  # Used to decide between 0- and 1-indexing
-    for i in range(0, self_loop_types):
+    for i in range(0, len(self_loop_types)):
         l = self_loop_types[i]
         if l is None:
             a_node_has_no_self_loops = True
@@ -120,7 +120,7 @@ def link_pred_dataset():
     sl = self_loop_types
     self_loop_types = [[] for _ in range(0, len(distinct_self_loop_types) + \
                                             int(a_node_has_no_self_loops))]
-    for i in range(0, sl):
+    for i in range(0, len(sl)):
         if sl[i] is None:
             self_loop_types[0].append(i)
         else:
@@ -533,12 +533,14 @@ def get_max_score_for_node_classification(neighbors_collections, \
     N = len(node_colors)
 
     print_flush("  Getting Automorphism Orbits...")
-    session = RAMFriendlyNTSession(mode="Traces", \
+    # Need Nauty to prevent edge augmentation. Traces' needed augmentation blows
+    #   the number of nodes up too high.
+    session = RAMFriendlyNTSession(mode="Nauty", \
                                    directed=True, \
                                    has_edge_types=False, \
                                    neighbors_collections=neighbors_collections, \
                                    kill_py_graph=True, \
-                                   only_one_call=False, \
+                                   only_one_call=True, \
                                    tmp_path_base="/nfs/jhibshma/tmp", \
                                    announce_launch=True)
     print_flush("     (loaded graph)")
