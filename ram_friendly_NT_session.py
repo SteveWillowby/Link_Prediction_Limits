@@ -877,6 +877,22 @@ class RAMFriendlyNTSession:
             # Cases 1, 2, and 4 -- no extra nodes
             pass
 
+        total_n = self.__n__ + self.__extra_n__
+        if total_n > 2000000000:
+            self.__input_file__.close()
+            if self.__only_one_call__:
+                os.remove(self.__input_filename__)
+            else:
+                os.remove(self.__intro_filename__)
+
+            if self.__dir_augment__ or self.__et_augment__:
+                self.__augment_file__.close()
+                os.remove(self.__augment_filename__)
+
+            raise ValueError("Error! Nauty/Traces cannot handle graphs " + \
+                             "with over 2000000000 nodes. \nThis graph has " + \
+                "%d nodes plue %d nodes needed for augmenting: %d total." % \
+                             (self.__n__, self.__extra_n__, total_n))
 
         self.__write__("n %d\n" % (self.__n__ + self.__extra_n__))
         self.__write__("g \n")
@@ -1103,8 +1119,6 @@ if __name__ == "__main__":
                                  sparse=True)
 
     assert len(neighbors_collections) == 0
-
-    # TODO: Debug -- the Traces direction augmentation is failing.
 
     # rt_1 = session.get_runtime()
     # session.set_colors_by_partitions([[1], [2, 0, 3, 4]])
