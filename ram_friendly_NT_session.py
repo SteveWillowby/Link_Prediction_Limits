@@ -893,10 +893,11 @@ class RAMFriendlyNTSession:
                 self.__augment_file__.close()
                 os.remove(self.__augment_filename__)
 
-            raise ValueError("Error! Nauty/Traces cannot handle graphs " + \
+            raise ValueError(("Error! Nauty/Traces cannot handle graphs " + \
                              "with over 2000000000 nodes. \nThis graph has " + \
                 "%d nodes plue %d nodes needed for augmenting: %d total." % \
-                             (self.__n__, self.__extra_n__, total_n))
+                             (self.__n__, self.__extra_n__, total_n)) + \
+                " Note that Traces often needs more augment nodes than Nauty.")
 
         self.__write__("n %d\n" % (self.__n__ + self.__extra_n__))
         self.__write__("g \n")
