@@ -121,7 +121,8 @@ class RAMFriendlyNTSession:
                     dreadnaut_call="Nauty_n_Traces/nauty26r12/dreadnaut", \
                     tmp_path_base="/tmp", \
                     flush_threshold=None, \
-                    announce_launch=False):
+                    announce_launch=False, \
+                    print_notes=False):
 
         if mode != "Traces" and mode != "Nauty":
             raise ValueError("Error! `mode` must be 'Traces' or 'Nauty'.")
@@ -187,10 +188,10 @@ class RAMFriendlyNTSession:
                         break
                     break
 
-        if self.__dir_augment__:
+        if self.__dir_augment__ and print_notes:
             print("NOTE: Running Traces with a directed graph --" + \
                   " this system will augment the graph accordingly.")
-        if self.__et_augment__:
+        if self.__et_augment__ and print_notes:
             print("NOTE: Running Nauty/Traces with edge types --" + \
                   " this system will augment the graph accordingly.")
 

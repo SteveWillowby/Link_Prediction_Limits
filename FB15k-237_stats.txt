@@ -1,8 +1,0 @@
-Loading FB15k-237...
-Num Triples: 20466
-Num Classes: 20446
-Average Class Size: 1.071114
-T/P: 1.070067
-T: 21900, P: 20466, N: 1434
-Max ROC: 0.999683
-Max AUPR: 0.999978
