@@ -131,7 +131,8 @@ class RAMFriendlyNTSession:
 
         if "/" != tmp_path_base[-1]:
             tmp_path_base = tmp_path_base + "/"
-        tmp_path_base = tmp_path_base + ("dreadnaut_%d" % os.getpid())
+        tmp_path_base = tmp_path_base + ("dreadnaut_%d_%f" % \
+                                            (os.getpid(), time.time()))
 
         if announce_launch:
             print("PID is %d" % os.getpid())
@@ -1143,6 +1144,7 @@ if __name__ == "__main__":
     node_order_2 = session.get_canonical_order()
     rt_2 = session.get_runtime()
     session.run()
+
     session.end_session()
     print("Runtime 2:    %s" % rt_2.get())
     print("Num Aut 2:    %s" % num_aut_2.get())
@@ -1160,7 +1162,7 @@ if __name__ == "__main__":
         session = RAMFriendlyNTSession(directed, has_edge_types, \
                                        neighbors_collections, \
                                        mode="Traces", \
-                                       only_one_call=False, \
+                                       only_one_call=True, \
                                        kill_py_graph=False, \
                                        sparse=True, \
                                        announce_launch=False)
@@ -1171,9 +1173,8 @@ if __name__ == "__main__":
         orbits_3 = session.get_automorphism_orbits()
         node_order_3 = session.get_canonical_order()
         session.run()
+        session.end_session()
         # print("Runtime 3:    %s" % rt_3.get())
         print("Num Aut 3:    %s" % num_aut_3.get())
         print("Orbits 3:     %s" % orbits_3.get())
         print("Node Order 3: %s" % node_order_3.get())
-
-    session.end_session()
