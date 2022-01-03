@@ -251,6 +251,10 @@ def read_graph(edge_list_filename, directed, \
 
     N = num_nodes
     M = sum([len(nc) for nc in neighbors_collections])
+    if not directed:
+        assert M % 2 == 0
+        M = int(M / 2)
+
     if has_node_types or len(self_loop_info) > 0:
         Nt = len(node_type_relabeling)
     else:

@@ -29,7 +29,7 @@ if __name__ == "__main__":
         ((directed, has_edge_types, nodes, neighbors_collections), \
             node_coloring, removed_edges) = \
                 read_graph(edge_list, directed, node_list_filename=node_list, \
-                           edge_remover=random_edge_remover(test_edge_fraction))
+                           edge_remover=None)  #random_edge_remover(test_edge_fraction))
 
         true_edges = removed_edges
 
@@ -40,6 +40,9 @@ if __name__ == "__main__":
                         has_edge_types=has_edge_types, \
                         true_edges=true_edges, \
                         k=1)
+
+        # TODO: Remove the `continue` once code is ready.
+        continue
 
         print("Num True Edges: %d" % len(true_edges))
         print("Num Classes: %d" % len(class_info))
