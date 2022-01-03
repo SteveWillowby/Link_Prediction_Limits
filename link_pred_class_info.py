@@ -201,7 +201,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                         (percent_done <= 100 and percent_done % 10 == 0):
                     print("    %d percent done." % percent_done)
                 if percent_done in [5, 30]:
-                    print("...")
+                    print("    ...")
             iteration += 1
 
             k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
