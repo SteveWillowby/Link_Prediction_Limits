@@ -1,0 +1,43 @@
+Loading real_world_graphs/karate.g
+INFO: Input graph has 34 nodes, 156 edges, 1 node types (accounting for self-loops), and 1 edge types.
+  Found 27 base orbits for 34 nodes
+  There were a total of 480 automorphisms.
+Num non-trivial orbits: 4 (average size of 2.750000)
+Num nodes in nt orbits: 11 (average degree of 2.545455)
+Loading real_world_graphs/eucore.g
+NOTE: Input file real_world_graphs/eucore.g had 642 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 24929 edges, 2 node types (accounting for self-loops), and 1 edge types.
+  Found 976 base orbits for 1005 nodes
+  There were a total of 5.605406226839e20 automorphisms.
+Num non-trivial orbits: 10 (average size of 3.900000)
+Num nodes in nt orbits: 39 (average degree of 0.102564)
+Loading real_world_graphs/college-temporal.g
+INFO: Input graph has 1899 nodes, 20296 edges, 1 node types (accounting for self-loops), and 20201 edge types.
+  Found 1899 base orbits for 1899 nodes
+  There were a total of 1 automorphisms.
+Loading real_world_graphs/citeseer.g
+INFO: Input graph has 3264 nodes, 4536 edges, 1 node types (accounting for self-loops), and 1 edge types.
+  Found 2310 base orbits for 3264 nodes
+  There were a total of 1.775695797555e649 automorphisms.
+Num non-trivial orbits: 175 (average size of 6.451429)
+Num nodes in nt orbits: 1129 (average degree of 0.678477)
+Loading real_world_graphs/cora.g
+INFO: Input graph has 2708 nodes, 5429 edges, 1 node types (accounting for self-loops), and 1 edge types.
+  Found 2457 base orbits for 2708 nodes
+  There were a total of 4.817040983554e125 automorphisms.
+Num non-trivial orbits: 95 (average size of 3.642105)
+Num nodes in nt orbits: 346 (average degree of 0.416185)
+Loading real_world_graphs/wiki-en-additions.g
+NOTE: Input file real_world_graphs/wiki-en-additions.g had 1590 nodes with 1 or more self-loops.
+INFO: Input graph has 100312 nodes, 887426 edges, 1591 node types (accounting for self-loops), and 216413 edge types.
+  Found 100158 base orbits for 100312 nodes
+  There were a total of 1.446383121592e71 automorphisms.
+Num non-trivial orbits: 94 (average size of 2.638298)
+Num nodes in nt orbits: 248 (average degree of 0.262097)
+Loading real_world_graphs/FB15k-237/FB15k-237_train_and_valid_edges.txt
+NOTE: Input file real_world_graphs/FB15k-237/FB15k-237_train_and_valid_edges.txt had 1246 nodes with 1 or more self-loops.
+INFO: Input graph has 14541 nodes, 262445 edges, 26 node types (accounting for self-loops), and 728 edge types.
+  Found 14253 base orbits for 14541 nodes
+  There were a total of 1.518969405326e243 automorphisms.
+Num non-trivial orbits: 94 (average size of 4.063830)
+Num nodes in nt orbits: 382 (average degree of 1.657068)
