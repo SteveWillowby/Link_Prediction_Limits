@@ -1,17 +1,4 @@
-from file_utils import read_graph
-import math
 from ram_friendly_NT_session import RAMFriendlyNTSession
-
-# TODO: Update documentation
-
-# Functions:
-#
-# get_class_info_for_target_triples(formatted_graph, node_colors, triples)
-#   -- Returns (orbit_type, class size, num positives) triples for the classes
-#       in which at least one of the (a, t, b) edges in `triples` falls.
-
-
-# TODO: Add random edge remover for testing.
 
 # TODO: Update to allow for undirected edges and edges without types.
 def get_class_info_for_target_triples(neighbors_collections, node_colors, triples):
@@ -165,8 +152,10 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     main_session.set_colors_by_partitions(orig_partitions)
 
     base_orbits = main_session.get_automorphism_orbits()
+    no = main_session.get_num_automorphisms()
     main_session.run()
     base_orbits = base_orbits.get()
+    no = no.get()
 
     base_orbit_colors = [0 for _ in range(0, num_nodes)]
     for i in range(0, len(base_orbits)):
@@ -177,6 +166,28 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
 
     print("  Found %d base orbits for %d nodes" % \
             (len(base_orbits), num_nodes))
+    print("  There were a total of %s automorphisms." % no)
+
+    # TODO: Since it seems most graphs are almost rigid, simplify the code
+    #   below by looking at every single non-edge.
+    avg_nontrivial_orbit_size = 0
+    num_nontrivial_orbits = 0
+    avg_degree_of_node_in_nt_orbit = 0
+    num_nodes_in_nt_orbits = 0
+    for o in base_orbits:
+        if len(o) > 1:
+            num_nodes_in_nt_orbits += len(o)
+            num_nontrivial_orbits += 1
+            avg_nontrivial_orbit_size += len(o)
+            avg_degree_of_node_in_nt_orbit += len(o) * len(neighbors_collections[o[0]])
+    
+    if num_nodes_in_nt_orbits > 0:
+        avg_degree_of_node_in_nt_orbit /= float(num_nodes_in_nt_orbits)
+        avg_nontrivial_orbit_size /= float(num_nontrivial_orbits)
+        print("Num non-trivial orbits: %d (average size of %f)" % \
+                (num_nontrivial_orbits, avg_nontrivial_orbit_size))
+        print("Num nodes in nt orbits: %d (average degree of %f)" % \
+                (num_nodes_in_nt_orbits, avg_degree_of_node_in_nt_orbit))
 
     positives_in_edge_class = {}
     print("Proceeding to get edge classes for the true edges.")
@@ -463,143 +474,3 @@ def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
         tuple([old_colors[new_node_to_old[n]] for n in range(0, len(node_order))])
 
     return (num_nodes, observed_edge_types, edge_list, tuple(new_node_to_old))
-
-# class_info is a collection of triples:
-#   (class_label, class_size, num_positives_in_class)
-def get_max_AUPR(class_info):
-    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
-    class_info.sort()
-    class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
-    P = sum([x[0] for x in class_info])
-    T = sum([x[1] for x in class_info])
-    N = T - P
-
-    b = 0.0
-    d = 0.0
-    AUPR = 0.0
-    for (a, c) in class_info:
-        a = float(a)
-        c = float(c)
-        if a == 0.0:
-            addition = 0.0
-        elif d == 0.0:
-            # Only occurs once.
-            addition = (a * a) / c
-        else:
-            addition = ((a * a) / c) * (1.0 + ((b / a) - (d / c)) * math.log((d + c) / d))
-
-        assert addition >= 0.0
-        # print("a: %f, b: %f, c: %f, d: %f -----> %f" % (a, b, c, d, addition))
-        AUPR += addition
-
-        b += a
-        d += c
-    AUPR /= float(P)
-    return AUPR
-
-def get_max_ROC(class_info):
-    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
-    class_info.sort()
-    class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
-    P = sum([x[0] for x in class_info])
-    T = sum([x[1] for x in class_info])
-    N = T - P
-    print("T: %d, P: %d, N: %d" % (T, P, N))
-    n_acc = 0
-    p_acc = 0
-    TPR = []  # Goes up from 0 to 1
-    FPR = []  # Goes up from 0 to 1
-    for (p, t) in class_info:
-        p_acc += p
-        n_acc += t - p
-        TPR.append(float(p_acc) / P)
-        FPR.append(float(n_acc) / N)
-    ROC = 0.0
-    for i in range(1, len(TPR)):
-        tpr_a = TPR[i - 1]
-        tpr_b = TPR[i]
-        fpr_a = FPR[i - 1]
-        fpr_b = FPR[i]
-        addition = (fpr_b - fpr_a) * ((tpr_a + tpr_b) / 2.0)
-        assert addition >= 0.0
-        ROC += addition
-    return ROC
-
-if __name__ == "__main__":
-    for t in [("karate.g", False), \
-              ("eucore.g", True), \
-              ("college-temporal.g", True), \
-              ("citeseer.g", True), \
-              ("cora.g", True), \
-              ("wiki-en-additions.g", True), \
-              ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
-                    "FB15k-237/FB15k-237_nodes.txt", True)]:
-
-        if len(t) == 2:
-            (name, directed) = t
-            edge_list = "real_world_graphs/%s" % name
-            node_list = None
-        elif len(t) == 3:
-            (name, node_name, directed) = t
-            edge_list = "real_world_graphs/%s" % name
-            node_list = "real_world_graphs/%s" % node_name
-
-        print("Loading %s" % edge_list)
-        ((directed, has_edge_types, nodes, neighbors_collections), \
-            node_coloring) = \
-                read_graph(edge_list, directed, node_list_filename=node_list)
-
-        # TODO: Add code to get test (i.e. "true") edges.
-        if has_edge_types:
-            true_edges = [(0, 12, 0), (1, 13, 1), (2, 14, 0)]
-        else:
-            true_edges = [(0, 12), (1, 13), (2, 14)]
-
-        class_info = get_k_hop_info_classes_for_link_pred(\
-                        neighbors_collections=neighbors_collections, \
-                        orig_colors=node_coloring, \
-                        directed=directed, \
-                        has_edge_types=has_edge_types, \
-                        true_edges=true_edges, \
-                        k=1)
-
-        print("Num True Edges: %d" % len(true_edges))
-        print("Num Classes: %d" % len(class_info))
-        print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
-        print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-
-        print("Max ROC: %f" % get_max_ROC(class_info))
-        print("Max AUPR: %f" % get_max_AUPR(class_info))
-
-    exit()
-
-    print("Loading FB15k-237...")
-    (train, valid, test, id_to_mid, id_to_type) = load_FB15k_237()
-    train_nodes = set([x[0] for x in train] + [x[2] for x in train])
-    valid_nodes = set([x[0] for x in valid] + [x[2] for x in valid])
-    test_nodes  = set([x[0] for x in test]  + [x[2] for x in test])
-    all_nodes = train_nodes | valid_nodes | test_nodes
-
-    print("  New Formatting...")
-    (g, nc) = convert_triples_to_NT_graph(train + valid, \
-                                          num_nodes=len(all_nodes))
-
-    print("Computing Triple Class Sizes...")
-    # class_info = get_class_info_for_target_triples(neighbors_collections=g, \
-    #                                                node_colors=nc, \
-    #                                                triples=test)
-
-    class_info = get_k_hop_info_classes_for_link_pred(neighbors_collections=g, \
-                                                      orig_colors=nc, \
-                                                      directed=True, \
-                                                      has_edge_types=True, \
-                                                      true_edges=test, \
-                                                      k=1)
-
-    print("Num Triples: %d" % len(test))
-    print("Num Classes: %d" % len(class_info))
-    print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
-    print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-
-    print("Max ROC: %f" % get_max_ROC(class_info))
-    print("Max AUPR: %f" % get_max_AUPR(class_info))
