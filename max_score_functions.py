@@ -23,11 +23,21 @@ def get_max_AUPR(class_info):
         c = float(c)
         if a == 0.0:
             addition = 0.0
+
+        # Precision of this specific class is ((a + b) / (c + d)).
+        # The width of this slice (amount of recall) is a / P.
+        #   Since we divide by P at the end, the area of the "box" part is
+        #   a * ((a + b) / (c + d)). In the very first round this is just
+        #   (a * a) / c.
+
         elif d == 0.0:
-            # Only occurs once.
+            # Only occurs once. No previous point, so the only area is the box.
             addition = (a * a) / c
         else:
             addition = ((a * a) / c) * (1.0 + ((b / a) - (d / c)) * math.log((d + c) / d))
+            assert_margin = 0.0001
+            assert addition + assert_margin >= (a * a) / c
+            assert addition - assert_margin <= a * (((a + b) / (c + d)) + (b / c)) / 2.0
 
         assert addition >= 0.0
         # print("a: %f, b: %f, c: %f, d: %f -----> %f" % (a, b, c, d, addition))
@@ -35,6 +45,9 @@ def get_max_AUPR(class_info):
 
         b += a
         d += c
+
+    assert P == int(b + 0.1)  # The +0.1 is just to avoid rounding errors.
+
     AUPR /= float(P)
     return AUPR
 
@@ -46,24 +59,26 @@ def get_max_ROC(class_info):
     T = sum([x[1] for x in class_info])
     N = T - P
     print("T: %d, P: %d, N: %d" % (T, P, N))
+    assert P > 0
     n_acc = 0
     p_acc = 0
-    TPR = []  # Goes up from 0 to 1
-    FPR = []  # Goes up from 0 to 1
+    # I chose to add the corners.
+    TPR = [0.0]  # Goes up from 0 to 1
+    FPR = [0.0]  # Goes up from 0 to 1
     for (p, t) in class_info:
         p_acc += p
         n_acc += t - p
 
-        if P == 0:
-            print("WAT? P == 0 in get_max_ROC???")
-            TPR.append(1.0)
-        else:
-            TPR.append(float(p_acc) / P)
+        TPR.append(float(p_acc) / P)
 
         if N == 0:
             FPR.append(0.0)
         else:
             FPR.append(float(n_acc) / N)
+
+    # I chose to add the corners.
+    TPR.append(1.0)
+    FPR.append(1.0)
     ROC = 0.0
     for i in range(1, len(TPR)):
         tpr_a = TPR[i - 1]
