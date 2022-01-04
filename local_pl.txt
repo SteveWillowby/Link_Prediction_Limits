@@ -1,0 +1,33 @@
+Loading real_world_graphs/karate.g
+INFO: Input graph has 34 nodes, 69 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    1 percent done.
+    2 percent done.
+    3 percent done.
+    4 percent done.
+    5 percent done.
+    ...
+    10 percent done.
+    15 percent done.
+    20 percent done.
+    25 percent done.
+    30 percent done.
+    ...
+    40 percent done.
+    50 percent done.
+    60 percent done.
+    70 percent done.
+    80 percent done.
+    90 percent done.
+#
+#  382 Edge Classes for 561 Total Edges
+#
+Num True Edges: 9
+Num Classes: 9
+Average Class Size: 1.111111
+T/P: 1.111111
+T: 10, P: 9, N: 1
+Max ROC: 0.944444
+Max AUPR: 0.994032
+Loading real_world_graphs/eucore.g
+NOTE: Input file real_world_graphs/eucore.g had 581 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22393 edges, 2 node types (accounting for self-loops), and 1 edge types.
