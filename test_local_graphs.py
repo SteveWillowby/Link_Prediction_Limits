@@ -2,10 +2,11 @@ from graph_loader import read_graph, random_edge_remover
 from link_pred_class_info import get_class_info_for_target_triples, \
                                  get_k_hop_info_classes_for_link_pred
 from max_score_functions import get_max_AUPR, get_max_ROC
+import sys
 
 if __name__ == "__main__":
 
-    test_edge_fraction = 0.05
+    test_edge_fraction = 0.1
 
     for t in [("karate.g", False), \
               ("eucore.g", True), \
@@ -29,7 +30,8 @@ if __name__ == "__main__":
         ((directed, has_edge_types, nodes, neighbors_collections), \
             node_coloring, removed_edges) = \
                 read_graph(edge_list, directed, node_list_filename=node_list, \
-                           edge_remover=None)  #random_edge_remover(test_edge_fraction))
+                           edge_remover=random_edge_remover(test_edge_fraction))
+        sys.stdout.flush()
 
         true_edges = removed_edges
 
@@ -40,9 +42,12 @@ if __name__ == "__main__":
                         has_edge_types=has_edge_types, \
                         true_edges=true_edges, \
                         k=1)
+        sys.stdout.flush()
 
-        # TODO: Remove the `continue` once code is ready.
-        continue
+        if len(true_edges) == 0:
+            print("There were not test given edges for this graph.")
+            sys.stdout.flush()
+            continue
 
         print("Num True Edges: %d" % len(true_edges))
         print("Num Classes: %d" % len(class_info))
@@ -51,6 +56,7 @@ if __name__ == "__main__":
 
         print("Max ROC: %f" % get_max_ROC(class_info))
         print("Max AUPR: %f" % get_max_AUPR(class_info))
+        sys.stdout.flush()
 
     exit()
 
