@@ -1,15 +1,1 @@
 __pycache__/
-FB15K-237/text_*
-basic_container_types.py
-coloring.py
-file_utils.py
-list_containers.py
-main_algorithm.py
-pre_collapse.py
-prep_for_NT.py
-print_debugging.py
-proven_equivalences.py
-relabeling.py
-sampling.py
-testing.py
-views.py
