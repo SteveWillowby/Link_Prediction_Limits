@@ -120,6 +120,7 @@ class RAMFriendlyNTSession:
                     only_one_call=False, \
                     dreadnaut_call="Nauty_n_Traces/nauty26r12/dreadnaut", \
                     tmp_path_base="/tmp", \
+                    tmp_file_augment="", \
                     flush_threshold=None, \
                     announce_launch=False, \
                     print_notes=False):
@@ -132,8 +133,8 @@ class RAMFriendlyNTSession:
 
         if "/" != tmp_path_base[-1]:
             tmp_path_base = tmp_path_base + "/"
-        tmp_path_base = tmp_path_base + ("dreadnaut_%d_%f" % \
-                                            (os.getpid(), time.time()))
+        tmp_path_base = tmp_path_base + \
+            ("dreadnaut_%d_%s_%f" % (os.getpid(), tmp_file_augment, time.time()))
 
         if announce_launch:
             print("PID is %d" % os.getpid())
@@ -375,8 +376,10 @@ class RAMFriendlyNTSession:
 
         # Clean up temporary files
         if not self.__only_one_call__:
-            os.remove(self.__intro_filename__)
-        os.remove(self.__input_filename__)
+            if os.path.exists(self.__intro_filename__):
+                os.remove(self.__intro_filename__)
+        if os.path.exists(self.__input_filename__):
+            os.remove(self.__input_filename__)
         if os.path.exists(self.__output_filename__):
             os.remove(self.__output_filename__)
 

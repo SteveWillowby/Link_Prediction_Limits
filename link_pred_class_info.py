@@ -1,92 +1,7 @@
+from multiprocessing import Pool
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
-
-# TODO: Update to allow for undirected edges and edges without types.
-def get_class_info_for_target_triples(neighbors_collections, node_colors, triples):
-    # A triple (a, t, b)'s class is also a triple (i, j, t).
-    #   `i` is the index of the automorphism orbit of a.
-    #   `j` is the index of the automorphism orbit of b given a is highlighted.
-    #   `t` is the same.
-    triple_classes = {}
-    class_sizes = {}
-    positives_in_class = {}
-
-    num_nodes = len(neighbors_collections)
-
-    print("  Overall ISO...")
-    coloring_list = list(node_colors)
-    session = RAMFriendlyNTSession(directed=True, \
-                                   has_edge_types=True, \
-                                   neighbors_collections=neighbors_collections, \
-                                   kill_py_graph=True, \
-                                   only_one_call=False)
-    session.set_colors_by_coloring(node_colors)
-    base_orbits = session.get_automorphism_orbits()
-    session.run()
-    base_orbits = base_orbits.get()
-    print("  Done with Overall ISO.")
-
-    base_orbit_colors = [0 for _ in range(0, num_nodes)]
-    for i in range(0, len(base_orbits)):
-        for n in base_orbits[i]:
-            base_orbit_colors[n] = i
-
-    main_cell_sizes = [len(o) for o in base_orbits]
-
-    next_color = len(base_orbits)
-    print("  Found %d base orbits for %d nodes" % (next_color, num_nodes))
-
-    triple_classes = set()
-    class_sizes = {}
-    positives_in_class = {}
-
-    percent_done = 0
-    for i in range(0, len(triples)):
-        percent = int((100 * i) / len(triples))
-        if percent > percent_done:
-            percent_done = percent
-            print("%d percent done" % percent_done)
-            sys.stdout.flush()
-
-        (a, t, b) = triples[i]
-        main_a_color = base_orbit_colors[a]
-        main_b_color = base_orbit_colors[b]
-        a_cell_size = main_cell_sizes[main_a_color]
-        b_cell_size = main_cell_sizes[main_b_color]
-        if a_cell_size == 1 or b_cell_size == 1:
-            orbit = (main_a_color, main_b_color, t, True)
-            orbit_size = a_cell_size * b_cell_size
-        else:
-            base_orbits[main_a_color].remove(a)
-            base_orbits.append([a])
-            session.set_colors_by_partitions(base_orbits)
-            sub_orbits = session.get_automorphism_orbits()
-            session.run()
-            sub_orbits = sub_orbits.get()
-            base_orbits[main_a_color].append(a)
-            base_orbits.pop()
-
-            sub_cell_sizes = [len(o) for o in sub_orbits]
-
-            for j in range(0, len(sub_orbits)):
-                if b in sub_orbits[j]:
-                    sub_b_color = j
-                    break
-
-            b_sub_cell_size = sub_cell_sizes[sub_b_color]
-            orbit = (main_a_color, sub_b_color, t, False)
-            orbit_size = a_cell_size * b_sub_cell_size
-
-        if orbit not in triple_classes:
-            triple_classes.add(orbit)
-            class_sizes[orbit] = orbit_size
-            positives_in_class[orbit] = 0
-        positives_in_class[orbit] += 1
-
-    session.end_session()
-
-    return [(tc, class_sizes[tc], positives_in_class[tc]) for tc in triple_classes]
-
+from threading import Thread
 
 # Answers the questions: If you only look at the nodes within k hops of
 #   (head, tail), then what are the classes?
@@ -104,25 +19,36 @@ def get_class_info_for_target_triples(neighbors_collections, node_colors, triple
 def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
                                          has_edge_types, \
-                                         true_edges, k):
+                                         true_edges, k, \
+                                         num_processes=1, \
+                                         num_threads_per_process=1):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors
-        next_color = len(orig_partitions)
+        next_orig_color = len(orig_partitions)
 
         orig_colors = [0 for _ in range(0, num_nodes)]
         for i in range(0, orig_partitions):
             for n in orig_partitions[i]:
                 orig_colors[n] = i
-        del orig_partitions
+    else:
+        next_orig_color = max(orig_colors) + 1
+        orig_partitions = [[] for _ in range(0, next_orig_color)]
+        for n in range(0, len(orig_colors)):
+            orig_partitions[orig_colors[n]].append(n)
 
     # While the _graph_ is flattened, `true_edges` might not be. Flatten it.
     self_loops_in_true_edges = False
+    has_repeat_edges = False
     if has_edge_types:
         if directed:
             te = {}
             for (source, edge_type, target) in true_edges:
+                if (not has_repeat_edges) \
+                        and target in neighbors_collections[source]:
+                    has_repeat_edges = True
+
                 edge = (source, target)
                 self_loops_in_true_edges |= source == target
                 if edge not in te:
@@ -135,6 +61,10 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         else:
             te = {}
             for (source, edge_type, target) in true_edges:
+                if (not has_repeat_edges) \
+                        and target in neighbors_collections[source]:
+                    has_repeat_edges = True
+
                 edge = (min(source, target), max(source, target))
                 self_loops_in_true_edges |= source == target
                 if edge not in te:
@@ -148,6 +78,10 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         if directed:
             te = {}
             for (source, target) in true_edges:
+                if (not has_repeat_edges) \
+                        and target in neighbors_collections[source]:
+                    has_repeat_edges = True
+
                 edge = (source, target)
                 self_loops_in_true_edges |= source == target
                 if edge not in te:
@@ -157,6 +91,10 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         else:
             te = {}
             for (source, target) in true_edges:
+                if (not has_repeat_edges) \
+                        and target in neighbors_collections[source]:
+                    has_repeat_edges = True
+
                 edge = (min(source, target), max(source, target))
                 self_loops_in_true_edges |= source == target
                 if edge not in te:
@@ -186,10 +124,6 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         else:
             neighbors = [set(nc) for nc in neighbors_collections]
 
-    basic_edge_classes = {}
-    positives_in_edge_class = {}
-    next_orig_color = max(orig_colors) + 1
-
     total_iterations = int((num_nodes * (num_nodes - 1)) / 2) + \
                        int(self_loops_in_true_edges) * num_nodes
     if directed:
@@ -198,26 +132,163 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     else:
         total_edges = total_iterations
 
+    # Get the orbits for the base graph in case k = "inf" or in case all the
+    #   nodes within k hops form the entire graph.
+    session = RAMFriendlyNTSession(directed=directed, \
+                                   has_edge_types=has_edge_types, \
+                                   neighbors_collections=neighbors_collections, \
+                                   kill_py_graph=False, \
+                                   only_one_call=True, \
+                                   mode="Traces")
+    session.set_colors_by_partitions(orig_partitions)
+    orbit_partitions = session.get_automorphism_orbits()
+    session.run()
+    session.end_session()
+    orbit_partitions = orbit_partitions.get()
+    orbit_colors = [None for _ in range(0, num_nodes)]
+    for i in range(0, len(orbit_partitions)):
+        for n in orbit_partitions[i]:
+            orbit_colors[n] = i
+
+    if num_processes > 1:
+
+        args = [(i, k, neighbors_collections, neighbors, directed, has_edge_types, \
+                 int(total_iterations / (num_processes * num_threads_per_process)), \
+                 true_edges, num_nodes, \
+                 orig_colors, orig_partitions, next_orig_color, \
+                 orbit_colors, orbit_partitions, \
+                 self_loops_in_true_edges, has_repeat_edges, \
+                 num_processes, num_threads_per_process, {}, {}) \
+                        for i in range(0, num_processes)]
+ 
+        process_pool = Pool(num_processes)
+        result = process_pool.map(__parallel_proc_func__, args, \
+                                    chunksize=1)
+        process_pool.close()
+        process_pool.join()
+        (basic_edge_classes, positives_in_edge_class) = \
+            __parallel_aggregator__(result)
+
+    else:
+        assert num_processes > 0
+        # num_processes = 1. Avoid copying data.
+        arg = (0, k, neighbors_collections, neighbors, directed, has_edge_types, \
+                 int(total_iterations / num_threads_per_process), \
+                 true_edges, num_nodes, \
+                 orig_colors, orig_partitions, next_orig_color, \
+                 orbit_colors, orbit_partitions, \
+                 self_loops_in_true_edges, has_repeat_edges, \
+                 1, num_threads_per_process, {}, {})
+
+        (basic_edge_classes, positives_in_edge_class) = \
+            __parallel_proc_func__(arg)
+
+
+    print("#")
+    print("#  %d Edge Classes for %d Total Edges" % \
+                    (len(basic_edge_classes), total_edges))
+    print("#")
+    # for (ec, count) in basic_edge_classes.items():
+    #     print("%s -- %d" % (ec, count))
+
+    full_edge_classes = []
+    next_int_label = 0
+    for label, c in positives_in_edge_class.items():
+        (EC, _) = label
+        full_edge_classes.append((next_int_label, basic_edge_classes[EC], c))
+        next_int_label += 1
+
+    return full_edge_classes
+
+def __parallel_proc_func__(arg):
+    (proc_idx, k, neighbors_collections, neighbors, directed, has_edge_types, \
+     avg_num_tasks, true_edges, num_nodes, \
+     orig_colors, orig_partitions, next_orig_color, \
+     orbit_colors, orbit_partitions, \
+     self_loops_in_true_edges, has_repeat_edges, \
+     num_processes, num_threads_per_process, _, __) = arg
+
+    if num_threads_per_process == 1:
+        return __parallel_collection_function__(arg)
+
+    args = [\
+     (proc_idx + num_processes * i, k, \
+      neighbors_collections, neighbors, directed, has_edge_types, \
+      avg_num_tasks, true_edges, num_nodes, \
+      list(orig_colors), [list(o) for o in orig_partitions], \
+      next_orig_color, \
+      list(orbit_colors), [list(o) for o in orbit_partitions], \
+      self_loops_in_true_edges, has_repeat_edges, \
+      num_processes, num_threads_per_process, \
+      {}, {}) \
+        for i in range(0, num_threads_per_process)]
+
+    # TODO: Figure out threads.
+    threads = [Thread((__parallel_collection_function__, args[i])) \
+                for i in range(0, num_threads_per_process)]
+    for t in thread:
+        t.start()
+    for t in thread:
+        t.join()
+
+    result = [(args[i][-2], args[i][-1]) \
+                for i in range(0, num_threads_per_process)]
+    return __parallel_aggregator__(result)
+
+def __parallel_collection_function__(arg):
+
+    (proc_thread_idx, k, neighbors_collections, neighbors, directed, has_edge_types, \
+     avg_num_tasks, true_edges, num_nodes, \
+     orig_colors, orig_partitions, next_orig_color, \
+     orbit_colors, orbit_partitions, \
+     self_loops_in_true_edges, has_repeat_edges, \
+     num_processes, num_threads_per_process, \
+     basic_edge_classes, positives_in_edge_class) = arg
+
+    parallelism = num_processes * num_threads_per_process
+
+    session = RAMFriendlyNTSession(directed=directed, \
+                                   has_edge_types=has_edge_types, \
+                                   neighbors_collections=neighbors_collections, \
+                                   kill_py_graph=False, \
+                                   only_one_call=False, \
+                                   tmp_file_augment="%d" % proc_thread_idx, \
+                                   mode="Traces")
+
     iteration = 0
     percent_done = 0
     for a in range(0, num_nodes):
+        if a % parallelism != proc_thread_idx:
+            continue
         for b in range(a + int(not self_loops_in_true_edges), num_nodes):
-            if int((iteration * 100) / total_iterations) > percent_done:
-                percent_done = int((iteration * 100) / total_iterations)
+            # Only print progress if you are the first process.
+            if proc_thread_idx == 0 and \
+                    int((iteration * 100) / avg_num_tasks) > percent_done:
+                percent_done = int((iteration * 100) / avg_num_tasks)
                 if percent_done < 5 or \
                         (percent_done <= 30 and percent_done % 5 == 0) or \
                         (percent_done <= 100 and percent_done % 10 == 0):
-                    print("    %d percent done." % percent_done)
+                    print("    Roughly %d percent done." % percent_done)
                 if percent_done in [5, 30]:
                     print("    ...")
                 sys.stdout.flush()
             iteration += 1
 
-            k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
-            (new_node_to_old, new_neighbors_collections, \
-                observed_edge_types) = \
-                    __induced_subgraph__(neighbors_collections, \
-                                         k_hop_nodes, has_edge_types)
+            if k == "inf":
+                new_neighbors_collections = None
+                observed_edge_types = None
+                new_node_to_old = None
+            else:
+                k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
+                if len(k_hop_nodes) < num_nodes:
+                    (new_node_to_old, new_neighbors_collections, \
+                        observed_edge_types) = \
+                            __induced_subgraph__(neighbors_collections, \
+                                                 k_hop_nodes, has_edge_types)
+                else:
+                    new_neighbors_collections = None
+                    new_node_to_old = None
+                    observed_edge_types = None
 
             old_a_color = orig_colors[a]
             old_b_color = orig_colors[b]
@@ -225,22 +296,91 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                 ab_pairs = [(a, b), (b, a)]
             else:
                 ab_pairs = [(a, b)]
+
             for (c, d) in ab_pairs:
-                # The canonicalizing code does not require that all colors in
-                #   orig_colors be in the range 0 - max_C
-                if directed:
-                    orig_colors[c] = next_orig_color
-                    orig_colors[d] = next_orig_color + 1
+                if d in neighbors_collections[c] and not has_repeat_edges:
+                    continue
+
+                if k == "inf" or len(k_hop_nodes) == num_nodes:
+                    c_color = orbit_colors[c]
+                    d_color = orbit_colors[d]
+                    c_partition = orbit_partitions[c_color]
+                    d_partition = orbit_partitions[d_color]
+
+                    if directed:
+                        if len(c_partition) == 1 or len(d_partition) == 1 or \
+                                (len(c_partition) == 2 and d in c_partition):
+                            EC = (False, c_color, d_color, False)
+                        else:
+                            orbit_partitions.append([c])
+                            c_partition.remove(c)
+
+                            session.set_colors_by_partitions(orbit_partitions)
+                            suborbit_partitions = session.get_automorphism_orbits()
+                            session.run()
+                            suborbit_partitions = suborbit_partitions.get()
+
+                            d_subcolor = None
+                            for i in range(0, len(suborbit_partitions)):
+                                if d in suborbit_partitions[i]:
+                                    d_subcolor = i
+                                    break
+                            assert d_subcolor is not None
+
+                            c_partition.append(c)
+                            orbit_partitions.pop()
+                            EC = (False, c_color, d_subcolor, True)
+                    else:
+                        if len(c_partition) == 1 or len(d_partition) == 1 or \
+                                (len(c_partition) == 2 and d in c_partition):
+                            EC = (False, min(c_color, d_color), \
+                                         max(c_color, d_color), False)
+                        else:
+                            min_color = min(c_color, d_color)
+                            if min_color == c_color:
+                                highlighted_node = c
+                                changed_partition = c_partition
+                                alt_node = d
+                            else:
+                                highlighted_node = d
+                                changed_partition = d_partition
+                                alt_node = c
+
+                            orbit_partitions.append([highlighted_node])
+                            changed_partition.remove(highlighted_node)
+
+                            session.set_colors_by_partitions(orbit_partitions)
+                            suborbit_partitions = session.get_automorphism_orbits()
+                            session.run()
+                            suborbit_partitions = suborbit_partitions.get()
+
+                            alt_subcolor = None
+                            for i in range(0, len(suborbit_partitions)):
+                                if alt_node in suborbit_partitions[i]:
+                                    alt_subcolor = i
+                                    break
+                            assert alt_subcolor is not None
+
+                            changed_partition.append(highlighted_node)
+                            orbit_partitions.pop()
+                            EC = (False, min_color, alt_subcolor, True)
                 else:
-                    orig_colors[c] = next_orig_color
-                    orig_colors[d] = next_orig_color
+                    # The canonicalizing code does not require that all colors in
+                    #   orig_colors be in the range 0 - max_C
+                    if directed:
+                        orig_colors[c] = next_orig_color
+                        orig_colors[d] = next_orig_color + 1
+                    else:
+                        orig_colors[c] = next_orig_color
+                        orig_colors[d] = next_orig_color
 
-                new_colors = __new_color_partitioning__(new_node_to_old, orig_colors)
+                    new_colors = \
+                        __new_color_partitioning__(new_node_to_old, orig_colors)
 
-                EC = __canon_rep__(new_node_to_old, new_neighbors_collections, \
-                                   new_colors, orig_colors, \
-                                   observed_edge_types, \
-                                   directed, has_edge_types)
+                    EC = __canon_rep__(new_node_to_old, new_neighbors_collections, \
+                                       new_colors, orig_colors, \
+                                       observed_edge_types, \
+                                       directed, has_edge_types)
 
                 orig_colors[a] = old_a_color
                 orig_colors[b] = old_b_color
@@ -262,310 +402,33 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                             positives_in_edge_class[label] = 0
                         positives_in_edge_class[label] += 1
 
+    session.end_session()
+    return (basic_edge_classes, positives_in_edge_class)
 
-    print("#")
-    print("#  %d Edge Classes for %d Total Edges" % \
-                    (len(basic_edge_classes), total_edges))
-    print("#")
-    # for (ec, count) in basic_edge_classes.items():
-    #     print("%s -- %d" % (ec, count))
+# NOTE: Destroys `results`
+def __parallel_aggregator__(results):
+    (basic_edge_classes, positives_in_edge_class) = results[0]
+    results[0] = None
 
-    full_edge_classes = []
-    next_int_label = 0
-    for label, c in positives_in_edge_class.items():
-        (EC, _) = label
-        full_edge_classes.append((next_int_label, basic_edge_classes[EC], c))
-        next_int_label += 1
+    for i in range(1, len(results)):
+        (proc_bec, proc_piec) = results[i]
+        results[i] = None
 
-    return full_edge_classes
-
-def OLD_get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
-                                         directed, \
-                                         has_edge_types, \
-                                         true_edges, k):
-    assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
-
-    if type(true_edges) is not list:
-        true_edges = list(true_edges)
-
-    num_nodes = len(neighbors_collections)
-
-    if directed:
-        if has_edge_types:
-            neighbors = [set([n for n, _ in d.items()]) \
-                            for d in neighbors_collections]
-            for a in range(0, num_nodes):
-                for b, _ in neighbors_collections[a].items():
-                    neighbors[b].add(a)
-        else:
-            neighbors = [set(nc) for nc in neighbors_collections]
-            for a in range(0, num_nodes):
-                for b in neighbors_collections[a]:
-                    neighbors[b].add(a)
-    else:
-        if has_edge_types:
-            neighbors = [set([n for n, _ in d.items()]) \
-                            for d in neighbors_collections]
-        else:
-            neighbors = [set(nc) for nc in neighbors_collections]
-
-    if type(orig_colors[0]) is list:
-        orig_partitions = orig_colors
-        next_color = len(orig_partitions)
-
-        orig_colors = [0 for _ in range(0, num_nodes)]
-        for i in range(0, orig_partitions):
-            for n in orig_partitions[i]:
-                orig_colors[n] = i
-    else:
-        next_color = max(orig_colors) + 1
-        orig_partitions = [[] for _ in range(0, next_color)]
-        for n in range(0, num_nodes):
-            orig_partitions[orig_colors[n]].append(n)
-
-    # Note: Make sure to use the _external_, _base_ colors when making a
-    #   canonical representation of a subgraph.
-    main_session = \
-        RAMFriendlyNTSession(directed=directed, \
-                             has_edge_types=has_edge_types, \
-                             neighbors_collections=neighbors_collections, \
-                             only_one_call=False, \
-                             kill_py_graph=False, \
-                             mode="Traces")
-    main_session.set_colors_by_partitions(orig_partitions)
-
-    base_orbits = main_session.get_automorphism_orbits()
-    no = main_session.get_num_automorphisms()
-    main_session.run()
-    base_orbits = base_orbits.get()
-    no = no.get()
-
-    base_orbit_colors = [0 for _ in range(0, num_nodes)]
-    for i in range(0, len(base_orbits)):
-        for n in base_orbits[i]:
-            base_orbit_colors[n] = i
-
-    main_cell_sizes = [len(o) for o in base_orbits]
-
-    print("  Found %d base orbits for %d nodes" % \
-            (len(base_orbits), num_nodes))
-    print("  There were a total of %s automorphisms." % no)
-
-    # TODO: Since it seems most graphs are almost rigid, simplify the code
-    #   below by looking at every single non-edge.
-    avg_nontrivial_orbit_size = 0
-    num_nontrivial_orbits = 0
-    avg_degree_of_node_in_nt_orbit = 0
-    num_nodes_in_nt_orbits = 0
-    for o in base_orbits:
-        if len(o) > 1:
-            num_nodes_in_nt_orbits += len(o)
-            num_nontrivial_orbits += 1
-            avg_nontrivial_orbit_size += len(o)
-            avg_degree_of_node_in_nt_orbit += len(o) * len(neighbors_collections[o[0]])
-    
-    if num_nodes_in_nt_orbits > 0:
-        avg_degree_of_node_in_nt_orbit /= float(num_nodes_in_nt_orbits)
-        avg_nontrivial_orbit_size /= float(num_nontrivial_orbits)
-        print("Num non-trivial orbits: %d (average size of %f)" % \
-                (num_nontrivial_orbits, avg_nontrivial_orbit_size))
-        print("Num nodes in nt orbits: %d (average degree of %f)" % \
-                (num_nodes_in_nt_orbits, avg_degree_of_node_in_nt_orbit))
-
-    positives_in_edge_class = {}
-    print("Proceeding to get edge classes for the true edges.")
-    identifier = 0
-    percent_done = 0
-    for i in range(0, len(true_edges)):
-        percent = int((100 * i) / len(true_edges))
-        if percent > percent_done:
-            percent_done = percent
-            print("%d percent done" % percent_done)
-            sys.stdout.flush()
-
-        if has_edge_types:
-            (a, identifier, b) = true_edges[i]
-        else:
-            (a, b) = true_edges[i]
-
-        main_a_color = base_orbit_colors[a]
-        main_b_color = base_orbit_colors[b]
-        a_cell_size = main_cell_sizes[main_a_color]
-        b_cell_size = main_cell_sizes[main_b_color]
-        if a_cell_size == 1 or b_cell_size == 1:
-            if directed:
-                edge_class = (main_a_color, main_b_color, False)
+        for label, c in proc_piec.items():
+            if label not in positives_in_edge_class:
+                positives_in_edge_class[label] = c
             else:
-                edge_class = (min(main_a_color, main_b_color), \
-                              max(main_a_color, main_b_color), False)
-        else:
-            if directed:
-                singleton_node = a
-                other_node = b
-                old_cell = main_a_color
+                positives_in_edge_class[label] += c
+        del proc_piec
+
+        for EC, c in proc_bec.items():
+            if EC not in basic_edge_classes:
+                basic_edge_classes[EC] = c
             else:
-                if main_a_color <= main_b_color:
-                    singleton_node = a
-                    other_node = b
-                    old_cell = main_a_color
-                else:
-                    singleton_node = b
-                    other_node = a
-                    old_cell = main_b_color
+                basic_edge_classes[EC] += c
+        del proc_bec
+    return (basic_edge_classes, positives_in_edge_class)
 
-            base_orbits[old_cell].remove(singleton_node)
-            base_orbits.append([singleton_node])
-
-            main_session.set_colors_by_partitions(base_orbits)
-            sub_orbits = main_session.get_automorphism_orbits()
-            main_session.run()
-            sub_orbits = sub_orbits.get()
-            base_orbits[old_cell].append(singleton_node)
-            base_orbits.pop()
-
-            for j in range(0, len(sub_orbits)):
-                if other_node in sub_orbits[j]:
-                    sub_node_color = j
-                    break
-
-            edge_class = (old_cell, sub_node_color, True)
-
-        if edge_class not in positives_in_edge_class:
-            positives_in_edge_class[edge_class] = {}
-        if identifier not in positives_in_edge_class[edge_class]:
-            positives_in_edge_class[edge_class][identifier] = 0
-        positives_in_edge_class[edge_class][identifier] += 1
-
-
-    print("Proceeding to get k_hop_classes for _all_ edge classes.")
-
-    k_hop_edge_classes = set()
-    class_sizes = {}
-    positives_in_kh_class = {}
-
-    # IMPORTANT NOTE: The subsequent node needs to assign edge classes in
-    #   exactly the same way even though the above code loops through edges
-    #   differently.
-    #
-    # The code above looks at all (x, y) pairs given in true edges.
-    # The code below looks at a single representative x from EACH base orbit.
-    #   It then looks at a representative y from each sub-orbit obtained after
-    #   making x a singleton.
-
-    t = None
-    percent_done = 0
-    for i in range(0, len(base_orbits)):
-        percent = int((100 * i) / len(base_orbits))
-        if percent > percent_done:
-            percent_done = percent
-            print("%d percent done with ALL edge types" % percent_done)
-            sys.stdout.flush()
-
-        a = min(base_orbits[i])
-        main_a_color = i
-        a_cell_size = main_cell_sizes[main_a_color]
-        b_candidates = []
-        if a_cell_size == 1:
-            if directed:
-                start = 0
-            else:
-                start = i + 1
-            for j in range(start, len(base_orbits)):
-                if j == i:
-                    continue
-                b = base_orbits[j][0]
-                main_b_color = j
-                b_cell_size = main_cell_sizes[main_b_color]
-
-                # a's color denotes whether or not b's color is from a
-                #   subcoloring
-                edge_class = (main_a_color, main_b_color, False)
-
-                b_candidates.append((b, b_cell_size, edge_class))
-        else:
-            base_orbits.append([a])
-            base_orbits[main_a_color].remove(a)
-            main_session.set_colors_by_partitions(base_orbits)
-            base_orbits[main_a_color].append(a)
-            base_orbits.pop()
-            sub_orbits = main_session.get_automorphism_orbits()
-            main_session.run()
-            sub_orbits = sub_orbits.get()
-            for j in range(0, len(sub_orbits)):
-                b = min(sub_orbits[j])
-                if b == a:
-                    continue
-                if directed or a < b:
-                    if len(base_orbits[base_orbit_colors[b]]) == 1:
-                        if directed:
-                            edge_class = (main_a_color, base_orbit_colors[b], False)
-                        else:
-                            min_ = min(base_orbit_colors[b], main_a_color)
-                            max_ = max(base_orbit_colors[b], main_a_color)
-                            edge_class = (min_, max_, False)
-                    else:
-                        edge_class = (main_a_color, j, True)
-                    b_candidates.append((b, a_cell_size * len(sub_orbits[j]), \
-                                         edge_class))
-
-        for (b, main_size, edge_class) in b_candidates:
-
-            orig_a_color = orig_colors[a]
-            orig_b_color = orig_colors[b]
-            # orig_a_partition_size = len(orig_partitions[a])
-            # orig_b_partition_size = len(orig_partitions[b])
-
-            # The canonicalizing code does not require that all colors in
-            #   orig_colors be in the range 0 - max_C
-            if directed:
-                orig_colors[a] = next_color
-                orig_colors[b] = next_color + 1
-            else:
-                orig_colors[a] = next_color
-                orig_colors[b] = next_color
-
-            # Set k_hop_class via a canonicalization around (a, b).
-            relevant_nodes = __k_hop_nodes__(neighbors, k, [a, b])
-
-            (sorted_sub_nodes_list, sub_neighbors_collections, \
-                sub_colors, observed_edge_types) = \
-                    __induced_subgraph__(neighbors_collections, \
-                                         orig_colors, \
-                                         relevant_nodes, \
-                                         has_edge_types)
-            
-            k_hop_class = __canon_rep__(sorted_sub_nodes_list, \
-                                        sub_neighbors_collections, \
-                                        sub_colors, orig_colors, \
-                                        observed_edge_types, \
-                                        directed, has_edge_types)
-
-            orig_colors[a] = orig_a_color
-            orig_colors[b] = orig_b_color
-
-            if k_hop_class not in k_hop_edge_classes:
-                k_hop_edge_classes.add(k_hop_class)
-                class_sizes[k_hop_class] = 0
-
-                # TODO: Figure out how to get positives in class via the code above.
-                positives_in_kh_class[k_hop_class] = {}
-            class_sizes[k_hop_class] += main_size
-
-            if edge_class in positives_in_edge_class:
-                for identifier, positives in \
-                        positives_in_edge_class[edge_class].items():
-                    if identifier not in positives_in_kh_class[k_hop_class]:
-                        positives_in_kh_class[k_hop_class][identifier] = 0
-                    positives_in_kh_class[k_hop_class][identifier] += positives
-
-    main_session.end_session()
-
-    class_info = []
-    for khc in k_hop_edge_classes:
-        for identifier, positives in positives_in_kh_class[khc].items():
-            class_info.append(((khc, identifier), class_sizes[khc], positives))
-    print("There were a total of %d edge and non-edge classes." % len(k_hop_edge_classes))
-    return class_info
 
 def __k_hop_nodes__(neighbors, k, init_nodes):
     visited = set(init_nodes)
@@ -632,6 +495,13 @@ def __new_color_partitioning__(new_node_to_old, node_colors):
     del ncs
     return new_colors
 
+class __IDENTITY_ACCESS__:
+
+    def __init__(self):
+        pass
+
+    def __getitem__(i):
+        return i
 
 def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
                   observed_edge_types, directed, has_edge_types):
@@ -662,4 +532,4 @@ def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
     old_colors_in_order = \
         tuple([old_colors[new_node_to_old[n]] for n in range(0, len(node_order))])
 
-    return (num_nodes, observed_edge_types, edge_list, old_colors_in_order)
+    return (True, num_nodes, observed_edge_types, edge_list, old_colors_in_order)

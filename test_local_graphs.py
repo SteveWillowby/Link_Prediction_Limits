@@ -1,6 +1,5 @@
 from graph_loader import read_graph, random_edge_remover
-from link_pred_class_info import get_class_info_for_target_triples, \
-                                 get_k_hop_info_classes_for_link_pred
+from link_pred_class_info import get_k_hop_info_classes_for_link_pred
 from max_score_functions import get_max_AUPR, get_max_ROC
 import sys
 
@@ -16,6 +15,9 @@ if __name__ == "__main__":
               ("wiki-en-additions.g", True), \
               ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
                     "FB15k-237/FB15k-237_nodes.txt", True)]:
+
+        if ("karate" not in t[0] and "eucore" not in t[0]):
+            continue
 
         if len(t) == 2:
             (name, directed) = t
@@ -41,7 +43,9 @@ if __name__ == "__main__":
                         directed=directed, \
                         has_edge_types=has_edge_types, \
                         true_edges=true_edges, \
-                        k=1)
+                        k=1, \
+                        num_processes=6, \
+                        num_threads_per_process=1)
         sys.stdout.flush()
 
         if len(true_edges) == 0:
