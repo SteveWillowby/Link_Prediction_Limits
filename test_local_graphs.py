@@ -12,11 +12,13 @@ if __name__ == "__main__":
               ("college-temporal.g", True), \
               ("citeseer.g", True), \
               ("cora.g", True), \
-              ("wiki-en-additions.g", True), \
               ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
-                    "FB15k-237/FB15k-237_nodes.txt", True)]:
+                    "FB15k-237/FB15k-237_nodes.txt", True), \
+              ("wiki-en-additions.g", True)]:
 
-        if ("karate" not in t[0] and "eucore" not in t[0]):
+        # if ("karate" not in t[0] and "eucore" not in t[0]):
+        #     continue
+        if ("wiki" in t[0]):
             continue
 
         if len(t) == 2:
