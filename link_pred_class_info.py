@@ -157,10 +157,13 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         for n in orbit_partitions[i]:
             orbit_colors[n] = i
 
+    ntpp = num_threads_per_process
+    np = num_processes
+
     if num_processes > 1:
 
         args = [(i, k, neighbors_collections, neighbors, directed, has_edge_types, \
-                 int(total_iterations / (num_processes * num_threads_per_process)), \
+                 int((total_iterations + np * ntpp - 1) / (np * ntpp)), \
                  true_edges, num_nodes, \
                  orig_colors, orig_partitions, next_orig_color, \
                  orbit_colors, orbit_partitions, \
@@ -180,7 +183,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         assert num_processes > 0
         # num_processes = 1. Avoid copying data.
         arg = (0, k, neighbors_collections, neighbors, directed, has_edge_types, \
-                 int(total_iterations / num_threads_per_process), \
+                 int((total_iterations + ntpp - 1) / ntpp), \
                  true_edges, num_nodes, \
                  orig_colors, orig_partitions, next_orig_color, \
                  orbit_colors, orbit_partitions, \
