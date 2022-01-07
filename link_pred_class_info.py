@@ -233,17 +233,21 @@ def __parallel_proc_func__(arg):
       {}, {}) \
         for i in range(0, num_threads_per_process)]
 
-    # TODO: Figure out threads.
-    threads = [Thread((__parallel_collection_function__, args[i])) \
+    result = [None for i in range(0, num_threads_per_process)]
+    funcs = [(lambda i: (lambda: __thread_collection_overlay__(args, result, i)))(j) \
+                for j in range(0, num_threads_per_process)]
+
+    threads = [Thread(target=funcs[i]) \
                 for i in range(0, num_threads_per_process)]
-    for t in thread:
+    for t in threads:
         t.start()
-    for t in thread:
+    for t in threads:
         t.join()
 
-    result = [(args[i][-2], args[i][-1]) \
-                for i in range(0, num_threads_per_process)]
     return __parallel_aggregator__(result)
+
+def __thread_collection_overlay__(arg_array, result_array, idx):
+    result_array[idx] = __parallel_collection_function__(arg_array[idx])
 
 def __parallel_collection_function__(arg):
 
