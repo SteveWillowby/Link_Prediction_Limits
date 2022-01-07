@@ -124,13 +124,20 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         else:
             neighbors = [set(nc) for nc in neighbors_collections]
 
+    num_edges = sum([len(nc) for nc in neighbors_collections])
+    if not directed:
+        assert num_edges % 2 == 0
+        num_edges = int(num_edges / 2)
+
     total_iterations = int((num_nodes * (num_nodes - 1)) / 2) + \
-                       int(self_loops_in_true_edges) * num_nodes
+                       int(self_loops_in_true_edges) * num_nodes - \
+                       int(not has_repeat_edges) * num_edges
     if directed:
-        total_edges = num_nodes * (num_nodes - 1) + \
-                      int(self_loops_in_true_edges) * num_nodes
+        observed_edges = num_nodes * (num_nodes - 1) + \
+                         int(self_loops_in_true_edges) * num_nodes - \
+                         int(not has_repeat_edges) * num_edges
     else:
-        total_edges = total_iterations
+        observed_edges = total_iterations
 
     # Get the orbits for the base graph in case k = "inf" or in case all the
     #   nodes within k hops form the entire graph.
@@ -185,8 +192,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
 
 
     print("#")
-    print("#  %d Edge Classes for %d Total Edges" % \
-                    (len(basic_edge_classes), total_edges))
+    print("#  %d Edge Classes for %d Observed Edges" % \
+                    (len(basic_edge_classes), observed_edges))
     print("#")
     # for (ec, count) in basic_edge_classes.items():
     #     print("%s -- %d" % (ec, count))
@@ -245,8 +252,6 @@ def __parallel_collection_function__(arg):
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class) = arg
 
-    parallelism = num_processes * num_threads_per_process
-
     session = RAMFriendlyNTSession(directed=directed, \
                                    has_edge_types=has_edge_types, \
                                    neighbors_collections=neighbors_collections, \
@@ -255,10 +260,16 @@ def __parallel_collection_function__(arg):
                                    tmp_file_augment="%d" % proc_thread_idx, \
                                    mode="Traces")
 
+    parallelism = num_processes * num_threads_per_process
+    parallelism_2x = 2 * parallelism
+    task_type_A = proc_thread_idx
+    task_type_B = parallelism_2x - (proc_thread_idx + 1)
+
     iteration = 0
     percent_done = 0
     for a in range(0, num_nodes):
-        if a % parallelism != proc_thread_idx:
+        if (a % parallelism_2x != task_type_A) and \
+                (a % parallelism_2x != task_type_B):
             continue
         for b in range(a + int(not self_loops_in_true_edges), num_nodes):
             # Only print progress if you are the first process.
