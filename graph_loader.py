@@ -6,6 +6,8 @@ import random
 #   -- Given a value p from the range (0, 1), returns a lambda function
 #       that returns true with probability p.
 #
+# read_edges(edge_list_filename, directed)
+#   returns a list of edges
 #
 # read_graph(edge_list_filename, directed, 
 #            node_list_filename=None,
@@ -269,6 +271,38 @@ def read_graph(edge_list_filename, directed, \
 
     return ((directed, has_edge_types, nodes, neighbors_collections), \
                 node_types, removed_edges)
+
+def read_edges(edge_list_filename, directed):
+    f = open(edge_list_filename, "r")
+    edges = []
+    has_edge_types = None
+
+    for line in f:
+        line = line.strip()
+        line = line.split(" ")
+        if has_edge_types is None:
+            has_edge_types = len(line) == 3
+        if len(line) != 2 + int(has_edge_types):
+            raise ValueError(\
+                    ("Error! All lines in %s" % edge_list_filename) + \
+                    " must have the same number of integers: 2 or 3.")
+
+        source = int(line[0])
+        target = int(line[1])
+        if not directed:
+            a = min(source, target)
+            b = max(source, target)
+            source = a
+            target = b
+
+        if has_edge_types:
+            edge_type = int(line[2])
+            edges.append((source, edge_type, target))
+        else:
+            edges.append((source, target))
+
+    f.close()
+    return edges
 
 def random_edge_remover(p):
     if p <= 0.0 or p >= 1.0:
