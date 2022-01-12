@@ -1,0 +1,173 @@
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4907 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  1604006 Edge Classes for 7330556 Observed Edges
+#
+Num True Edges: 522
+Num Classes: 510
+Average Class Size: 517.050980
+T/P: 505.164751
+T: 263696, P: 522, N: 263174
+Max ROC: 0.938767
+Max AUPR: 0.389566
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4904 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  1643784 Edge Classes for 7330556 Observed Edges
+#
+Num True Edges: 525
+Num Classes: 514
+Average Class Size: 463.029183
+T/P: 453.327619
+T: 237997, P: 525, N: 237472
+Max ROC: 0.924305
+Max AUPR: 0.410951
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4837 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  1603742 Edge Classes for 7330556 Observed Edges
+#
+Num True Edges: 592
+Num Classes: 582
+Average Class Size: 528.946735
+T/P: 520.891709
+T: 307847, P: 591, N: 307256
+Max ROC: 0.939425
+Max AUPR: 0.405284
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4846 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  1591780 Edge Classes for 7330556 Observed Edges
+#
+Num True Edges: 583
+Num Classes: 570
+Average Class Size: 392.766667
+T/P: 384.008576
+T: 223877, P: 583, N: 223294
+Max ROC: 0.932119
+Max AUPR: 0.409090
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4915 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  1653244 Edge Classes for 7330556 Observed Edges
+#
+Num True Edges: 514
+Num Classes: 502
+Average Class Size: 403.274900
+T/P: 393.859922
+T: 202444, P: 514, N: 201930
+Max ROC: 0.941958
+Max AUPR: 0.400270
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4925 edges, 1 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
