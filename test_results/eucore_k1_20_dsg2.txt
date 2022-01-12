@@ -1,0 +1,640 @@
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 570 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22410 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  898826 Edge Classes for 987615 Observed Edges
+#
+Num True Edges: 2591
+Num Classes: 2590
+Average Class Size: 1.025869
+T/P: 1.025473
+T: 2657, P: 2591, N: 66
+Max ROC: 0.999143
+Max AUPR: 0.999978
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 582 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22493 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  890765 Edge Classes for 987532 Observed Edges
+#
+Num True Edges: 2496
+Num Classes: 2492
+Average Class Size: 1.026485
+T/P: 1.024840
+T: 2558, P: 2496, N: 62
+Max ROC: 0.998165
+Max AUPR: 0.999955
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 576 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22422 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  888111 Edge Classes for 987603 Observed Edges
+#
+Num True Edges: 2573
+Num Classes: 2569
+Average Class Size: 1.065006
+T/P: 1.063350
+T: 2736, P: 2573, N: 163
+Max ROC: 0.998511
+Max AUPR: 0.999908
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 573 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22401 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  891120 Edge Classes for 987624 Observed Edges
+#
+Num True Edges: 2597
+Num Classes: 2595
+Average Class Size: 1.048940
+T/P: 1.048132
+T: 2722, P: 2597, N: 125
+Max ROC: 0.998461
+Max AUPR: 0.999928
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 581 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22417 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  890555 Edge Classes for 987608 Observed Edges
+#
+Num True Edges: 2573
+Num Classes: 2572
+Average Class Size: 1.060264
+T/P: 1.059852
+T: 2727, P: 2573, N: 154
+Max ROC: 0.998685
+Max AUPR: 0.999924
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 576 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22462 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  892516 Edge Classes for 987563 Observed Edges
+#
+Num True Edges: 2533
+Num Classes: 2530
+Average Class Size: 1.036364
+T/P: 1.035136
+T: 2622, P: 2533, N: 89
+Max ROC: 0.997833
+Max AUPR: 0.999925
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 585 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22483 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  889162 Edge Classes for 987542 Observed Edges
+#
+Num True Edges: 2503
+Num Classes: 2503
+Average Class Size: 1.082701
+T/P: 1.082701
+T: 2710, P: 2503, N: 207
+Max ROC: 0.998791
+Max AUPR: 0.999904
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 574 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22470 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  894710 Edge Classes for 987555 Observed Edges
+#
+Num True Edges: 2527
+Num Classes: 2526
+Average Class Size: 1.027316
+T/P: 1.026909
+T: 2595, P: 2527, N: 68
+Max ROC: 0.998536
+Max AUPR: 0.999961
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 581 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22365 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  892326 Edge Classes for 987660 Observed Edges
+#
+Num True Edges: 2625
+Num Classes: 2624
+Average Class Size: 1.030869
+T/P: 1.030476
+T: 2705, P: 2625, N: 80
+Max ROC: 0.998919
+Max AUPR: 0.999968
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 584 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22426 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  887531 Edge Classes for 987599 Observed Edges
+#
+Num True Edges: 2561
+Num Classes: 2558
+Average Class Size: 1.063331
+T/P: 1.062085
+T: 2720, P: 2561, N: 159
+Max ROC: 0.997844
+Max AUPR: 0.999870
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 572 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22460 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  898826 Edge Classes for 987565 Observed Edges
+#
+Num True Edges: 2539
+Num Classes: 2536
+Average Class Size: 1.027208
+T/P: 1.025994
+T: 2605, P: 2539, N: 66
+Max ROC: 0.998893
+Max AUPR: 0.999972
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 576 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22377 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  896433 Edge Classes for 987648 Observed Edges
+#
+Num True Edges: 2618
+Num Classes: 2617
+Average Class Size: 1.027130
+T/P: 1.026738
+T: 2688, P: 2618, N: 70
+Max ROC: 0.998704
+Max AUPR: 0.999966
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 580 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22410 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  894701 Edge Classes for 987615 Observed Edges
+#
+Num True Edges: 2581
+Num Classes: 2581
+Average Class Size: 1.026734
+T/P: 1.026734
+T: 2650, P: 2581, N: 69
+Max ROC: 0.999245
+Max AUPR: 0.999980
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 574 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22481 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  895120 Edge Classes for 987544 Observed Edges
+#
+Num True Edges: 2516
+Num Classes: 2514
+Average Class Size: 1.019889
+T/P: 1.019078
+T: 2564, P: 2516, N: 48
+Max ROC: 0.999205
+Max AUPR: 0.999985
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 588 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22468 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  888114 Edge Classes for 987557 Observed Edges
+#
+Num True Edges: 2515
+Num Classes: 2514
+Average Class Size: 1.050517
+T/P: 1.050099
+T: 2641, P: 2515, N: 126
+Max ROC: 0.998630
+Max AUPR: 0.999933
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 573 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22550 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  891084 Edge Classes for 987475 Observed Edges
+#
+Num True Edges: 2448
+Num Classes: 2448
+Average Class Size: 1.042075
+T/P: 1.042075
+T: 2551, P: 2448, N: 103
+Max ROC: 0.998951
+Max AUPR: 0.999957
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 570 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22316 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  895486 Edge Classes for 987709 Observed Edges
+#
+Num True Edges: 2685
+Num Classes: 2684
+Average Class Size: 1.050671
+T/P: 1.050279
+T: 2820, P: 2685, N: 135
+Max ROC: 0.999201
+Max AUPR: 0.999961
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 587 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22431 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  888574 Edge Classes for 987594 Observed Edges
+#
+Num True Edges: 2553
+Num Classes: 2553
+Average Class Size: 1.059146
+T/P: 1.059146
+T: 2704, P: 2553, N: 151
+Max ROC: 0.998320
+Max AUPR: 0.999904
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 582 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22433 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  883778 Edge Classes for 987592 Observed Edges
+#
+Num True Edges: 2556
+Num Classes: 2556
+Average Class Size: 1.083725
+T/P: 1.083725
+T: 2770, P: 2556, N: 214
+Max ROC: 0.998307
+Max AUPR: 0.999864
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 584 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22372 edges, 2 node types (accounting for self-loops), and 1 edge types.
+    Roughly 1 percent done.
+    Roughly 2 percent done.
+    Roughly 3 percent done.
+    Roughly 4 percent done.
+    Roughly 5 percent done.
+    ...
+    Roughly 10 percent done.
+    Roughly 15 percent done.
+    Roughly 20 percent done.
+    Roughly 25 percent done.
+    Roughly 30 percent done.
+    ...
+    Roughly 40 percent done.
+    Roughly 50 percent done.
+    Roughly 60 percent done.
+    Roughly 70 percent done.
+    Roughly 80 percent done.
+    Roughly 90 percent done.
+    Roughly 100 percent done.
+#
+#  895241 Edge Classes for 987653 Observed Edges
+#
+Num True Edges: 2615
+Num Classes: 2611
+Average Class Size: 1.028342
+T/P: 1.026769
+T: 2685, P: 2615, N: 70
+Max ROC: 0.998929
+Max AUPR: 0.999972
