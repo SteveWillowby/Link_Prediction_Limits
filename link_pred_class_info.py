@@ -26,7 +26,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          true_edges, k, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
-                                         use_HC_iso=False):
+                                         use_HC_iso=False, \
+                                         print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
 
@@ -211,7 +212,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
-                 num_processes, num_threads_per_process, {}, {}) \
+                 num_processes, num_threads_per_process, {}, {}, \
+                 print_progress) \
                         for i in range(0, num_processes)]
  
         process_pool = Pool(num_processes)
@@ -231,7 +233,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
-                 1, num_threads_per_process, {}, {})
+                 1, num_threads_per_process, {}, {}, \
+                 print_progress)
 
         (basic_edge_classes, positives_in_edge_class) = \
             __parallel_proc_func__(arg)
@@ -259,7 +262,7 @@ def __parallel_proc_func__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
-     num_processes, num_threads_per_process, _, __) = arg
+     num_processes, num_threads_per_process, _, __,  print_progress) = arg
 
     if num_threads_per_process == 1:
         return __parallel_collection_function__(arg)
@@ -274,7 +277,7 @@ def __parallel_proc_func__(arg):
          Coloring(orbit_colors), None, \
          self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
          num_processes, num_threads_per_process, \
-         {}, {}) \
+         {}, {}, print_progress) \
             for i in range(0, num_threads_per_process)]
     else:
         args = [\
@@ -286,7 +289,7 @@ def __parallel_proc_func__(arg):
          list(orbit_colors), [list(o) for o in orbit_partitions], \
          self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
          num_processes, num_threads_per_process, \
-         {}, {}) \
+         {}, {}, print_progress) \
             for i in range(0, num_threads_per_process)]
 
     result = [None for i in range(0, num_threads_per_process)]
@@ -313,7 +316,7 @@ def __parallel_collection_function__(arg):
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
      num_processes, num_threads_per_process, \
-     basic_edge_classes, positives_in_edge_class) = arg
+     basic_edge_classes, positives_in_edge_class, print_progress) = arg
 
     if not use_HC_iso:
         (neighbors_collections, neighbors) = graph
@@ -345,9 +348,11 @@ def __parallel_collection_function__(arg):
                 if percent_done < 5 or \
                         (percent_done <= 30 and percent_done % 5 == 0) or \
                         (percent_done <= 100 and percent_done % 10 == 0):
-                    print("    Roughly %d percent done." % percent_done)
+                    if print_progress:
+                        print("    Roughly %d percent done." % percent_done)
                 if percent_done in [5, 30]:
-                    print("    ...")
+                    if print_progress:
+                        print("    ...")
                 sys.stdout.flush()
             iteration += 1
 
