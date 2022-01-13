@@ -59,6 +59,9 @@ class GraphView:
             self.__m__ = 0
             for neighbors in neighbors_list:
                 self.__m__ += len(neighbors)
+            if not directed:
+                assert self.__m__ % 2 == 0
+                self.__m__ /= 2
 
         # We give multiple names to the functions in case the expected interface
         #   is different.

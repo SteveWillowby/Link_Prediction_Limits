@@ -208,8 +208,8 @@ def __BCT_generic_set_isub__(A, B):
             A.discard(elt)
     return A
 
-__default_set_type__ = Set
-__default_dict_type__ = Dict
+__default_set_type__ = set
+__default_dict_type__ = dict
 __default_list_type__ = list
 
 def default_set(arg=None, copy=True):
