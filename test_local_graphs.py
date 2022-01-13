@@ -88,7 +88,8 @@ if __name__ == "__main__":
                         true_edges=true_edges, \
                         k=k, \
                         num_processes=np, \
-                        num_threads_per_process=ntpp)
+                        num_threads_per_process=ntpp, \
+                        use_HC_iso=True)
         sys.stdout.flush()
 
         if len(true_edges) == 0:
