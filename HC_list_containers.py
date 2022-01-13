@@ -1,10 +1,10 @@
-from basic_container_types import Sorted, Indexed, SetLike, DictLike, \
-                                    __BCT_generic_set_or__, \
-                                    __BCT_generic_set_and__, \
-                                    __BCT_generic_set_sub__, \
-                                    __BCT_generic_set_ior__, \
-                                    __BCT_generic_set_iand__, \
-                                    __BCT_generic_set_isub__
+from HC_basic_container_types import Sorted, Indexed, SetLike, DictLike, \
+                                      __BCT_generic_set_or__, \
+                                      __BCT_generic_set_and__, \
+                                      __BCT_generic_set_sub__, \
+                                      __BCT_generic_set_ior__, \
+                                      __BCT_generic_set_iand__, \
+                                      __BCT_generic_set_isub__
 
 # A set class. It uses lists rather than hash tables to save space.
 #   However, this can incur large computation costs for certain operations.
