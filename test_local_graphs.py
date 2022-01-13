@@ -27,7 +27,7 @@ if __name__ == "__main__":
     np = int(argv[1])
     ntpp = int(argv[2])
     k = argv[3]
-    if k != "inf":
+    if k != "inf" and k != "all":
         k = int(k)
     num_runs = int(argv[4])
     graph_name = argv[5]
@@ -80,28 +80,84 @@ if __name__ == "__main__":
 
         sys.stdout.flush()
 
-        class_info = get_k_hop_info_classes_for_link_pred(\
-                        neighbors_collections=neighbors_collections, \
-                        orig_colors=node_coloring, \
-                        directed=directed, \
-                        has_edge_types=has_edge_types, \
-                        true_edges=true_edges, \
-                        k=k, \
-                        num_processes=np, \
-                        num_threads_per_process=ntpp, \
-                        use_HC_iso=True)
-        sys.stdout.flush()
-
-        if len(true_edges) == 0:
-            print("There were no test given edges for this graph.")
+        if k == "all":
+            assert len(true_edges) > 0
+            k = "inf"
+            class_info = get_k_hop_info_classes_for_link_pred(\
+                            neighbors_collections=neighbors_collections, \
+                            orig_colors=node_coloring, \
+                            directed=directed, \
+                            has_edge_types=has_edge_types, \
+                            true_edges=true_edges, \
+                            k=k, \
+                            num_processes=np, \
+                            num_threads_per_process=ntpp, \
+                            use_HC_iso=True, \
+                            print_progress=False)
             sys.stdout.flush()
-            continue
+            print("k = %s" % k)
+            print("Num True Edges: %d" % len(true_edges))
+            print("Num Classes: %d" % len(class_info))
+            print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+            print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
+            inf_ROC = get_max_ROC(class_info)
+            inf_AUPR = get_max_AUPR(class_info)
+            print("Max ROC: %f" % inf_ROC)
+            print("Max AUPR: %f" % inf_AUPR)
+            sys.stdout.flush()
 
-        print("Num True Edges: %d" % len(true_edges))
-        print("Num Classes: %d" % len(class_info))
-        print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
-        print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
+            k = 1
+            k_ROC = None
+            k_AUPR = None
+            while k_ROC is None or k_ROC < inf_ROC or k_AUPR < inf_AUPR:
+                class_info = get_k_hop_info_classes_for_link_pred(\
+                                neighbors_collections=neighbors_collections, \
+                                orig_colors=node_coloring, \
+                                directed=directed, \
+                                has_edge_types=has_edge_types, \
+                                true_edges=true_edges, \
+                                k=k, \
+                                num_processes=np, \
+                                num_threads_per_process=ntpp, \
+                                use_HC_iso=True, \
+                                print_progress=False)
+                sys.stdout.flush()
+                print("k = %s" % k)
+                print("Num True Edges: %d" % len(true_edges))
+                print("Num Classes: %d" % len(class_info))
+                print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+                print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
+                k_ROC = get_max_ROC(class_info)
+                k_AUPR = get_max_AUPR(class_info)
+                print("Max ROC: %f" % k_ROC)
+                print("Max AUPR: %f" % k_AUPR)
+                sys.stdout.flush()
 
-        print("Max ROC: %f" % get_max_ROC(class_info))
-        print("Max AUPR: %f" % get_max_AUPR(class_info))
-        sys.stdout.flush()
+                k += 1
+
+        else:
+            class_info = get_k_hop_info_classes_for_link_pred(\
+                            neighbors_collections=neighbors_collections, \
+                            orig_colors=node_coloring, \
+                            directed=directed, \
+                            has_edge_types=has_edge_types, \
+                            true_edges=true_edges, \
+                            k=k, \
+                            num_processes=np, \
+                            num_threads_per_process=ntpp, \
+                            use_HC_iso=True)
+            sys.stdout.flush()
+
+            if len(true_edges) == 0:
+                print("There were no test given edges for this graph.")
+                sys.stdout.flush()
+                continue
+
+            print("Num True Edges: %d" % len(true_edges))
+            print("Num Classes: %d" % len(class_info))
+            print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+            print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
+
+            print("Max ROC: %f" % get_max_ROC(class_info))
+            print("Max AUPR: %f" % get_max_AUPR(class_info))
+            sys.stdout.flush()
