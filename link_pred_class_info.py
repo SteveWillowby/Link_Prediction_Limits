@@ -129,8 +129,13 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
             for a in range(0, num_nodes):
                 for b, t in neighbors_collections[a].items():
                     edge_types[(a, b)] = t
+            for a in range(0, num_nodes):
+                neighbors_collections[a] = \
+                    set([b for b, t in neighbors_collections[a].items()])
         else:
             edge_types = None
+            for a in range(0, num_nodes):
+                neighbors_collections[a] = set(neighbors_collections[a])
 
         graph = GraphView(directed, neighbors_list=neighbors_collections, \
                           edge_types=edge_types)
@@ -472,22 +477,46 @@ def __parallel_collection_function__(arg):
                     if use_HC_iso:
                         sub_coloring = Coloring(SubListView(orig_colors, \
                                                             sub_relabeling))
-                        # sub_coloring = Coloring(orig_sub_coloring)
+                        c_eq_d = c == d
+                        c_sub = sub_relabeling.old_to_new(c)
+                        d_sub = sub_relabeling.old_to_new(d)
+                        orig_c_color = orig_colors[c]
+                        orig_d_color = orig_colors[d]
 
-                        cd_relabeling = Relabeling(Relabeling.SUB_COLLECTION_TYPE, \
-                                                   [sub_relabeling.old_to_new(c), \
-                                                    sub_relabeling.old_to_new(d)])
-                        if directed:
-                            sub_coloring.refine_with(Coloring([0, 1]), \
-                                                     alt_relabeling=cd_relabeling)
+                        if c_eq_d:
+                            sub_coloring.make_singleton(c_sub)
                         else:
-                            sub_coloring.refine_with(Coloring([0, 0]), \
-                                                     alt_relabeling=cd_relabeling)
+                            cd_relabeling = Relabeling(Relabeling.SUB_COLLECTION_TYPE, \
+                                                       [c_sub, d_sub])
+                            assert cd_relabeling.old_to_new(c_sub) == 0
+                            assert cd_relabeling.old_to_new(d_sub) == 1
+                            if directed:
+                                sub_coloring.refine_with(Coloring([0, 1]), \
+                                                         alt_relabeling=cd_relabeling)
+                            else:
+                                sub_coloring.refine_with(Coloring([0, 0]), \
+                                                         alt_relabeling=cd_relabeling)
 
                         (_, sub_canon_order) = \
                             hopeful_canonicalizer(k_hop_subgraph, sub_coloring, \
                                                   return_canonical_order=True)
-                        EC = (True, canonical_representation(k_hop_subgraph, \
+                        if directed:
+                            EC = (True, c_eq_d, (orig_c_color, orig_d_color), \
+                                    canonical_representation(k_hop_subgraph, \
+                                                             sub_canon_order, \
+                                                             sub_coloring))
+                        else:
+                            first_color = orig_c_color
+                            second_color = orig_d_color
+                            for n in sub_canon_order:
+                                if n == c:
+                                    break
+                                if n == d:
+                                    first_color = orig_d_color
+                                    second_color = orig_c_color
+                                    break
+                            EC = (True, c_eq_d, (first_color, second_color), \
+                                    canonical_representation(k_hop_subgraph, \
                                                              sub_canon_order, \
                                                              sub_coloring))
                     else:
