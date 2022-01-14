@@ -219,10 +219,22 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         process_pool = Pool(num_processes)
         result = process_pool.map(__parallel_proc_func__, args, \
                                     chunksize=1)
+        if print_progress:
+            print("Got result. Closing pool...")
+            sys.stdout.flush()
         process_pool.close()
+        if print_progress:
+            print("Pool closed. Joining pool...")
+            sys.stdout.flush()
         process_pool.join()
+        if print_progress:
+            print("Pool joined. Aggregating results...")
+            sys.stdout.flush()
         (basic_edge_classes, positives_in_edge_class) = \
             __parallel_aggregator__(result)
+        if print_progress:
+            print("Results aggregated.")
+            sys.stdout.flush()
 
     else:
         assert num_processes > 0
@@ -564,6 +576,9 @@ def __parallel_collection_function__(arg):
 
     if not use_HC_iso:
         session.end_session()
+    if print_progress:
+        print("Process-thread idx %d finished collecting." % proc_thread_idx)
+        sys.stdout.flush()
     return (basic_edge_classes, positives_in_edge_class)
 
 # NOTE: Destroys `results`
