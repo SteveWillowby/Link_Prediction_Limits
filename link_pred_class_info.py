@@ -2,6 +2,7 @@ from HC_coloring import Coloring
 from HC_main_algorithm import hopeful_canonicalizer, canonical_representation
 from HC_relabeling import Relabeling
 from HC_views import GraphView, KHopSubGraphView, SubListView
+from hashlib import blake2b
 from multiprocessing import Pool
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
@@ -27,6 +28,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_HC_iso=False, \
+                                         hash_subgraphs=False, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
@@ -211,7 +213,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  true_edges, num_nodes, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
-                 self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+                 self_loops_in_true_edges, has_repeat_edges, \
+                 use_HC_iso, hash_subgraphs, \
                  num_processes, num_threads_per_process, {}, {}, \
                  print_progress) \
                         for i in range(0, num_processes)]
@@ -244,7 +247,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  true_edges, num_nodes, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
-                 self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+                 self_loops_in_true_edges, has_repeat_edges, \
+                 use_HC_iso, hash_subgraphs, \
                  1, num_threads_per_process, {}, {}, \
                  print_progress)
 
@@ -273,7 +277,8 @@ def __parallel_proc_func__(arg):
      avg_num_tasks, true_edges, num_nodes, \
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
-     self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+     self_loops_in_true_edges, has_repeat_edges, \
+     use_HC_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, _, __,  print_progress) = arg
 
     if num_threads_per_process == 1:
@@ -287,7 +292,8 @@ def __parallel_proc_func__(arg):
          Coloring(orig_colors), \
          next_orig_color, \
          Coloring(orbit_colors), None, \
-         self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+         self_loops_in_true_edges, has_repeat_edges, \
+         use_HC_iso, hash_subgraphs, \
          num_processes, num_threads_per_process, \
          {}, {}, print_progress) \
             for i in range(0, num_threads_per_process)]
@@ -299,7 +305,8 @@ def __parallel_proc_func__(arg):
          list(orig_colors), \
          next_orig_color, \
          list(orbit_colors), [list(o) for o in orbit_partitions], \
-         self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+         self_loops_in_true_edges, has_repeat_edges, \
+         use_HC_iso, hash_subgraphs, \
          num_processes, num_threads_per_process, \
          {}, {}, print_progress) \
             for i in range(0, num_threads_per_process)]
@@ -326,9 +333,13 @@ def __parallel_collection_function__(arg):
      avg_num_tasks, true_edges, num_nodes, \
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
-     self_loops_in_true_edges, has_repeat_edges, use_HC_iso, \
+     self_loops_in_true_edges, has_repeat_edges, \
+     use_HC_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class, print_progress) = arg
+
+    if hash_subgraphs:
+        HASH_BYTES = 64  # Can be anywhere between 1 and 64
 
     if not use_HC_iso:
         (neighbors_collections, neighbors) = graph
@@ -557,6 +568,11 @@ def __parallel_collection_function__(arg):
                         orig_colors[a] = old_a_color
                         orig_colors[b] = old_b_color
 
+                    if hash_subgraphs:
+                        h = blake2b(digest_size=HASH_BYTES)
+                        h.update(bytes(str(EC), 'ascii'))
+                        EC = h.digest()
+
                 if EC not in basic_edge_classes:
                     basic_edge_classes[EC] = 0
                 basic_edge_classes[EC] += 1
@@ -709,3 +725,18 @@ def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
         tuple([old_colors[new_node_to_old[n]] for n in node_order])
 
     return (True, num_nodes, observed_edge_types, edge_list, old_colors_in_order)
+
+if __name__ == "__main__":
+    EC_triangle = (True, (0, 0), ((0, 0, 0, 0), ((0, 1), (0, 2), (1, 2))), False)
+    EC_triangle_copy = tuple(EC_triangle)
+    EC_3_chain = (True, (0, 0), ((0, 0, 0, 0), ((0, 1), (1, 2), (2, 3))), False)
+
+    b = blake2b(digest_size=64)
+    b.update(bytes(str(EC_triangle), 'ascii'))
+    print(b.hexdigest())
+    b = blake2b(digest_size=64)
+    b.update(bytes(str(EC_triangle_copy), 'ascii'))
+    print(b.hexdigest())
+    b = blake2b(digest_size=64)
+    b.update(bytes(str(EC_3_chain), 'ascii'))
+    print(b.hexdigest())

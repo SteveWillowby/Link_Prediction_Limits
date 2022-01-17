@@ -82,6 +82,7 @@ if __name__ == "__main__":
 
         if k == "all":
             assert len(true_edges) > 0
+            # First do exact computations for k=inf and k=1.
             k = "inf"
             class_info = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
@@ -107,9 +108,38 @@ if __name__ == "__main__":
             sys.stdout.flush()
 
             k = 1
+            class_info = get_k_hop_info_classes_for_link_pred(\
+                            neighbors_collections=neighbors_collections, \
+                            orig_colors=node_coloring, \
+                            directed=directed, \
+                            has_edge_types=has_edge_types, \
+                            true_edges=true_edges, \
+                            k=k, \
+                            num_processes=np, \
+                            num_threads_per_process=ntpp, \
+                            use_HC_iso=True, \
+                            hash_subgraphs=False, \
+                            print_progress=False)
+            sys.stdout.flush()
+            print("k = %s" % k)
+            print("Num True Edges: %d" % len(true_edges))
+            print("Num Classes: %d" % len(class_info))
+            print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+            print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
+            inf_ROC = get_max_ROC(class_info)
+            inf_AUPR = get_max_AUPR(class_info)
+            print("Max ROC: %f" % inf_ROC)
+            print("Max AUPR: %f" % inf_AUPR)
+
+            # Second, interpolate using the hashed subgraphs.
+            print("-- Now Hashing Subgraphs --")
+            MARGIN = 0.001
+            k = 1
             k_ROC = None
             k_AUPR = None
-            while k_ROC is None or k_ROC < inf_ROC or k_AUPR < inf_AUPR:
+            while k_ROC is None or k_ROC < (inf_ROC - MARGIN) or \
+                                   k_AUPR < (inf_AUPR - MARGIN):
+
                 class_info = get_k_hop_info_classes_for_link_pred(\
                                 neighbors_collections=neighbors_collections, \
                                 orig_colors=node_coloring, \
@@ -120,6 +150,7 @@ if __name__ == "__main__":
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_HC_iso=True, \
+                                hash_subgraphs=True, \
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % k)
