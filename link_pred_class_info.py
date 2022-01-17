@@ -571,7 +571,7 @@ def __parallel_collection_function__(arg):
                     if hash_subgraphs:
                         h = blake2b(digest_size=HASH_BYTES)
                         h.update(bytes(str(EC), 'ascii'))
-                        EC = h.digest()
+                        EC = __ALREADY_HASHED_(h.digest())
 
                 if EC not in basic_edge_classes:
                     basic_edge_classes[EC] = 0
@@ -687,13 +687,16 @@ def __new_color_partitioning__(new_node_to_old, node_colors):
     del ncs
     return new_colors
 
-class __IDENTITY_ACCESS__:
+class __ALREADY_HASHED__:
 
-    def __init__(self):
-        pass
+    def __init__(self, v):
+        self.__v__ = v
 
-    def __getitem__(i):
-        return i
+    def __hash__(self):
+        return self.__v__
+
+    def __eq__(self, other):
+        return (type(other) is __ALREADY_HASHED__) and self.__v__ == other.__v__
 
 def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
                   observed_edge_types, directed, has_edge_types):
@@ -740,3 +743,8 @@ if __name__ == "__main__":
     b = blake2b(digest_size=64)
     b.update(bytes(str(EC_3_chain), 'ascii'))
     print(b.hexdigest())
+
+    d = {}
+    d[__ALREADY_HASHED__(5)] = 5
+    d[5] = hash(5)
+    print(d)
