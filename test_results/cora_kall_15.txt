@@ -1,0 +1,24 @@
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4890 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  5705045 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 539
+Num Classes: 538
+Average Class Size: 8.618959
+T/P: 8.602968
+T: 4637, P: 539, N: 4098
+Max ROC: 0.938973
+Max AUPR: 0.894515
+#
+#  558663 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 539
+Num Classes: 459
+Average Class Size: 4125.640523
+T/P: 3513.300557
+T: 1893669, P: 539, N: 1893130
+Max ROC: 0.878432
+Max AUPR: 0.146001
