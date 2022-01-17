@@ -1,0 +1,25 @@
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 577 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22470 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  912638 Edge Classes for 987555 Observed Edges
+#
+k = inf
+Num True Edges: 2524
+Num Classes: 2521
+Average Class Size: 1.046807
+T/P: 1.045563
+T: 2639, P: 2524, N: 115
+Max ROC: 0.997959
+Max AUPR: 0.999909
+#
+#  865893 Edge Classes for 987555 Observed Edges
+#
+k = 1
+Num True Edges: 2524
+Num Classes: 2519
+Average Class Size: 1.073839
+T/P: 1.071712
+T: 2705, P: 2524, N: 181
+Max ROC: 0.997622
+Max AUPR: 0.999836
