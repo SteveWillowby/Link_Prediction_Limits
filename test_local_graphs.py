@@ -15,10 +15,10 @@ if __name__ == "__main__":
     argv = [__argstr_parser__(s) for s in sys.argv]
 
     n_args = len(argv) - 1
-    if n_args != 5:
+    if n_args != 6:
         raise ValueError("Error! Must pass five arguments:\n" + \
                 "number of processes, number of threads per process, " + \
-                "k, number of runs, and graph name.\n" + \
+                "k, py_iso, number of runs, graph name.\n" + \
                 "options for graph name are:\n" + \
                 "karate, eucore, college, citeseer, cora, FB15k, and wiki")
 
@@ -29,8 +29,11 @@ if __name__ == "__main__":
     k = argv[3]
     if k != "inf" and k != "all":
         k = int(k)
-    num_runs = int(argv[4])
-    graph_name = argv[5]
+    py_iso = argv[4]
+    assert py_iso in ["1", "0", "true", "false", "True", "False"]
+    py_iso = py_iso in ["1", "true", "True"]
+    num_runs = int(argv[5])
+    graph_name = argv[6]
 
     assert graph_name in ["karate", "eucore", "college", "citeseer", \
                           "cora", "FB15k", "wiki"]
@@ -93,7 +96,7 @@ if __name__ == "__main__":
                             k=k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=True, \
+                            use_HC_iso=py_iso, \
                             print_progress=False)
             sys.stdout.flush()
             print("k = %s" % k)
@@ -117,7 +120,7 @@ if __name__ == "__main__":
                             k=k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=True, \
+                            use_HC_iso=py_iso, \
                             hash_subgraphs=False, \
                             print_progress=False)
             sys.stdout.flush()
@@ -133,7 +136,7 @@ if __name__ == "__main__":
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
-            MARGIN = 0.001
+            MARGIN = 0.0001
             k = 1
             k_ROC = None
             k_AUPR = None
@@ -149,7 +152,7 @@ if __name__ == "__main__":
                                 k=k, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
-                                use_HC_iso=True, \
+                                use_HC_iso=py_iso, \
                                 hash_subgraphs=True, \
                                 print_progress=False)
                 sys.stdout.flush()
@@ -176,7 +179,7 @@ if __name__ == "__main__":
                             k=k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=True)
+                            use_HC_iso=py_iso)
             sys.stdout.flush()
 
             if len(true_edges) == 0:
