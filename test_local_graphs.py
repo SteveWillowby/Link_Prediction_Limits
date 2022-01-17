@@ -86,20 +86,20 @@ if __name__ == "__main__":
         if k == "all":
             assert len(true_edges) > 0
             # First do exact computations for k=inf and k=1.
-            k = "inf"
+            sub_k = "inf"
             class_info = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
-                            k=k, \
+                            k=sub_k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_HC_iso=py_iso, \
                             print_progress=False)
             sys.stdout.flush()
-            print("k = %s" % k)
+            print("k = %s" % sub_k)
             print("Num True Edges: %d" % len(true_edges))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
@@ -110,21 +110,21 @@ if __name__ == "__main__":
             print("Max AUPR: %f" % inf_AUPR)
             sys.stdout.flush()
 
-            k = 1
+            sub_k = 1
             class_info = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
-                            k=k, \
+                            k=sub_k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_HC_iso=py_iso, \
                             hash_subgraphs=False, \
                             print_progress=False)
             sys.stdout.flush()
-            print("k = %s" % k)
+            print("k = %s" % sub_k)
             print("Num True Edges: %d" % len(true_edges))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
             MARGIN = 0.0001
-            k = 1
+            sub_k = 1
             k_ROC = None
             k_AUPR = None
             while k_ROC is None or k_ROC < (inf_ROC - MARGIN) or \
@@ -149,14 +149,14 @@ if __name__ == "__main__":
                                 directed=directed, \
                                 has_edge_types=has_edge_types, \
                                 true_edges=true_edges, \
-                                k=k, \
+                                k=sub+k, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_HC_iso=py_iso, \
                                 hash_subgraphs=True, \
                                 print_progress=False)
                 sys.stdout.flush()
-                print("k = %s" % k)
+                print("k = %s" % sub_k)
                 print("Num True Edges: %d" % len(true_edges))
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
@@ -167,7 +167,7 @@ if __name__ == "__main__":
                 print("Max AUPR: %f" % k_AUPR)
                 sys.stdout.flush()
 
-                k += 1
+                sub_k += 1
 
         else:
             class_info = get_k_hop_info_classes_for_link_pred(\
