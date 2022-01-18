@@ -149,7 +149,7 @@ if __name__ == "__main__":
                                 directed=directed, \
                                 has_edge_types=has_edge_types, \
                                 true_edges=true_edges, \
-                                k=sub+k, \
+                                k=sub_k, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_HC_iso=py_iso, \
