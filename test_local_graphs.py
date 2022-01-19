@@ -129,10 +129,10 @@ if __name__ == "__main__":
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
             print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-            inf_ROC = get_max_ROC(class_info)
-            inf_AUPR = get_max_AUPR(class_info)
-            print("Max ROC: %f" % inf_ROC)
-            print("Max AUPR: %f" % inf_AUPR)
+            k1_ROC = get_max_ROC(class_info)
+            k1_AUPR = get_max_AUPR(class_info)
+            print("K1 ROC: %f" % k1_ROC)
+            print("K1 AUPR: %f" % k1_AUPR)
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
