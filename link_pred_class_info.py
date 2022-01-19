@@ -571,7 +571,7 @@ def __parallel_collection_function__(arg):
                     if hash_subgraphs:
                         h = blake2b(digest_size=HASH_BYTES)
                         h.update(bytes(str(EC), 'ascii'))
-                        EC = __ALREADY_HASHED_(h.digest())
+                        EC = __ALREADY_HASHED__(h.digest())
 
                 if EC not in basic_edge_classes:
                     basic_edge_classes[EC] = 0
