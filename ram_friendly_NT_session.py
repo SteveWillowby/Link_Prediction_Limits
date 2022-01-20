@@ -11,7 +11,7 @@ import time
 # NOTE: Requires that nodes are of type int, and no other type, not even
 #   int-like types.
 #
-# The init function for MemEfficientNTSession takes the following arguments:
+# The init function for RAMFriendlyNTSession takes the following arguments:
 #   `directed` -- True or False
 #
 #   `has_edge_types` -- True or False
@@ -982,7 +982,7 @@ class RAMFriendlyNTSession:
                     else:
                         # Case 5 -- no extra nodes
 
-                        # n -- next_node
+                        # n -- neighbor
                         self.__write__("%d " % neighbor)
 
         elif self.__et_augment__:
