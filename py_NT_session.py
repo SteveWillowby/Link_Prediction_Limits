@@ -233,7 +233,6 @@ class PyNTSession:
         get_canon = self.__finish_result_collection__()
 
         # run Nauty/Traces
-        print("Starting")
         start_t = time.time()
         orbit_info = pynauty.autgrp(self.__graph__)
         # Throw out the automorphisms group lists.
@@ -245,7 +244,6 @@ class PyNTSession:
         else:
             canon_order = None
         total_t = time.time() - start_t
-        print("Finished")
 
         self.__populate_results__(total_t, orbit_info, canon_order)
 

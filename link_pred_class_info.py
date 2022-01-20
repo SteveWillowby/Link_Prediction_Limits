@@ -1,9 +1,6 @@
-from HC_coloring import Coloring
-from HC_main_algorithm import hopeful_canonicalizer, canonical_representation
-from HC_relabeling import Relabeling
-from HC_views import GraphView, KHopSubGraphView, SubListView
 from hashlib import blake2b
 from multiprocessing import Pool
+from py_NT_session import PyNTSession
 from ram_friendly_NT_session import RAMFriendlyNTSession
 import sys
 from threading import Thread
@@ -27,7 +24,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          true_edges, k, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
-                                         use_HC_iso=False, \
+                                         use_py_iso=True, \
                                          hash_subgraphs=False, \
                                          print_progress=True):
 
@@ -42,18 +39,11 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
             for n in orig_partitions[i]:
                 orig_colors[n] = i
 
-        if use_HC_iso:
-            del orig_partitions
-
-    elif not use_HC_iso:
+    else:
         next_orig_color = max(orig_colors) + 1
         orig_partitions = [[] for _ in range(0, next_orig_color)]
         for n in range(0, len(orig_colors)):
             orig_partitions[orig_colors[n]].append(n)
-
-    if use_HC_iso:
-        orig_colors = Coloring(orig_colors)
-        next_orig_color = None  # Not used, so set to None
 
     # While the _graph_ is flattened, `true_edges` might not be. Flatten it.
     self_loops_in_true_edges = False
@@ -126,43 +116,26 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         assert num_edges % 2 == 0
         num_edges = int(num_edges / 2)
 
-    if use_HC_iso:
+    # Get sets of neighbors -- used to get k-hop subgraphs.
+    if directed:
         if has_edge_types:
-            edge_types = {}
+            neighbors = [set([n for n, _ in d.items()]) \
+                            for d in neighbors_collections]
             for a in range(0, num_nodes):
-                for b, t in neighbors_collections[a].items():
-                    edge_types[(a, b)] = t
-            for a in range(0, num_nodes):
-                neighbors_collections[a] = \
-                    set([b for b, t in neighbors_collections[a].items()])
+                for b, _ in neighbors_collections[a].items():
+                    neighbors[b].add(a)
         else:
-            edge_types = None
+            neighbors = [set(nc) for nc in neighbors_collections]
             for a in range(0, num_nodes):
-                neighbors_collections[a] = set(neighbors_collections[a])
-
-        graph = GraphView(directed, neighbors_list=neighbors_collections, \
-                          edge_types=edge_types)
+                for b in neighbors_collections[a]:
+                    neighbors[b].add(a)
     else:
-        # Get sets of neighbors -- used to get k-hop subgraphs.
-        if directed:
-            if has_edge_types:
-                neighbors = [set([n for n, _ in d.items()]) \
-                                for d in neighbors_collections]
-                for a in range(0, num_nodes):
-                    for b, _ in neighbors_collections[a].items():
-                        neighbors[b].add(a)
-            else:
-                neighbors = [set(nc) for nc in neighbors_collections]
-                for a in range(0, num_nodes):
-                    for b in neighbors_collections[a]:
-                        neighbors[b].add(a)
+        if has_edge_types:
+            neighbors = [set([n for n, _ in d.items()]) \
+                            for d in neighbors_collections]
         else:
-            if has_edge_types:
-                neighbors = [set([n for n, _ in d.items()]) \
-                                for d in neighbors_collections]
-            else:
-                neighbors = [set(nc) for nc in neighbors_collections]
-        graph = (neighbors_collections, neighbors)
+            neighbors = [set(nc) for nc in neighbors_collections]
+    graph = (neighbors_collections, neighbors)
 
     total_iterations = int((num_nodes * (num_nodes - 1)) / 2) + \
                        int(self_loops_in_true_edges) * num_nodes - \
@@ -174,34 +147,32 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     else:
         observed_edges = total_iterations
 
-    if use_HC_iso:
-        (orbit_colors, _) = hopeful_canonicalizer(graph, orig_colors, \
-                                                  return_canonical_order=False)
-        orbit_partitions = None
-
-        # orbit_partitions = [list(orbit_coloring.get_cell(i)) \
-        #                       for i in range(0, orbit_coloring.get_num_cells())]
-        # orbit_colors = [orbit_coloring[n] for n in range(0, num_nodes)]
-
+    if use_py_iso:
+        session = PyNTSession(directed=directed, \
+                              has_edge_types=has_edge_types, \
+                              neighbors_collections=neighbors_collections, \
+                              dir_augment=True)
     else:
         # Get the orbits for the base graph in case k = "inf" or in case all the
         #   nodes within k hops form the entire graph.
+
         session = RAMFriendlyNTSession(directed=directed, \
                                        has_edge_types=has_edge_types, \
                                        neighbors_collections=neighbors_collections, \
                                        kill_py_graph=False, \
                                        only_one_call=True, \
                                        mode="Traces")
-        session.set_colors_by_partitions(orig_partitions)
-        del orig_partitions
-        orbit_partitions = session.get_automorphism_orbits()
-        session.run()
-        session.end_session()
-        orbit_partitions = orbit_partitions.get()
-        orbit_colors = [None for _ in range(0, num_nodes)]
-        for i in range(0, len(orbit_partitions)):
-            for n in orbit_partitions[i]:
-                orbit_colors[n] = i
+
+    session.set_colors_by_partitions(orig_partitions)
+    del orig_partitions
+    orbit_partitions = session.get_automorphism_orbits()
+    session.run()
+    session.end_session()
+    orbit_partitions = orbit_partitions.get()
+    orbit_colors = [None for _ in range(0, num_nodes)]
+    for i in range(0, len(orbit_partitions)):
+        for n in orbit_partitions[i]:
+            orbit_colors[n] = i
 
     ntpp = num_threads_per_process
     np = num_processes
@@ -214,7 +185,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_HC_iso, hash_subgraphs, \
+                 use_py_iso, hash_subgraphs, \
                  num_processes, num_threads_per_process, {}, {}, \
                  print_progress) \
                         for i in range(0, num_processes)]
@@ -248,7 +219,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_HC_iso, hash_subgraphs, \
+                 use_py_iso, hash_subgraphs, \
                  1, num_threads_per_process, {}, {}, \
                  print_progress)
 
@@ -278,35 +249,21 @@ def __parallel_proc_func__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_HC_iso, hash_subgraphs, \
+     use_py_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, _, __,  print_progress) = arg
 
     if num_threads_per_process == 1:
         return __parallel_collection_function__(arg)
 
-    if use_HC_iso:
-        args = [\
-         (proc_idx + num_processes * i, k, \
-         graph, directed, has_edge_types, \
-         avg_num_tasks, true_edges, num_nodes, \
-         Coloring(orig_colors), \
-         next_orig_color, \
-         Coloring(orbit_colors), None, \
-         self_loops_in_true_edges, has_repeat_edges, \
-         use_HC_iso, hash_subgraphs, \
-         num_processes, num_threads_per_process, \
-         {}, {}, print_progress) \
-            for i in range(0, num_threads_per_process)]
-    else:
-        args = [\
-         (proc_idx + num_processes * i, k, \
+    args = [\
+        (proc_idx + num_processes * i, k, \
          graph, directed, has_edge_types, \
          avg_num_tasks, true_edges, num_nodes, \
          list(orig_colors), \
          next_orig_color, \
          list(orbit_colors), [list(o) for o in orbit_partitions], \
          self_loops_in_true_edges, has_repeat_edges, \
-         use_HC_iso, hash_subgraphs, \
+         use_py_iso, hash_subgraphs, \
          num_processes, num_threads_per_process, \
          {}, {}, print_progress) \
             for i in range(0, num_threads_per_process)]
@@ -334,16 +291,20 @@ def __parallel_collection_function__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_HC_iso, hash_subgraphs, \
+     use_py_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class, print_progress) = arg
 
     if hash_subgraphs:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
 
-    if not use_HC_iso:
-        (neighbors_collections, neighbors) = graph
-
+    (neighbors_collections, neighbors) = graph
+    if use_py_iso:
+        session = PyNTSession(directed=directed, \
+                              has_edge_types=has_edge_types, \
+                              neighbors_collections=neighbors_collections, \
+                              dir_augment=True)
+    else:
         session = RAMFriendlyNTSession(directed=directed, \
                                   has_edge_types=has_edge_types, \
                                   neighbors_collections=neighbors_collections, \
@@ -384,23 +345,16 @@ def __parallel_collection_function__(arg):
                 observed_edge_types = None
                 new_node_to_old = None
             else:
-                if use_HC_iso:
-                    # This code being called has a different meaning for "k".
-                    #   Hence the k*2.
-                    k_hop_subgraph = KHopSubGraphView(graph, set([a, b]), k*2)
-                    sub_relabeling = k_hop_subgraph.get_node_relabeling()
-                    k_hop_nodes = sub_relabeling
+                k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
+                if len(k_hop_nodes) < num_nodes:
+                    (new_node_to_old, new_neighbors_collections, \
+                        observed_edge_types) = \
+                            __induced_subgraph__(neighbors_collections, \
+                                                 k_hop_nodes, has_edge_types)
                 else:
-                    k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
-                    if len(k_hop_nodes) < num_nodes:
-                        (new_node_to_old, new_neighbors_collections, \
-                            observed_edge_types) = \
-                                __induced_subgraph__(neighbors_collections, \
-                                                     k_hop_nodes, has_edge_types)
-                    else:
-                        new_neighbors_collections = None
-                        new_node_to_old = None
-                        observed_edge_types = None
+                    new_neighbors_collections = None
+                    new_node_to_old = None
+                    observed_edge_types = None
 
             old_a_color = orig_colors[a]
             old_b_color = orig_colors[b]
@@ -410,54 +364,37 @@ def __parallel_collection_function__(arg):
                 ab_pairs = [(a, b)]
 
             for (c, d) in ab_pairs:
-                if (not has_repeat_edges) and use_HC_iso and \
-                        ((directed and d in graph.out_neighbors(c)) or \
-                         ((not directed) and d in graph.neighbors(c))):
-                    continue
-                elif (not has_repeat_edges) and (not use_HC_iso) and \
-                        d in neighbors_collections[c]:
+                if (not has_repeat_edges) and d in neighbors_collections[c]:
                     continue
 
                 if k == "inf" or len(k_hop_nodes) == num_nodes:
                     c_color = orbit_colors[c]
                     d_color = orbit_colors[d]
-                    if use_HC_iso:
-                        c_partition = orbit_colors.get_cell(c_color)
-                        d_partition = orbit_colors.get_cell(d_color)
-                    else:
-                        c_partition = orbit_partitions[c_color]
-                        d_partition = orbit_partitions[d_color]
+                    c_partition = orbit_partitions[c_color]
+                    d_partition = orbit_partitions[d_color]
 
                     if directed:
                         if len(c_partition) == 1 or len(d_partition) == 1 or \
                                 (len(c_partition) == 2 and d in c_partition):
                             EC = (False, c_color, d_color, False)
                         else:
-                            if use_HC_iso:
-                                sub_coloring = Coloring(orbit_colors)
-                                sub_coloring.make_singleton(c)
-                                (sub_orbits, _) = hopeful_canonicalizer(graph, \
-                                                                        sub_coloring, \
-                                                           return_canonical_order=False)
-                                d_subcolor = sub_orbits[d]
-                            else:
-                                orbit_partitions.append([c])
-                                c_partition.remove(c)
+                            orbit_partitions.append([c])
+                            c_partition.remove(c)
 
-                                session.set_colors_by_partitions(orbit_partitions)
-                                suborbit_partitions = session.get_automorphism_orbits()
-                                session.run()
-                                suborbit_partitions = suborbit_partitions.get()
+                            session.set_colors_by_partitions(orbit_partitions)
+                            suborbit_partitions = session.get_automorphism_orbits()
+                            session.run()
+                            suborbit_partitions = suborbit_partitions.get()
 
-                                d_subcolor = None
-                                for i in range(0, len(suborbit_partitions)):
-                                    if d in suborbit_partitions[i]:
-                                        d_subcolor = i
-                                        break
-                                assert d_subcolor is not None
+                            d_subcolor = None
+                            for i in range(0, len(suborbit_partitions)):
+                                if d in suborbit_partitions[i]:
+                                    d_subcolor = i
+                                    break
+                            assert d_subcolor is not None
 
-                                c_partition.append(c)
-                                orbit_partitions.pop()
+                            c_partition.append(c)
+                            orbit_partitions.pop()
                             EC = (False, c_color, d_subcolor, True)
                     else:
                         if len(c_partition) == 1 or len(d_partition) == 1 or \
@@ -475,98 +412,51 @@ def __parallel_collection_function__(arg):
                                 changed_partition = d_partition
                                 alt_node = c
 
-                            if use_HC_iso:
-                                sub_coloring = Coloring(orbit_colors)
-                                sub_coloring.make_singleton(highlighted_node)
-                                (sub_orbits, _) = hopeful_canonicalizer(graph, \
-                                                                        sub_coloring, \
-                                                           return_canonical_order=False)
-                                alt_subcolor = sub_orbits[alt_node]
-                            else:
-                                orbit_partitions.append([highlighted_node])
-                                changed_partition.remove(highlighted_node)
+                            orbit_partitions.append([highlighted_node])
+                            changed_partition.remove(highlighted_node)
 
-                                session.set_colors_by_partitions(orbit_partitions)
-                                suborbit_partitions = session.get_automorphism_orbits()
-                                session.run()
-                                suborbit_partitions = suborbit_partitions.get()
+                            session.set_colors_by_partitions(orbit_partitions)
+                            suborbit_partitions = session.get_automorphism_orbits()
+                            session.run()
+                            suborbit_partitions = suborbit_partitions.get()
 
-                                alt_subcolor = None
-                                for i in range(0, len(suborbit_partitions)):
-                                    if alt_node in suborbit_partitions[i]:
-                                        alt_subcolor = i
-                                        break
-                                assert alt_subcolor is not None
+                            alt_subcolor = None
+                            for i in range(0, len(suborbit_partitions)):
+                                if alt_node in suborbit_partitions[i]:
+                                    alt_subcolor = i
+                                    break
+                            assert alt_subcolor is not None
 
-                                changed_partition.append(highlighted_node)
-                                orbit_partitions.pop()
+                            changed_partition.append(highlighted_node)
+                            orbit_partitions.pop()
                             EC = (False, min_color, alt_subcolor, True)
                 else:
-                    if use_HC_iso:
-                        sub_coloring = Coloring(SubListView(orig_colors, \
-                                                            sub_relabeling))
-                        c_eq_d = c == d
-                        c_sub = sub_relabeling.old_to_new(c)
-                        d_sub = sub_relabeling.old_to_new(d)
-                        orig_c_color = orig_colors[c]
-                        orig_d_color = orig_colors[d]
+                    # orig_color_pair shows what the colors used to be before
+                    #   highlighting was applied.
 
-                        if c_eq_d:
-                            sub_coloring.make_singleton(c_sub)
-                        else:
-                            cd_relabeling = Relabeling(Relabeling.SUB_COLLECTION_TYPE, \
-                                                       [c_sub, d_sub])
-                            assert cd_relabeling.old_to_new(c_sub) == 0
-                            assert cd_relabeling.old_to_new(d_sub) == 1
-                            if directed:
-                                sub_coloring.refine_with(Coloring([0, 1]), \
-                                                         alt_relabeling=cd_relabeling)
-                            else:
-                                sub_coloring.refine_with(Coloring([0, 0]), \
-                                                         alt_relabeling=cd_relabeling)
-
-                        (_, sub_canon_order) = \
-                            hopeful_canonicalizer(k_hop_subgraph, sub_coloring, \
-                                                  return_canonical_order=True)
-                        if directed:
-                            EC = (True, c_eq_d, (orig_c_color, orig_d_color), \
-                                    canonical_representation(k_hop_subgraph, \
-                                                             sub_canon_order, \
-                                                             sub_coloring))
-                        else:
-                            first_color = orig_c_color
-                            second_color = orig_d_color
-                            for n in sub_canon_order:
-                                if n == c:
-                                    break
-                                if n == d:
-                                    first_color = orig_d_color
-                                    second_color = orig_c_color
-                                    break
-                            EC = (True, c_eq_d, (first_color, second_color), \
-                                    canonical_representation(k_hop_subgraph, \
-                                                             sub_canon_order, \
-                                                             sub_coloring))
+                    # The canonicalizing code does not require that all
+                    #   colors in orig_colors be in the range 0 - max_C
+                    if directed:
+                        orig_color_pair = (orig_colors[c], orig_colors[d])
+                        orig_colors[c] = next_orig_color
+                        orig_colors[d] = next_orig_color + 1
                     else:
-                        # The canonicalizing code does not require that all
-                        #   colors in orig_colors be in the range 0 - max_C
-                        if directed:
-                            orig_colors[c] = next_orig_color
-                            orig_colors[d] = next_orig_color + 1
-                        else:
-                            orig_colors[c] = next_orig_color
-                            orig_colors[d] = next_orig_color
+                        orig_color_pair = (min(orig_colors[c], orig_colors[d]),\
+                                           max(orig_colors[c], orig_colors[d]))
+                        orig_colors[c] = next_orig_color
+                        orig_colors[d] = next_orig_color
 
-                        new_colors = \
-                            __new_color_partitioning__(new_node_to_old, orig_colors)
+                    new_colors = \
+                        __new_color_partitioning__(new_node_to_old, orig_colors)
 
-                        EC = __canon_rep__(new_node_to_old, new_neighbors_collections, \
-                                           new_colors, orig_colors, \
-                                           observed_edge_types, \
-                                           directed, has_edge_types)
+                    EC = __canon_rep__(new_node_to_old, new_neighbors_collections, \
+                                       new_colors, orig_colors, orig_color_pair, \
+                                       observed_edge_types, \
+                                       directed, has_edge_types, \
+                                       use_py_iso)
 
-                        orig_colors[a] = old_a_color
-                        orig_colors[b] = old_b_color
+                    orig_colors[a] = old_a_color
+                    orig_colors[b] = old_b_color
 
                     if hash_subgraphs:
                         h = blake2b(digest_size=HASH_BYTES)
@@ -590,8 +480,8 @@ def __parallel_collection_function__(arg):
                             positives_in_edge_class[label] = 0
                         positives_in_edge_class[label] += 1
 
-    if not use_HC_iso:
-        session.end_session()
+    session.end_session()
+
     if print_progress:
         print("Process-thread idx %d finished collecting." % proc_thread_idx)
         sys.stdout.flush()
@@ -698,16 +588,24 @@ class __ALREADY_HASHED__:
     def __eq__(self, other):
         return (type(other) is __ALREADY_HASHED__) and self.__v__ == other.__v__
 
-def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
-                  observed_edge_types, directed, has_edge_types):
+def __canon_rep__(new_node_to_old, g, new_colors, old_colors, orig_color_pair, \
+                  observed_edge_types, directed, has_edge_types, \
+                  use_py_iso):
     num_nodes = len(g)
 
-    session = RAMFriendlyNTSession(directed=directed, \
-                                   has_edge_types=has_edge_types, \
-                                   neighbors_collections=g, \
-                                   only_one_call=True, \
-                                   kill_py_graph=False, \
-                                   mode="Traces")
+    if use_py_iso:
+        session = PyNTSession(directed=directed, \
+                              has_edge_types=has_edge_types, \
+                              neighbors_collections=g, \
+                              dir_augment=True)
+    else:
+        session = RAMFriendlyNTSession(directed=directed, \
+                                       has_edge_types=has_edge_types, \
+                                       neighbors_collections=g, \
+                                       only_one_call=True, \
+                                       kill_py_graph=False, \
+                                       mode="Traces")
+
     session.set_colors_by_partitions(new_colors)
     node_order = session.get_canonical_order()
     session.run()
@@ -727,7 +625,8 @@ def __canon_rep__(new_node_to_old, g, new_colors, old_colors, \
     old_colors_in_order = \
         tuple([old_colors[new_node_to_old[n]] for n in node_order])
 
-    return (True, num_nodes, observed_edge_types, edge_list, old_colors_in_order)
+    return (True, orig_color_pair, num_nodes, \
+            observed_edge_types, edge_list, old_colors_in_order)
 
 if __name__ == "__main__":
     EC_triangle = (True, (0, 0), ((0, 0, 0, 0), ((0, 1), (0, 2), (1, 2))), False)

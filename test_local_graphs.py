@@ -96,7 +96,7 @@ if __name__ == "__main__":
                             k=sub_k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=py_iso, \
+                            use_py_iso=py_iso, \
                             print_progress=False)
             sys.stdout.flush()
             print("k = %s" % sub_k)
@@ -120,7 +120,7 @@ if __name__ == "__main__":
                             k=sub_k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=py_iso, \
+                            use_py_iso=py_iso, \
                             hash_subgraphs=False, \
                             print_progress=False)
             sys.stdout.flush()
@@ -152,7 +152,7 @@ if __name__ == "__main__":
                                 k=sub_k, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
-                                use_HC_iso=py_iso, \
+                                use_py_iso=py_iso, \
                                 hash_subgraphs=True, \
                                 print_progress=False)
                 sys.stdout.flush()
@@ -179,7 +179,9 @@ if __name__ == "__main__":
                             k=k, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
-                            use_HC_iso=py_iso)
+                            use_py_iso=py_iso, \
+                            hash_subgraphs=True, \
+                            print_progress=True)
             sys.stdout.flush()
 
             if len(true_edges) == 0:
