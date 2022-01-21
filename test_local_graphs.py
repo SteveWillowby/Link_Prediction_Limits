@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
-            MARGIN = 0.0001
+            MARGIN = 0.001
             sub_k = 1
             k_ROC = None
             k_AUPR = None
