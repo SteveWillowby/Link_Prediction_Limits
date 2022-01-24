@@ -1,0 +1,555 @@
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 584 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22534 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  920354 Edge Classes for 987491 Observed Edges
+#
+k = inf
+Num True Edges: 2453
+Num Classes: 2453
+Average Class Size: 1.015084
+T/P: 1.015084
+T: 2490, P: 2453, N: 37
+Max ROC: 0.999069
+Max AUPR: 0.999986
+#
+#  870854 Edge Classes for 987491 Observed Edges
+#
+k = 1
+Num True Edges: 2453
+Num Classes: 2453
+Average Class Size: 1.042397
+T/P: 1.042397
+T: 2557, P: 2453, N: 104
+K1 ROC: 0.999063
+K1 AUPR: 0.999961
+-- Now Hashing Subgraphs --
+#
+#  870854 Edge Classes for 987491 Observed Edges
+#
+k = 1
+Num True Edges: 2453
+Num Classes: 2453
+Average Class Size: 1.042397
+T/P: 1.042397
+T: 2557, P: 2453, N: 104
+Max ROC: 0.999063
+Max AUPR: 0.999961
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 580 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22438 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  908841 Edge Classes for 987587 Observed Edges
+#
+k = inf
+Num True Edges: 2553
+Num Classes: 2553
+Average Class Size: 1.051704
+T/P: 1.051704
+T: 2685, P: 2553, N: 132
+Max ROC: 0.997685
+Max AUPR: 0.999884
+#
+#  864367 Edge Classes for 987587 Observed Edges
+#
+k = 1
+Num True Edges: 2553
+Num Classes: 2552
+Average Class Size: 1.090909
+T/P: 1.090482
+T: 2784, P: 2553, N: 231
+K1 ROC: 0.997823
+K1 AUPR: 0.999811
+-- Now Hashing Subgraphs --
+#
+#  864367 Edge Classes for 987587 Observed Edges
+#
+k = 1
+Num True Edges: 2553
+Num Classes: 2552
+Average Class Size: 1.090909
+T/P: 1.090482
+T: 2784, P: 2553, N: 231
+Max ROC: 0.997823
+Max AUPR: 0.999811
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 574 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22415 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  914656 Edge Classes for 987610 Observed Edges
+#
+k = inf
+Num True Edges: 2582
+Num Classes: 2582
+Average Class Size: 1.152982
+T/P: 1.152982
+T: 2977, P: 2582, N: 395
+Max ROC: 0.998347
+Max AUPR: 0.999762
+#
+#  867910 Edge Classes for 987610 Observed Edges
+#
+k = 1
+Num True Edges: 2582
+Num Classes: 2578
+Average Class Size: 1.110551
+T/P: 1.108830
+T: 2863, P: 2582, N: 281
+K1 ROC: 0.997928
+K1 AUPR: 0.999785
+-- Now Hashing Subgraphs --
+#
+#  867910 Edge Classes for 987610 Observed Edges
+#
+k = 1
+Num True Edges: 2582
+Num Classes: 2578
+Average Class Size: 1.110551
+T/P: 1.108830
+T: 2863, P: 2582, N: 281
+Max ROC: 0.997928
+Max AUPR: 0.999785
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 592 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22434 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  928233 Edge Classes for 987591 Observed Edges
+#
+k = inf
+Num True Edges: 2545
+Num Classes: 2545
+Average Class Size: 1.012967
+T/P: 1.012967
+T: 2578, P: 2545, N: 33
+Max ROC: 0.999268
+Max AUPR: 0.999991
+#
+#  876182 Edge Classes for 987591 Observed Edges
+#
+k = 1
+Num True Edges: 2545
+Num Classes: 2545
+Average Class Size: 1.014145
+T/P: 1.014145
+T: 2581, P: 2545, N: 36
+K1 ROC: 0.998788
+K1 AUPR: 0.999983
+-- Now Hashing Subgraphs --
+#
+#  876182 Edge Classes for 987591 Observed Edges
+#
+k = 1
+Num True Edges: 2545
+Num Classes: 2545
+Average Class Size: 1.014145
+T/P: 1.014145
+T: 2581, P: 2545, N: 36
+Max ROC: 0.998788
+Max AUPR: 0.999983
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 576 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22492 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  912648 Edge Classes for 987533 Observed Edges
+#
+k = inf
+Num True Edges: 2503
+Num Classes: 2503
+Average Class Size: 1.065921
+T/P: 1.065921
+T: 2668, P: 2503, N: 165
+Max ROC: 0.997505
+Max AUPR: 0.999842
+#
+#  867948 Edge Classes for 987533 Observed Edges
+#
+k = 1
+Num True Edges: 2503
+Num Classes: 2501
+Average Class Size: 1.081168
+T/P: 1.080304
+T: 2704, P: 2503, N: 201
+K1 ROC: 0.997948
+K1 AUPR: 0.999841
+-- Now Hashing Subgraphs --
+#
+#  867948 Edge Classes for 987533 Observed Edges
+#
+k = 1
+Num True Edges: 2503
+Num Classes: 2501
+Average Class Size: 1.081168
+T/P: 1.080304
+T: 2704, P: 2503, N: 201
+Max ROC: 0.997948
+Max AUPR: 0.999841
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 587 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22460 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  912679 Edge Classes for 987565 Observed Edges
+#
+k = inf
+Num True Edges: 2524
+Num Classes: 2523
+Average Class Size: 1.034483
+T/P: 1.034073
+T: 2610, P: 2524, N: 86
+Max ROC: 0.998298
+Max AUPR: 0.999943
+#
+#  866898 Edge Classes for 987565 Observed Edges
+#
+k = 1
+Num True Edges: 2524
+Num Classes: 2523
+Average Class Size: 1.055489
+T/P: 1.055071
+T: 2663, P: 2524, N: 139
+K1 ROC: 0.998355
+K1 AUPR: 0.999912
+-- Now Hashing Subgraphs --
+#
+#  866898 Edge Classes for 987565 Observed Edges
+#
+k = 1
+Num True Edges: 2524
+Num Classes: 2523
+Average Class Size: 1.055489
+T/P: 1.055071
+T: 2663, P: 2524, N: 139
+Max ROC: 0.998355
+Max AUPR: 0.999912
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 583 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22458 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  908832 Edge Classes for 987567 Observed Edges
+#
+k = inf
+Num True Edges: 2530
+Num Classes: 2530
+Average Class Size: 1.049012
+T/P: 1.049012
+T: 2654, P: 2530, N: 124
+Max ROC: 0.997628
+Max AUPR: 0.999887
+#
+#  866976 Edge Classes for 987567 Observed Edges
+#
+k = 1
+Num True Edges: 2530
+Num Classes: 2528
+Average Class Size: 1.073972
+T/P: 1.073123
+T: 2715, P: 2530, N: 185
+K1 ROC: 0.997615
+K1 AUPR: 0.999832
+-- Now Hashing Subgraphs --
+#
+#  866976 Edge Classes for 987567 Observed Edges
+#
+k = 1
+Num True Edges: 2530
+Num Classes: 2528
+Average Class Size: 1.073972
+T/P: 1.073123
+T: 2715, P: 2530, N: 185
+Max ROC: 0.997615
+Max AUPR: 0.999832
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 578 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22464 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  906895 Edge Classes for 987561 Observed Edges
+#
+k = inf
+Num True Edges: 2529
+Num Classes: 2529
+Average Class Size: 1.056149
+T/P: 1.056149
+T: 2671, P: 2529, N: 142
+Max ROC: 0.997914
+Max AUPR: 0.999886
+#
+#  864378 Edge Classes for 987561 Observed Edges
+#
+k = 1
+Num True Edges: 2529
+Num Classes: 2528
+Average Class Size: 1.064082
+T/P: 1.063662
+T: 2690, P: 2529, N: 161
+K1 ROC: 0.997523
+K1 AUPR: 0.999848
+-- Now Hashing Subgraphs --
+#
+#  864378 Edge Classes for 987561 Observed Edges
+#
+k = 1
+Num True Edges: 2529
+Num Classes: 2528
+Average Class Size: 1.064082
+T/P: 1.063662
+T: 2690, P: 2529, N: 161
+Max ROC: 0.997523
+Max AUPR: 0.999848
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 576 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22413 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  920482 Edge Classes for 987612 Observed Edges
+#
+k = inf
+Num True Edges: 2582
+Num Classes: 2582
+Average Class Size: 1.015492
+T/P: 1.015492
+T: 2622, P: 2582, N: 40
+Max ROC: 0.998964
+Max AUPR: 0.999984
+#
+#  869171 Edge Classes for 987612 Observed Edges
+#
+k = 1
+Num True Edges: 2582
+Num Classes: 2581
+Average Class Size: 1.031383
+T/P: 1.030984
+T: 2662, P: 2582, N: 80
+K1 ROC: 0.999087
+K1 AUPR: 0.999972
+-- Now Hashing Subgraphs --
+#
+#  869171 Edge Classes for 987612 Observed Edges
+#
+k = 1
+Num True Edges: 2582
+Num Classes: 2581
+Average Class Size: 1.031383
+T/P: 1.030984
+T: 2662, P: 2582, N: 80
+Max ROC: 0.999087
+Max AUPR: 0.999972
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 580 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22369 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  922467 Edge Classes for 987656 Observed Edges
+#
+k = inf
+Num True Edges: 2622
+Num Classes: 2622
+Average Class Size: 1.020976
+T/P: 1.020976
+T: 2677, P: 2622, N: 55
+Max ROC: 0.998908
+Max AUPR: 0.999977
+#
+#  869724 Edge Classes for 987656 Observed Edges
+#
+k = 1
+Num True Edges: 2622
+Num Classes: 2620
+Average Class Size: 1.027099
+T/P: 1.026316
+T: 2691, P: 2622, N: 69
+K1 ROC: 0.998450
+K1 AUPR: 0.999960
+-- Now Hashing Subgraphs --
+#
+#  869724 Edge Classes for 987656 Observed Edges
+#
+k = 1
+Num True Edges: 2622
+Num Classes: 2620
+Average Class Size: 1.027099
+T/P: 1.026316
+T: 2691, P: 2622, N: 69
+Max ROC: 0.998450
+Max AUPR: 0.999960
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 578 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22431 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  920450 Edge Classes for 987594 Observed Edges
+#
+k = inf
+Num True Edges: 2562
+Num Classes: 2562
+Average Class Size: 1.042935
+T/P: 1.042935
+T: 2672, P: 2562, N: 110
+Max ROC: 0.998205
+Max AUPR: 0.999925
+#
+#  873398 Edge Classes for 987594 Observed Edges
+#
+k = 1
+Num True Edges: 2562
+Num Classes: 2562
+Average Class Size: 1.047229
+T/P: 1.047229
+T: 2683, P: 2562, N: 121
+K1 ROC: 0.997950
+K1 AUPR: 0.999906
+-- Now Hashing Subgraphs --
+#
+#  873398 Edge Classes for 987594 Observed Edges
+#
+k = 1
+Num True Edges: 2562
+Num Classes: 2562
+Average Class Size: 1.047229
+T/P: 1.047229
+T: 2683, P: 2562, N: 121
+Max ROC: 0.997950
+Max AUPR: 0.999906
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 590 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22412 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  920475 Edge Classes for 987613 Observed Edges
+#
+k = inf
+Num True Edges: 2569
+Num Classes: 2569
+Average Class Size: 1.029583
+T/P: 1.029583
+T: 2645, P: 2569, N: 76
+Max ROC: 0.998417
+Max AUPR: 0.999954
+#
+#  871190 Edge Classes for 987613 Observed Edges
+#
+k = 1
+Num True Edges: 2569
+Num Classes: 2569
+Average Class Size: 1.049046
+T/P: 1.049046
+T: 2695, P: 2569, N: 126
+K1 ROC: 0.998597
+K1 AUPR: 0.999933
+-- Now Hashing Subgraphs --
+#
+#  871190 Edge Classes for 987613 Observed Edges
+#
+k = 1
+Num True Edges: 2569
+Num Classes: 2569
+Average Class Size: 1.049046
+T/P: 1.049046
+T: 2695, P: 2569, N: 126
+Max ROC: 0.998597
+Max AUPR: 0.999933
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 591 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22484 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  914586 Edge Classes for 987541 Observed Edges
+#
+k = inf
+Num True Edges: 2496
+Num Classes: 2496
+Average Class Size: 1.066506
+T/P: 1.066506
+T: 2662, P: 2496, N: 166
+Max ROC: 0.997246
+Max AUPR: 0.999824
+#
+#  870186 Edge Classes for 987541 Observed Edges
+#
+k = 1
+Num True Edges: 2496
+Num Classes: 2496
+Average Class Size: 1.084535
+T/P: 1.084535
+T: 2707, P: 2496, N: 211
+K1 ROC: 0.997419
+K1 AUPR: 0.999791
+-- Now Hashing Subgraphs --
+#
+#  870186 Edge Classes for 987541 Observed Edges
+#
+k = 1
+Num True Edges: 2496
+Num Classes: 2496
+Average Class Size: 1.084535
+T/P: 1.084535
+T: 2707, P: 2496, N: 211
+Max ROC: 0.997419
+Max AUPR: 0.999791
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 579 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22408 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  914670 Edge Classes for 987617 Observed Edges
+#
+k = inf
+Num True Edges: 2584
+Num Classes: 2583
+Average Class Size: 1.023229
+T/P: 1.022833
+T: 2643, P: 2584, N: 59
+Max ROC: 0.998134
+Max AUPR: 0.999958
+#
+#  864867 Edge Classes for 987617 Observed Edges
+#
+k = 1
+Num True Edges: 2584
+Num Classes: 2583
+Average Class Size: 1.025939
+T/P: 1.025542
+T: 2650, P: 2584, N: 66
+K1 ROC: 0.997895
+K1 AUPR: 0.999947
+-- Now Hashing Subgraphs --
+#
+#  864867 Edge Classes for 987617 Observed Edges
+#
+k = 1
+Num True Edges: 2584
+Num Classes: 2583
+Average Class Size: 1.025939
+T/P: 1.025542
+T: 2650, P: 2584, N: 66
+Max ROC: 0.997895
+Max AUPR: 0.999947
+(Re)Loading real_world_graphs/eucore.g and randomly removing edges.
+NOTE: Input file real_world_graphs/eucore.g had 574 nodes with 1 or more self-loops.
+INFO: Input graph has 1005 nodes, 22456 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  910761 Edge Classes for 987569 Observed Edges
+#
+k = inf
+Num True Edges: 2541
+Num Classes: 2540
+Average Class Size: 1.087008
+T/P: 1.086580
+T: 2761, P: 2541, N: 220
+Max ROC: 0.998386
+Max AUPR: 0.999865
+#
+#  866138 Edge Classes for 987569 Observed Edges
+#
+k = 1
+Num True Edges: 2541
+Num Classes: 2539
+Average Class Size: 1.073257
+T/P: 1.072412
+T: 2725, P: 2541, N: 184
+K1 ROC: 0.997648
+K1 AUPR: 0.999836
+-- Now Hashing Subgraphs --
+#
+#  866138 Edge Classes for 987569 Observed Edges
+#
+k = 1
+Num True Edges: 2541
+Num Classes: 2539
+Average Class Size: 1.073257
+T/P: 1.072412
+T: 2725, P: 2541, N: 184
+Max ROC: 0.997648
+Max AUPR: 0.999836
