@@ -92,7 +92,10 @@ if __name__ == "__main__":
     y_start = [ROC_endpoints[0][0]]
     yerr_start = [ROC_endpoints[0][1]]
     plt.errorbar(x_start, y_start, yerr=yerr_start, color="red", label="k = 1")
-    x_end = [x[1]]
+    if len(x) > 1:
+        x_end = [x[1]]
+    else:
+        x_end = [x[0]]
     y_end = [ROC_endpoints[1][0]]
     yerr_end = [ROC_endpoints[1][1]]
     plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", label="k = inf")
@@ -116,7 +119,10 @@ if __name__ == "__main__":
     y_start = [AUPR_endpoints[0][0]]
     yerr_start = [AUPR_endpoints[0][1]]
     plt.errorbar(x_start, y_start, yerr=yerr_start, color="red", label="k = 1")
-    x_end = [x[1]]
+    if len(x) > 1:
+        x_end = [x[1]]
+    else:
+        x_end = [x[0]]
     y_end = [AUPR_endpoints[1][0]]
     yerr_end = [AUPR_endpoints[1][1]]
     plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", label="k = inf")
