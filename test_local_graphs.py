@@ -15,10 +15,10 @@ if __name__ == "__main__":
     argv = [__argstr_parser__(s) for s in sys.argv]
 
     n_args = len(argv) - 1
-    if n_args != 6:
+    if n_args != 7:
         raise ValueError("Error! Must pass five arguments:\n" + \
                 "number of processes, number of threads per process, " + \
-                "k, py_iso, number of runs, graph name.\n" + \
+                "k, py_iso, percent of (non)edges, number of runs, graph name.\n" + \
                 "options for graph name are:\n" + \
                 "karate, eucore, college, citeseer, cora, FB15k, and wiki")
 
@@ -32,8 +32,9 @@ if __name__ == "__main__":
     py_iso = argv[4]
     assert py_iso in ["1", "0", "true", "false", "True", "False"]
     py_iso = py_iso in ["1", "true", "True"]
-    num_runs = int(argv[5])
-    graph_name = argv[6]
+    percent_of_non_edges = float(argv[5])
+    num_runs = int(argv[6])
+    graph_name = argv[7]
 
     assert graph_name in ["karate", "eucore", "college", "citeseer", \
                           "cora", "FB15k", "wiki"]
@@ -94,6 +95,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=sub_k, \
+                            percent_of_non_edges=percent_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -118,6 +120,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=sub_k, \
+                            percent_of_non_edges=percent_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -150,6 +153,7 @@ if __name__ == "__main__":
                                 has_edge_types=has_edge_types, \
                                 true_edges=true_edges, \
                                 k=sub_k, \
+                                percent_of_non_edges=percent_of_non_edges, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
@@ -177,6 +181,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=k, \
+                            percent_of_non_edges=percent_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \

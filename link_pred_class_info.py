@@ -2,6 +2,7 @@ from hashlib import blake2b
 from multiprocessing import Pool
 from py_NT_session import PyNTSession
 from ram_friendly_NT_session import RAMFriendlyNTSession
+import random
 import sys
 from threading import Thread
 
@@ -22,6 +23,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
                                          has_edge_types, \
                                          true_edges, k, \
+                                         percent_of_non_edges=100, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
@@ -29,6 +31,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
+    edge_percent = float(percent_of_non_edges) / 100.0
 
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors
@@ -187,7 +190,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  self_loops_in_true_edges, has_repeat_edges, \
                  use_py_iso, hash_subgraphs, \
                  num_processes, num_threads_per_process, {}, {}, \
-                 print_progress) \
+                 print_progress, edge_percent) \
                         for i in range(0, num_processes)]
  
         process_pool = Pool(num_processes)
@@ -221,7 +224,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  self_loops_in_true_edges, has_repeat_edges, \
                  use_py_iso, hash_subgraphs, \
                  1, num_threads_per_process, {}, {}, \
-                 print_progress)
+                 print_progress, edge_percent)
 
         (basic_edge_classes, positives_in_edge_class) = \
             __parallel_proc_func__(arg)
@@ -250,7 +253,8 @@ def __parallel_proc_func__(arg):
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
      use_py_iso, hash_subgraphs, \
-     num_processes, num_threads_per_process, _, __,  print_progress) = arg
+     num_processes, num_threads_per_process, _, __, \
+     print_progress, edge_percent) = arg
 
     if num_threads_per_process == 1:
         return __parallel_collection_function__(arg)
@@ -265,7 +269,7 @@ def __parallel_proc_func__(arg):
          self_loops_in_true_edges, has_repeat_edges, \
          use_py_iso, hash_subgraphs, \
          num_processes, num_threads_per_process, \
-         {}, {}, print_progress) \
+         {}, {}, print_progress, edge_percent) \
             for i in range(0, num_threads_per_process)]
 
     result = [None for i in range(0, num_threads_per_process)]
@@ -293,7 +297,8 @@ def __parallel_collection_function__(arg):
      self_loops_in_true_edges, has_repeat_edges, \
      use_py_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, \
-     basic_edge_classes, positives_in_edge_class, print_progress) = arg
+     basic_edge_classes, positives_in_edge_class, \
+     print_progress, edge_percent) = arg
 
     if hash_subgraphs:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
@@ -340,6 +345,16 @@ def __parallel_collection_function__(arg):
                 sys.stdout.flush()
             iteration += 1
 
+            if directed and a != b:
+                ab_pairs = [(a, b), (b, a)]
+            else:
+                ab_pairs = [(a, b)]
+
+            if random.random() >= edge_percent:
+                if len(ab_pairs) == 1 or random.random() >= edge_percent:
+                    continue
+                ab_pairs = [ab_pairs[random.randint(0, 1)]]
+
             if k == "inf":
                 new_neighbors_collections = None
                 observed_edge_types = None
@@ -358,10 +373,6 @@ def __parallel_collection_function__(arg):
 
             old_a_color = orig_colors[a]
             old_b_color = orig_colors[b]
-            if directed and a != b:
-                ab_pairs = [(a, b), (b, a)]
-            else:
-                ab_pairs = [(a, b)]
 
             for (c, d) in ab_pairs:
                 if (not has_repeat_edges) and d in neighbors_collections[c]:
