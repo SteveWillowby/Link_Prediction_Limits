@@ -1,0 +1,157 @@
+(Re)Loading real_world_graphs/citeseer.g and randomly removing edges.
+INFO: Input graph has 3264 nodes, 4071 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  4619861 Edge Classes for 10650432 Observed Edges
+#
+k = inf
+Num True Edges: 465
+Num Classes: 456
+Average Class Size: 856.997807
+T/P: 840.410753
+T: 390791, P: 465, N: 390326
+Max ROC: 0.976765
+Max AUPR: 0.667621
+#
+#  233650 Edge Classes for 10650432 Observed Edges
+#
+k = 1
+Num True Edges: 465
+Num Classes: 301
+Average Class Size: 18313.445183
+T/P: 11854.509677
+T: 5512347, P: 465, N: 5511882
+K1 ROC: 0.811201
+K1 AUPR: 0.070695
+-- Now Hashing Subgraphs --
+#
+#  233650 Edge Classes for 10650432 Observed Edges
+#
+k = 1
+Num True Edges: 465
+Num Classes: 301
+Average Class Size: 18313.445183
+T/P: 11854.509677
+T: 5512347, P: 465, N: 5511882
+Max ROC: 0.811201
+Max AUPR: 0.070695
+#
+#  2852250 Edge Classes for 10650432 Observed Edges
+#
+k = 2
+Num True Edges: 465
+Num Classes: 450
+Average Class Size: 1473.211111
+T/P: 1425.688172
+T: 662945, P: 465, N: 662480
+Max ROC: 0.960125
+Max AUPR: 0.511756
+#
+#  4277431 Edge Classes for 10650432 Observed Edges
+#
+k = 3
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 904.716484
+T/P: 885.260215
+T: 411646, P: 465, N: 411181
+Max ROC: 0.974518
+Max AUPR: 0.645405
+#
+#  4583749 Edge Classes for 10650432 Observed Edges
+#
+k = 4
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.929670
+T/P: 866.877419
+T: 403098, P: 465, N: 402633
+Max ROC: 0.975415
+Max AUPR: 0.664548
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 5
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 6
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 7
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 8
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 9
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 10
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 11
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046
+#
+#  4612064 Edge Classes for 10650432 Observed Edges
+#
+k = 12
+Num True Edges: 465
+Num Classes: 455
+Average Class Size: 885.920879
+T/P: 866.868817
+T: 403094, P: 465, N: 402629
+Max ROC: 0.975420
+Max AUPR: 0.666046

@@ -34,3 +34,91 @@ T/P: 3053.802583
 T: 1655161, P: 542, N: 1654619
 Max ROC: 0.872917
 Max AUPR: 0.159459
+#
+#  4943673 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 542
+Num Classes: 540
+Average Class Size: 35.146296
+T/P: 35.016605
+T: 18979, P: 542, N: 18437
+Max ROC: 0.975110
+Max AUPR: 0.839340
+#
+#  5698661 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 24.044362
+T/P: 24.000000
+T: 13008, P: 542, N: 12466
+Max ROC: 0.984164
+Max AUPR: 0.914862
+#
+#  5758973 Edge Classes for 7330556 Observed Edges
+#
+k = 4
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
+#
+#  5762516 Edge Classes for 7330556 Observed Edges
+#
+k = 5
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
+#
+#  5762516 Edge Classes for 7330556 Observed Edges
+#
+k = 6
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
+#
+#  5762516 Edge Classes for 7330556 Observed Edges
+#
+k = 7
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
+#
+#  5762516 Edge Classes for 7330556 Observed Edges
+#
+k = 8
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
+#
+#  5762516 Edge Classes for 7330556 Observed Edges
+#
+k = 9
+Num True Edges: 542
+Num Classes: 541
+Average Class Size: 23.998152
+T/P: 23.953875
+T: 12983, P: 542, N: 12441
+Max ROC: 0.984490
+Max AUPR: 0.918677
