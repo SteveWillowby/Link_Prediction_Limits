@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import random
 import statistics
 import sys
 
@@ -69,36 +70,57 @@ if __name__ == "__main__":
 
     #################### Get Means & Stdevs ####################
 
-    ROC_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
-                            for k, l in ROC_between_points.items()}
-    AUPR_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
-                            for k, l in AUPR_between_points.items()}
+    ROC_avg_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
+                               for k, l in ROC_between_points.items()}
+    AUPR_avg_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
+                               for k, l in AUPR_between_points.items()}
 
-    ROC_max_k = max([k for k, l in ROC_between_points.items()])
-    AUPR_max_k = max([k for k, l in AUPR_between_points.items()])
+    ROC_max_k = max([k for k, l in ROC_avg_between_points.items()])
+    AUPR_max_k = max([k for k, l in AUPR_avg_between_points.items()])
 
-    ROC_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
-                        for l in ROC_endpoints]
-    AUPR_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
-                        for l in AUPR_endpoints]
+    ROC_avg_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
+                          for l in ROC_endpoints]
+    AUPR_avg_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
+                           for l in AUPR_endpoints]
 
     #################### Create Plots ####################
 
+    SPS_BASE = 0.0025
+    STARTPOINT_SHIFTS = SPS_BASE * ROC_max_k
+    ENDPOINT_SHIFT = 0.1
+    JITTER_WIDTH = 0.05
+    LW = 4.0  # linewidth
+    A = 0.3  # alpha (i.e. transparency) \in (0, 1]
+
     x = [i for i in range(1, ROC_max_k + 1)]
-    y = [ROC_between_points[i][0] for i in x]
-    yerr = [ROC_between_points[i][1] for i in x]
-    plt.errorbar(x, y, yerr=yerr, color="blue", label="nearly exact")
-    x_start = [x[0]]
-    y_start = [ROC_endpoints[0][0]]
-    yerr_start = [ROC_endpoints[0][1]]
-    plt.errorbar(x_start, y_start, yerr=yerr_start, color="red", label="k = 1")
-    if len(x) > 1:
-        x_end = [x[1]]
-    else:
-        x_end = [x[0]]
-    y_end = [ROC_endpoints[1][0]]
-    yerr_end = [ROC_endpoints[1][1]]
-    plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", label="k = inf")
+    x_plotted = list(x)
+    x_plotted[0] = x_plotted[0] + STARTPOINT_SHIFTS
+    y = [ROC_avg_between_points[i][0] for i in x]
+    yerr = [ROC_avg_between_points[i][1] for i in x]
+    plt.errorbar(x_plotted, y, yerr=yerr, color="teal", linewidth=LW, label="nearly exact")
+    x_start = [x[0] - STARTPOINT_SHIFTS]
+    y_start = [ROC_avg_endpoints[0][0]]
+    yerr_start = [ROC_avg_endpoints[0][1]]
+    plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
+    x_end = [x[-1] + ENDPOINT_SHIFT]
+    y_end = [ROC_avg_endpoints[1][0]]
+    yerr_end = [ROC_avg_endpoints[1][1]]
+    plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", linewidth=LW, label="k = inf")
+
+    # Add the raw points.
+    for x_val in x:
+        sub_y = ROC_between_points[x_val]
+        if x_val == 1:
+            x_val += STARTPOINT_SHIFTS
+        sub_x = [x_val + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+        plt.scatter(sub_x, sub_y, color="teal", alpha=A)
+
+    sub_y = ROC_endpoints[0]
+    sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+    plt.scatter(sub_x, sub_y, color="brown", alpha=A)
+    sub_y = ROC_endpoints[1]
+    sub_x = [x_end[0] + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+    plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
     plt.title("Maximum Possible Link Prediction ROC Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
     plt.xlabel("number of hops (\"k\") of information")
@@ -111,21 +133,39 @@ if __name__ == "__main__":
 
     plt.close()
 
+    # ... now for AUPR
+
+    STARTPOINT_SHIFTS = SPS_BASE * AUPR_max_k
+
     x = [i for i in range(1, AUPR_max_k + 1)]
-    y = [AUPR_between_points[i][0] for i in x]
-    yerr = [AUPR_between_points[i][1] for i in x]
-    plt.errorbar(x, y, yerr=yerr, color="blue", label="nearly exact")
-    x_start = [x[0]]
-    y_start = [AUPR_endpoints[0][0]]
-    yerr_start = [AUPR_endpoints[0][1]]
-    plt.errorbar(x_start, y_start, yerr=yerr_start, color="red", label="k = 1")
-    if len(x) > 1:
-        x_end = [x[1]]
-    else:
-        x_end = [x[0]]
-    y_end = [AUPR_endpoints[1][0]]
-    yerr_end = [AUPR_endpoints[1][1]]
-    plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", label="k = inf")
+    x_plotted = list(x)
+    x_plotted[0] = x_plotted[0] + STARTPOINT_SHIFTS
+    y = [AUPR_avg_between_points[i][0] for i in x]
+    yerr = [AUPR_avg_between_points[i][1] for i in x]
+    plt.errorbar(x_plotted, y, yerr=yerr, color="teal", linewidth=LW, label="nearly exact")
+    x_start = [x[0] - STARTPOINT_SHIFTS]
+    y_start = [AUPR_avg_endpoints[0][0]]
+    yerr_start = [AUPR_avg_endpoints[0][1]]
+    plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
+    x_end = [x[-1] + ENDPOINT_SHIFT]
+    y_end = [AUPR_avg_endpoints[1][0]]
+    yerr_end = [AUPR_avg_endpoints[1][1]]
+    plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", linewidth=LW, label="k = inf")
+
+    # Add the raw points.
+    for x_val in x:
+        sub_y = AUPR_between_points[x_val]
+        if x_val == 1:
+            x_val += STARTPOINT_SHIFTS
+        sub_x = [x_val + 0.05 * (random.random() - 0.5) for _ in sub_y]
+        plt.scatter(sub_x, sub_y, color="teal", alpha=A)
+
+    sub_y = AUPR_endpoints[0]
+    sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+    plt.scatter(sub_x, sub_y, color="brown", alpha=A)
+    sub_y = AUPR_endpoints[1]
+    sub_x = [x_end[0] + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+    plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
     plt.title("Maximum Possible Link Prediction AUPR Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
     plt.xlabel("number of hops (\"k\") of information")
