@@ -360,8 +360,12 @@ def __parallel_collection_function__(arg):
                 observed_edge_types = None
                 new_node_to_old = None
             else:
-                k_hop_nodes = __k_hop_nodes__(neighbors, k, [a, b])
-                if len(k_hop_nodes) < num_nodes:
+                # cfc is True if we are absolutely certain that the connected
+                #   component(s) is/are maximal.
+                #
+                # i.e. cfc --> maximal component
+                (k_hop_nodes, cfc) = __k_hop_nodes__(neighbors, k, [a, b])
+                if (not cfc) and len(k_hop_nodes) < num_nodes:
                     (new_node_to_old, new_neighbors_collections, \
                         observed_edge_types) = \
                             __induced_subgraph__(neighbors_collections, \
@@ -378,7 +382,7 @@ def __parallel_collection_function__(arg):
                 if (not has_repeat_edges) and d in neighbors_collections[c]:
                     continue
 
-                if k == "inf" or len(k_hop_nodes) == num_nodes:
+                if k == "inf" or cfc or len(k_hop_nodes) == num_nodes:
                     c_color = orbit_colors[c]
                     d_color = orbit_colors[d]
                     c_partition = orbit_partitions[c_color]
@@ -524,15 +528,20 @@ def __parallel_aggregator__(results):
 
 
 def __k_hop_nodes__(neighbors, k, init_nodes):
+    certainly_full_component = False
+
     visited = set(init_nodes)
     frontier = set(init_nodes)
     for _ in range(0, k):
         new_frontier = set()
         for n in frontier:
             new_frontier |= neighbors[n] - visited
+        if len(new_frontier) == 0:
+            certainly_full_component = True
+            break
         visited |= new_frontier
         frontier = new_frontier
-    return visited
+    return (visited, certainly_full_component)
 
 def __induced_subgraph__(neighbors_collections, \
                          nodes, has_edge_types):
