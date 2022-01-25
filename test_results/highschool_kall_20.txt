@@ -1,0 +1,797 @@
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 332 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 34
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 34
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 34
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 338 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 28
+Num Classes: 28
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 28, P: 28, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4765 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 28
+Num Classes: 28
+Average Class Size: 1.071429
+T/P: 1.071429
+T: 30, P: 28, N: 2
+K1 ROC: 0.964286
+K1 AUPR: 0.997506
+-- Now Hashing Subgraphs --
+#
+#  4765 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 28
+Num Classes: 28
+Average Class Size: 1.071429
+T/P: 1.071429
+T: 30, P: 28, N: 2
+Max ROC: 0.964286
+Max AUPR: 0.997506
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 28
+Num Classes: 28
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 28, P: 28, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 319 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 47
+Num Classes: 46
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 46, P: 46, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 47
+Num Classes: 46
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 46, P: 46, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 47
+Num Classes: 46
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 46, P: 46, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 321 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 45
+Num Classes: 45
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 45, P: 45, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 45
+Num Classes: 45
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 45, P: 45, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 45
+Num Classes: 45
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 45, P: 45, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 329 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 37
+Num Classes: 36
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 36, P: 36, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 36
+Average Class Size: 1.055556
+T/P: 1.055556
+T: 38, P: 36, N: 2
+K1 ROC: 0.972222
+K1 AUPR: 0.998484
+-- Now Hashing Subgraphs --
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 36
+Average Class Size: 1.055556
+T/P: 1.055556
+T: 38, P: 36, N: 2
+Max ROC: 0.972222
+Max AUPR: 0.998484
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 37
+Num Classes: 36
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 36, P: 36, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 325 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 41
+Num Classes: 41
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 41, P: 41, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 41
+Num Classes: 41
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 41, P: 41, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 41
+Num Classes: 41
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 41, P: 41, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 337 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 29
+Num Classes: 28
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 28, P: 28, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4790 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 29
+Num Classes: 28
+Average Class Size: 1.035714
+T/P: 1.035714
+T: 29, P: 28, N: 1
+K1 ROC: 0.982143
+K1 AUPR: 0.999370
+-- Now Hashing Subgraphs --
+#
+#  4790 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 29
+Num Classes: 28
+Average Class Size: 1.035714
+T/P: 1.035714
+T: 29, P: 28, N: 1
+Max ROC: 0.982143
+Max AUPR: 0.999370
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 29
+Num Classes: 28
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 28, P: 28, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 329 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 37, P: 37, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.027027
+T/P: 1.027027
+T: 38, P: 37, N: 1
+K1 ROC: 0.986486
+K1 AUPR: 0.999638
+-- Now Hashing Subgraphs --
+#
+#  4788 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.027027
+T/P: 1.027027
+T: 38, P: 37, N: 1
+Max ROC: 0.986486
+Max AUPR: 0.999638
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 37, P: 37, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 334 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 32
+Num Classes: 32
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 32, P: 32, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 32
+Num Classes: 32
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 32, P: 32, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 32
+Num Classes: 32
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 32, P: 32, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 326 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 40
+Num Classes: 40
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 40, P: 40, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4777 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 40
+Num Classes: 40
+Average Class Size: 1.050000
+T/P: 1.050000
+T: 42, P: 40, N: 2
+K1 ROC: 0.975000
+K1 AUPR: 0.998770
+-- Now Hashing Subgraphs --
+#
+#  4777 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 40
+Num Classes: 40
+Average Class Size: 1.050000
+T/P: 1.050000
+T: 42, P: 40, N: 2
+Max ROC: 0.975000
+Max AUPR: 0.998770
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 40
+Num Classes: 40
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 40, P: 40, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 325 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 41
+Num Classes: 40
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 40, P: 40, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 41
+Num Classes: 40
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 40, P: 40, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 41
+Num Classes: 40
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 40, P: 40, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 335 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 31
+Num Classes: 31
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 31, P: 31, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4792 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 31
+Num Classes: 31
+Average Class Size: 1.032258
+T/P: 1.032258
+T: 32, P: 31, N: 1
+K1 ROC: 0.983871
+K1 AUPR: 0.999485
+-- Now Hashing Subgraphs --
+#
+#  4792 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 31
+Num Classes: 31
+Average Class Size: 1.032258
+T/P: 1.032258
+T: 32, P: 31, N: 1
+Max ROC: 0.983871
+Max AUPR: 0.999485
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 31
+Num Classes: 31
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 31, P: 31, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 324 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 42
+Num Classes: 41
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 41, P: 41, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4774 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 42
+Num Classes: 41
+Average Class Size: 1.048780
+T/P: 1.048780
+T: 43, P: 41, N: 2
+K1 ROC: 0.975610
+K1 AUPR: 0.998829
+-- Now Hashing Subgraphs --
+#
+#  4774 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 42
+Num Classes: 41
+Average Class Size: 1.048780
+T/P: 1.048780
+T: 43, P: 41, N: 2
+Max ROC: 0.975610
+Max AUPR: 0.998829
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 2
+Num True Edges: 42
+Num Classes: 41
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 41, P: 41, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 326 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 40
+Num Classes: 39
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 39, P: 39, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4806 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 40
+Num Classes: 39
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 39, P: 39, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4806 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 40
+Num Classes: 39
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 39, P: 39, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 330 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 36
+Num Classes: 36
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 36, P: 36, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 36
+Num Classes: 36
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 36, P: 36, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 36
+Num Classes: 36
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 36, P: 36, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 320 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 46
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4804 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 46
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4804 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 46
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 336 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 30
+Num Classes: 30
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 30, P: 30, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 30
+Num Classes: 30
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 30, P: 30, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 30
+Num Classes: 30
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 30, P: 30, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 333 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 33
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4792 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 33
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4792 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 33
+Num Classes: 33
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 33, P: 33, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 329 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 37, P: 37, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4786 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 37, P: 37, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4786 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 37
+Num Classes: 37
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 37, P: 37, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_highschool.g and randomly removing edges.
+INFO: Input graph has 70 nodes, 323 edges, 1 node types (accounting for self-loops), and 2 edge types.
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = inf
+Num True Edges: 43
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 43
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  4830 Edge Classes for 4830 Observed Edges
+#
+k = 1
+Num True Edges: 43
+Num Classes: 42
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 42, P: 42, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
