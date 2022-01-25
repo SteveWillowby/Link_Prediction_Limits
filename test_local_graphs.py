@@ -20,7 +20,8 @@ if __name__ == "__main__":
                 "number of processes, number of threads per process, " + \
                 "k, py_iso, percent of (non)edges, number of runs, graph name.\n" + \
                 "options for graph name are:\n" + \
-                "karate, eucore, college, citeseer, cora, FB15k, and wiki")
+                "karate, eucore, college, citeseer, cora, highschool,\n" + \
+                "convote, FB15k, and wiki")
 
     TEST_EDGE_FRACTION = 0.1
 
@@ -37,7 +38,8 @@ if __name__ == "__main__":
     graph_name = argv[7]
 
     assert graph_name in ["karate", "eucore", "college", "citeseer", \
-                          "cora", "FB15k", "wiki"]
+                          "cora", "FB15k", "wiki", "highschool", \
+                          "convote"]
 
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
@@ -47,7 +49,9 @@ if __name__ == "__main__":
                   "FB15k": ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
                             "FB15k-237/FB15k-237_nodes.txt", \
                             "FB15k-237/FB15k-237_test_edges.txt", True), \
-                  "wiki": ("wiki-en-additions.g", True)}[graph_name]
+                  "wiki": ("wiki-en-additions.g", True), \
+                  "convote": ("convote.g", True), \
+                  "highschool": ("moreno_highschool.g", True)}[graph_name]
 
 
     if len(graph_info) == 2:
