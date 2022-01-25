@@ -36,7 +36,7 @@ def get_max_AUPR(class_info):
         else:
             addition = ((a * a) / c) * (1.0 + ((b / a) - (d / c)) * math.log((d + c) / d))
             # TODO: Look into the meaning of this assertion margin.
-            assert_margin = 0.0002
+            assert_margin = 0.001
             assert addition + assert_margin >= (a * a) / c
             assert addition - assert_margin <= a * (((a + b) / (c + d)) + (b / c)) / 2.0
 
