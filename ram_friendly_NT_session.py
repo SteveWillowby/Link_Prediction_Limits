@@ -750,7 +750,8 @@ class RAMFriendlyNTSession:
 
             edge_types = list(edge_types)
             edge_types.sort()
-            if edge_types[0] == 0 and edge_types[-1] == len(edge_types) - 1:
+            if len(edge_types) == 0 or \
+                    edge_types[0] == 0 and edge_types[-1] == len(edge_types) - 1:
                 edge_type_relabeling = None
             else:
                 edge_type_relabeling = \
