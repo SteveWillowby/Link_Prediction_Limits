@@ -1,0 +1,404 @@
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 67 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  406 Edge Classes for 494 Observed Edges
+#
+k = inf
+Num True Edges: 11
+Num Classes: 10
+Average Class Size: 1.100000
+T/P: 1.000000
+T: 11, P: 11, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  314 Edge Classes for 494 Observed Edges
+#
+k = 1
+Num True Edges: 11
+Num Classes: 10
+Average Class Size: 1.100000
+T/P: 1.000000
+T: 11, P: 11, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  314 Edge Classes for 494 Observed Edges
+#
+k = 1
+Num True Edges: 11
+Num Classes: 10
+Average Class Size: 1.100000
+T/P: 1.000000
+T: 11, P: 11, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 70 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  325 Edge Classes for 491 Observed Edges
+#
+k = inf
+Num True Edges: 8
+Num Classes: 8
+Average Class Size: 1.375000
+T/P: 1.375000
+T: 11, P: 8, N: 3
+Max ROC: 0.812500
+Max AUPR: 0.935696
+#
+#  259 Edge Classes for 491 Observed Edges
+#
+k = 1
+Num True Edges: 8
+Num Classes: 8
+Average Class Size: 1.375000
+T/P: 1.375000
+T: 11, P: 8, N: 3
+K1 ROC: 0.812500
+K1 AUPR: 0.935696
+-- Now Hashing Subgraphs --
+#
+#  259 Edge Classes for 491 Observed Edges
+#
+k = 1
+Num True Edges: 8
+Num Classes: 8
+Average Class Size: 1.375000
+T/P: 1.375000
+T: 11, P: 8, N: 3
+Max ROC: 0.812500
+Max AUPR: 0.935696
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 71 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  327 Edge Classes for 490 Observed Edges
+#
+k = inf
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 7, P: 7, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  264 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.285714
+T/P: 1.285714
+T: 9, P: 7, N: 2
+K1 ROC: 0.928571
+K1 AUPR: 0.981993
+-- Now Hashing Subgraphs --
+#
+#  264 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.285714
+T/P: 1.285714
+T: 9, P: 7, N: 2
+Max ROC: 0.928571
+Max AUPR: 0.981993
+#
+#  324 Edge Classes for 490 Observed Edges
+#
+k = 2
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 7, P: 7, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 74 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  322 Edge Classes for 487 Observed Edges
+#
+k = inf
+Num True Edges: 4
+Num Classes: 4
+Average Class Size: 1.250000
+T/P: 1.250000
+T: 5, P: 4, N: 1
+Max ROC: 0.875000
+Max AUPR: 0.970780
+#
+#  269 Edge Classes for 487 Observed Edges
+#
+k = 1
+Num True Edges: 4
+Num Classes: 4
+Average Class Size: 1.250000
+T/P: 1.250000
+T: 5, P: 4, N: 1
+K1 ROC: 0.875000
+K1 AUPR: 0.970780
+-- Now Hashing Subgraphs --
+#
+#  269 Edge Classes for 487 Observed Edges
+#
+k = 1
+Num True Edges: 4
+Num Classes: 4
+Average Class Size: 1.250000
+T/P: 1.250000
+T: 5, P: 4, N: 1
+Max ROC: 0.875000
+Max AUPR: 0.970780
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 69 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  302 Edge Classes for 492 Observed Edges
+#
+k = inf
+Num True Edges: 9
+Num Classes: 9
+Average Class Size: 1.333333
+T/P: 1.333333
+T: 12, P: 9, N: 3
+Max ROC: 0.833333
+Max AUPR: 0.948858
+#
+#  244 Edge Classes for 492 Observed Edges
+#
+k = 1
+Num True Edges: 9
+Num Classes: 9
+Average Class Size: 1.666667
+T/P: 1.666667
+T: 15, P: 9, N: 6
+K1 ROC: 0.814815
+K1 AUPR: 0.898056
+-- Now Hashing Subgraphs --
+#
+#  244 Edge Classes for 492 Observed Edges
+#
+k = 1
+Num True Edges: 9
+Num Classes: 9
+Average Class Size: 1.666667
+T/P: 1.666667
+T: 15, P: 9, N: 6
+Max ROC: 0.814815
+Max AUPR: 0.898056
+#
+#  300 Edge Classes for 492 Observed Edges
+#
+k = 2
+Num True Edges: 9
+Num Classes: 9
+Average Class Size: 1.333333
+T/P: 1.333333
+T: 12, P: 9, N: 3
+Max ROC: 0.833333
+Max AUPR: 0.948858
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 66 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  326 Edge Classes for 495 Observed Edges
+#
+k = inf
+Num True Edges: 12
+Num Classes: 11
+Average Class Size: 1.272727
+T/P: 1.166667
+T: 14, P: 12, N: 2
+Max ROC: 0.916667
+Max AUPR: 0.986765
+#
+#  236 Edge Classes for 495 Observed Edges
+#
+k = 1
+Num True Edges: 12
+Num Classes: 11
+Average Class Size: 2.090909
+T/P: 1.916667
+T: 23, P: 12, N: 11
+K1 ROC: 0.897727
+K1 AUPR: 0.929918
+-- Now Hashing Subgraphs --
+#
+#  236 Edge Classes for 495 Observed Edges
+#
+k = 1
+Num True Edges: 12
+Num Classes: 11
+Average Class Size: 2.090909
+T/P: 1.916667
+T: 23, P: 12, N: 11
+Max ROC: 0.897727
+Max AUPR: 0.929918
+#
+#  325 Edge Classes for 495 Observed Edges
+#
+k = 2
+Num True Edges: 12
+Num Classes: 11
+Average Class Size: 1.272727
+T/P: 1.166667
+T: 14, P: 12, N: 2
+Max ROC: 0.916667
+Max AUPR: 0.986765
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 71 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  324 Edge Classes for 490 Observed Edges
+#
+k = inf
+Num True Edges: 7
+Num Classes: 6
+Average Class Size: 2.000000
+T/P: 1.714286
+T: 12, P: 7, N: 5
+Max ROC: 0.800000
+Max AUPR: 0.879321
+#
+#  277 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 6
+Average Class Size: 2.000000
+T/P: 1.714286
+T: 12, P: 7, N: 5
+K1 ROC: 0.800000
+K1 AUPR: 0.879321
+-- Now Hashing Subgraphs --
+#
+#  277 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 6
+Average Class Size: 2.000000
+T/P: 1.714286
+T: 12, P: 7, N: 5
+Max ROC: 0.800000
+Max AUPR: 0.879321
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 68 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  378 Edge Classes for 493 Observed Edges
+#
+k = inf
+Num True Edges: 10
+Num Classes: 10
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 10, P: 10, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  295 Edge Classes for 493 Observed Edges
+#
+k = 1
+Num True Edges: 10
+Num Classes: 10
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 10, P: 10, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  295 Edge Classes for 493 Observed Edges
+#
+k = 1
+Num True Edges: 10
+Num Classes: 10
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 10, P: 10, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 72 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  301 Edge Classes for 489 Observed Edges
+#
+k = inf
+Num True Edges: 6
+Num Classes: 6
+Average Class Size: 1.500000
+T/P: 1.500000
+T: 9, P: 6, N: 3
+Max ROC: 0.750000
+Max AUPR: 0.887327
+#
+#  255 Edge Classes for 489 Observed Edges
+#
+k = 1
+Num True Edges: 6
+Num Classes: 6
+Average Class Size: 1.500000
+T/P: 1.500000
+T: 9, P: 6, N: 3
+K1 ROC: 0.750000
+K1 AUPR: 0.887327
+-- Now Hashing Subgraphs --
+#
+#  255 Edge Classes for 489 Observed Edges
+#
+k = 1
+Num True Edges: 6
+Num Classes: 6
+Average Class Size: 1.500000
+T/P: 1.500000
+T: 9, P: 6, N: 3
+Max ROC: 0.750000
+Max AUPR: 0.887327
+(Re)Loading real_world_graphs/karate.g and randomly removing edges.
+INFO: Input graph has 34 nodes, 71 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  301 Edge Classes for 490 Observed Edges
+#
+k = inf
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.428571
+T/P: 1.428571
+T: 10, P: 7, N: 3
+Max ROC: 0.785714
+Max AUPR: 0.916613
+#
+#  256 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.571429
+T/P: 1.571429
+T: 11, P: 7, N: 4
+K1 ROC: 0.821429
+K1 AUPR: 0.911474
+-- Now Hashing Subgraphs --
+#
+#  256 Edge Classes for 490 Observed Edges
+#
+k = 1
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.571429
+T/P: 1.571429
+T: 11, P: 7, N: 4
+Max ROC: 0.821429
+Max AUPR: 0.911474
+#
+#  299 Edge Classes for 490 Observed Edges
+#
+k = 2
+Num True Edges: 7
+Num Classes: 7
+Average Class Size: 1.428571
+T/P: 1.428571
+T: 10, P: 7, N: 3
+Max ROC: 0.785714
+Max AUPR: 0.916613

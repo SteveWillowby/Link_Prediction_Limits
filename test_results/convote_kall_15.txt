@@ -1,0 +1,789 @@
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 551 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  36698 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 55
+Num Classes: 53
+Average Class Size: 1.981132
+T/P: 1.981132
+T: 105, P: 53, N: 52
+Max ROC: 0.937954
+Max AUPR: 0.957379
+#
+#  28169 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 55
+Num Classes: 53
+Average Class Size: 10.283019
+T/P: 10.283019
+T: 545, P: 53, N: 492
+K1 ROC: 0.951871
+K1 AUPR: 0.875412
+-- Now Hashing Subgraphs --
+#
+#  28169 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 55
+Num Classes: 53
+Average Class Size: 10.283019
+T/P: 10.283019
+T: 545, P: 53, N: 492
+Max ROC: 0.951871
+Max AUPR: 0.875412
+#
+#  36686 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 55
+Num Classes: 53
+Average Class Size: 1.981132
+T/P: 1.981132
+T: 105, P: 53, N: 52
+Max ROC: 0.937954
+Max AUPR: 0.957379
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 1 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 546 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  37652 Edge Classes for 47961 Observed Edges
+#
+k = inf
+Num True Edges: 70
+Num Classes: 65
+Average Class Size: 1.600000
+T/P: 1.600000
+T: 104, P: 65, N: 39
+Max ROC: 0.942209
+Max AUPR: 0.970117
+#
+#  27327 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 70
+Num Classes: 65
+Average Class Size: 21.615385
+T/P: 21.615385
+T: 1405, P: 65, N: 1340
+K1 ROC: 0.938094
+K1 AUPR: 0.790926
+-- Now Hashing Subgraphs --
+#
+#  27327 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 70
+Num Classes: 65
+Average Class Size: 21.615385
+T/P: 21.615385
+T: 1405, P: 65, N: 1340
+Max ROC: 0.938094
+Max AUPR: 0.790926
+#
+#  37650 Edge Classes for 47961 Observed Edges
+#
+k = 2
+Num True Edges: 70
+Num Classes: 65
+Average Class Size: 1.600000
+T/P: 1.600000
+T: 104, P: 65, N: 39
+Max ROC: 0.942209
+Max AUPR: 0.970117
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 535 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  35935 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 78
+Num Classes: 75
+Average Class Size: 1.520000
+T/P: 1.520000
+T: 114, P: 75, N: 39
+Max ROC: 0.956410
+Max AUPR: 0.981767
+#
+#  26545 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 78
+Num Classes: 75
+Average Class Size: 28.386667
+T/P: 28.386667
+T: 2129, P: 75, N: 2054
+Err2 -- math.log(3.566164) = 1.271491
+K1 ROC: 0.982376
+K1 AUPR: 0.910544
+-- Now Hashing Subgraphs --
+#
+#  26545 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 78
+Num Classes: 75
+Average Class Size: 28.386667
+T/P: 28.386667
+T: 2129, P: 75, N: 2054
+Err2 -- math.log(3.566164) = 1.271491
+Max ROC: 0.982376
+Max AUPR: 0.910544
+#
+#  35923 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 78
+Num Classes: 75
+Average Class Size: 1.520000
+T/P: 1.520000
+T: 114, P: 75, N: 39
+Max ROC: 0.956410
+Max AUPR: 0.981767
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 541 edges, 2 node types (accounting for self-loops), and 10 edge types.
+#
+#  36313 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 79
+Num Classes: 73
+Average Class Size: 1.547945
+T/P: 1.547945
+T: 113, P: 73, N: 40
+Max ROC: 0.941096
+Max AUPR: 0.973586
+#
+#  26463 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 79
+Num Classes: 72
+Average Class Size: 37.347222
+T/P: 36.835616
+T: 2689, P: 73, N: 2616
+Err2 -- math.log(3.708966) = 1.310753
+K1 ROC: 0.981028
+K1 AUPR: 0.871494
+-- Now Hashing Subgraphs --
+#
+#  26463 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 79
+Num Classes: 72
+Average Class Size: 37.347222
+T/P: 36.835616
+T: 2689, P: 73, N: 2616
+Err2 -- math.log(3.708966) = 1.310753
+Max ROC: 0.981028
+Max AUPR: 0.871494
+#
+#  36306 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 79
+Num Classes: 73
+Average Class Size: 1.547945
+T/P: 1.547945
+T: 113, P: 73, N: 40
+Max ROC: 0.941096
+Max AUPR: 0.973586
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 537 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  35931 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.551282
+T/P: 1.551282
+T: 121, P: 78, N: 43
+Max ROC: 0.952147
+Max AUPR: 0.979031
+#
+#  26872 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 80
+Num Classes: 74
+Average Class Size: 38.310811
+T/P: 36.346154
+T: 2835, P: 78, N: 2757
+Err2 -- math.log(3.203390) = 1.164210
+K1 ROC: 0.953638
+K1 AUPR: 0.789789
+-- Now Hashing Subgraphs --
+#
+#  26872 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 80
+Num Classes: 74
+Average Class Size: 38.310811
+T/P: 36.346154
+T: 2835, P: 78, N: 2757
+Err2 -- math.log(3.203390) = 1.164210
+Max ROC: 0.953638
+Max AUPR: 0.789789
+#
+#  35925 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.871795
+T/P: 1.871795
+T: 146, P: 78, N: 68
+Max ROC: 0.965309
+Max AUPR: 0.977237
+#
+#  35925 Edge Classes for 47742 Observed Edges
+#
+k = 3
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.871795
+T/P: 1.871795
+T: 146, P: 78, N: 68
+Max ROC: 0.965309
+Max AUPR: 0.977237
+#
+#  35925 Edge Classes for 47742 Observed Edges
+#
+k = 4
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.871795
+T/P: 1.871795
+T: 146, P: 78, N: 68
+Max ROC: 0.965309
+Max AUPR: 0.977237
+#
+#  35925 Edge Classes for 47742 Observed Edges
+#
+k = 5
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.871795
+T/P: 1.871795
+T: 146, P: 78, N: 68
+Max ROC: 0.965309
+Max AUPR: 0.977237
+#
+#  35928 Edge Classes for 47742 Observed Edges
+#
+k = 6
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.871795
+T/P: 1.871795
+T: 146, P: 78, N: 68
+Max ROC: 0.965309
+Max AUPR: 0.977237
+#
+#  35931 Edge Classes for 47742 Observed Edges
+#
+k = 7
+Num True Edges: 80
+Num Classes: 78
+Average Class Size: 1.551282
+T/P: 1.551282
+T: 121, P: 78, N: 43
+Max ROC: 0.952147
+Max AUPR: 0.979031
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 1 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 532 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  35365 Edge Classes for 47961 Observed Edges
+#
+k = inf
+Num True Edges: 85
+Num Classes: 79
+Average Class Size: 1.860759
+T/P: 1.860759
+T: 147, P: 79, N: 68
+Max ROC: 0.919025
+Max AUPR: 0.949857
+#
+#  25585 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 85
+Num Classes: 77
+Average Class Size: 43.597403
+T/P: 42.493671
+T: 3357, P: 79, N: 3278
+Err2 -- math.log(2.227605) = 0.800927
+K1 ROC: 0.960977
+K1 AUPR: 0.809805
+-- Now Hashing Subgraphs --
+#
+#  25585 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 85
+Num Classes: 77
+Average Class Size: 43.597403
+T/P: 42.493671
+T: 3357, P: 79, N: 3278
+Err2 -- math.log(2.227605) = 0.800927
+Max ROC: 0.960977
+Max AUPR: 0.809805
+#
+#  35363 Edge Classes for 47961 Observed Edges
+#
+k = 2
+Num True Edges: 85
+Num Classes: 79
+Average Class Size: 1.835443
+T/P: 1.835443
+T: 145, P: 79, N: 66
+Max ROC: 0.920598
+Max AUPR: 0.951646
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 546 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  34434 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 69
+Num Classes: 66
+Average Class Size: 1.500000
+T/P: 1.500000
+T: 99, P: 66, N: 33
+Max ROC: 0.954316
+Max AUPR: 0.981501
+#
+#  26611 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 69
+Num Classes: 66
+Average Class Size: 7.924242
+T/P: 7.924242
+T: 523, P: 66, N: 457
+K1 ROC: 0.955955
+K1 AUPR: 0.908693
+-- Now Hashing Subgraphs --
+#
+#  26611 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 69
+Num Classes: 66
+Average Class Size: 7.924242
+T/P: 7.924242
+T: 523, P: 66, N: 457
+Max ROC: 0.955955
+Max AUPR: 0.908693
+#
+#  34425 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 69
+Num Classes: 66
+Average Class Size: 1.500000
+T/P: 1.500000
+T: 99, P: 66, N: 33
+Max ROC: 0.954316
+Max AUPR: 0.981501
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 536 edges, 2 node types (accounting for self-loops), and 11 edge types.
+#
+#  37076 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 81
+Num Classes: 79
+Average Class Size: 1.810127
+T/P: 1.810127
+T: 143, P: 79, N: 64
+Max ROC: 0.951938
+Max AUPR: 0.970870
+#
+#  27080 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 81
+Num Classes: 78
+Average Class Size: 12.961538
+T/P: 12.797468
+T: 1011, P: 79, N: 932
+K1 ROC: 0.928634
+K1 AUPR: 0.827520
+-- Now Hashing Subgraphs --
+#
+#  27080 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 81
+Num Classes: 78
+Average Class Size: 12.961538
+T/P: 12.797468
+T: 1011, P: 79, N: 932
+Max ROC: 0.928634
+Max AUPR: 0.827520
+#
+#  37067 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 81
+Num Classes: 79
+Average Class Size: 1.987342
+T/P: 1.987342
+T: 157, P: 79, N: 78
+Max ROC: 0.959429
+Max AUPR: 0.970515
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 536 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  35934 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 78
+Num Classes: 74
+Average Class Size: 1.662162
+T/P: 1.640000
+T: 123, P: 75, N: 48
+Max ROC: 0.947639
+Max AUPR: 0.973578
+#
+#  26728 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 78
+Num Classes: 73
+Average Class Size: 37.328767
+T/P: 36.333333
+T: 2725, P: 75, N: 2650
+K1 ROC: 0.965454
+K1 AUPR: 0.799086
+-- Now Hashing Subgraphs --
+#
+#  26728 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 78
+Num Classes: 73
+Average Class Size: 37.328767
+T/P: 36.333333
+T: 2725, P: 75, N: 2650
+Max ROC: 0.965454
+Max AUPR: 0.799086
+#
+#  35923 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 78
+Num Classes: 74
+Average Class Size: 1.662162
+T/P: 1.640000
+T: 123, P: 75, N: 48
+Max ROC: 0.947639
+Max AUPR: 0.973578
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 538 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  37079 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 83
+Num Classes: 79
+Average Class Size: 1.329114
+T/P: 1.312500
+T: 105, P: 80, N: 25
+Max ROC: 0.945250
+Max AUPR: 0.984559
+#
+#  27146 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 83
+Num Classes: 78
+Average Class Size: 26.666667
+T/P: 26.000000
+T: 2080, P: 80, N: 2000
+Err2 -- math.log(6.303030) = 1.841031
+K1 ROC: 0.978616
+K1 AUPR: 0.896168
+-- Now Hashing Subgraphs --
+#
+#  27146 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 83
+Num Classes: 78
+Average Class Size: 26.666667
+T/P: 26.000000
+T: 2080, P: 80, N: 2000
+Err2 -- math.log(6.303030) = 1.841031
+Max ROC: 0.978616
+Max AUPR: 0.896168
+#
+#  37071 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 83
+Num Classes: 79
+Average Class Size: 1.329114
+T/P: 1.312500
+T: 105, P: 80, N: 25
+Max ROC: 0.945250
+Max AUPR: 0.984559
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 547 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  35931 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 63
+Num Classes: 61
+Average Class Size: 1.655738
+T/P: 1.655738
+T: 101, P: 61, N: 40
+Max ROC: 0.916803
+Max AUPR: 0.954945
+#
+#  26295 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 63
+Num Classes: 61
+Average Class Size: 57.852459
+T/P: 57.852459
+T: 3529, P: 61, N: 3468
+Err2 -- math.log(2.789723) = 1.025942
+K1 ROC: 0.964046
+K1 AUPR: 0.766602
+-- Now Hashing Subgraphs --
+#
+#  26295 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 63
+Num Classes: 61
+Average Class Size: 57.852459
+T/P: 57.852459
+T: 3529, P: 61, N: 3468
+Err2 -- math.log(2.789723) = 1.025942
+Max ROC: 0.964046
+Max AUPR: 0.766602
+#
+#  35924 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 63
+Num Classes: 61
+Average Class Size: 1.655738
+T/P: 1.655738
+T: 101, P: 61, N: 40
+Max ROC: 0.916803
+Max AUPR: 0.954945
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 531 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  36312 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 79
+Num Classes: 75
+Average Class Size: 1.853333
+T/P: 1.853333
+T: 139, P: 75, N: 64
+Max ROC: 0.937083
+Max AUPR: 0.963238
+#
+#  26796 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 79
+Num Classes: 74
+Average Class Size: 14.918919
+T/P: 14.720000
+T: 1104, P: 75, N: 1029
+K1 ROC: 0.933729
+K1 AUPR: 0.803324
+-- Now Hashing Subgraphs --
+#
+#  26796 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 79
+Num Classes: 74
+Average Class Size: 14.918919
+T/P: 14.720000
+T: 1104, P: 75, N: 1029
+Max ROC: 0.933729
+Max AUPR: 0.803324
+#
+#  36302 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 79
+Num Classes: 75
+Average Class Size: 1.853333
+T/P: 1.853333
+T: 139, P: 75, N: 64
+Max ROC: 0.937083
+Max AUPR: 0.963238
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 1 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 538 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  38037 Edge Classes for 47961 Observed Edges
+#
+k = inf
+Num True Edges: 76
+Num Classes: 74
+Average Class Size: 1.405405
+T/P: 1.405405
+T: 104, P: 74, N: 30
+Max ROC: 0.959459
+Max AUPR: 0.986201
+#
+#  27274 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 76
+Num Classes: 74
+Average Class Size: 4.243243
+T/P: 4.243243
+T: 314, P: 74, N: 240
+K1 ROC: 0.942173
+K1 AUPR: 0.915734
+-- Now Hashing Subgraphs --
+#
+#  27274 Edge Classes for 47961 Observed Edges
+#
+k = 1
+Num True Edges: 76
+Num Classes: 74
+Average Class Size: 4.243243
+T/P: 4.243243
+T: 314, P: 74, N: 240
+Max ROC: 0.942173
+Max AUPR: 0.915734
+#
+#  38037 Edge Classes for 47961 Observed Edges
+#
+k = 2
+Num True Edges: 76
+Num Classes: 74
+Average Class Size: 1.405405
+T/P: 1.405405
+T: 104, P: 74, N: 30
+Max ROC: 0.959459
+Max AUPR: 0.986201
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 541 edges, 2 node types (accounting for self-loops), and 10 edge types.
+#
+#  37080 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 68
+Num Classes: 66
+Average Class Size: 1.469697
+T/P: 1.469697
+T: 97, P: 66, N: 31
+Max ROC: 0.948436
+Max AUPR: 0.979269
+#
+#  27327 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 68
+Num Classes: 66
+Average Class Size: 5.833333
+T/P: 5.833333
+T: 385, P: 66, N: 319
+K1 ROC: 0.943597
+K1 AUPR: 0.892743
+-- Now Hashing Subgraphs --
+#
+#  27327 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 68
+Num Classes: 66
+Average Class Size: 5.833333
+T/P: 5.833333
+T: 385, P: 66, N: 319
+Max ROC: 0.943597
+Max AUPR: 0.892743
+#
+#  37071 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 68
+Num Classes: 66
+Average Class Size: 1.469697
+T/P: 1.469697
+T: 97, P: 66, N: 31
+Max ROC: 0.948436
+Max AUPR: 0.979269
+(Re)Loading real_world_graphs/convote.g and randomly removing edges.
+NOTE: Input file real_world_graphs/convote.g had 2 nodes with 1 or more self-loops.
+INFO: Input graph has 219 nodes, 540 edges, 2 node types (accounting for self-loops), and 12 edge types.
+#
+#  37852 Edge Classes for 47742 Observed Edges
+#
+k = inf
+Num True Edges: 75
+Num Classes: 74
+Average Class Size: 1.567568
+T/P: 1.567568
+T: 116, P: 74, N: 42
+Max ROC: 0.948842
+Max AUPR: 0.976641
+#
+#  27007 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 75
+Num Classes: 73
+Average Class Size: 34.356164
+T/P: 33.891892
+T: 2508, P: 74, N: 2434
+Err2 -- math.log(3.127182) = 1.140132
+K1 ROC: 0.978339
+K1 AUPR: 0.858196
+-- Now Hashing Subgraphs --
+#
+#  27007 Edge Classes for 47742 Observed Edges
+#
+k = 1
+Num True Edges: 75
+Num Classes: 73
+Average Class Size: 34.356164
+T/P: 33.891892
+T: 2508, P: 74, N: 2434
+Err2 -- math.log(3.127182) = 1.140132
+Max ROC: 0.978339
+Max AUPR: 0.858196
+#
+#  37843 Edge Classes for 47742 Observed Edges
+#
+k = 2
+Num True Edges: 75
+Num Classes: 74
+Average Class Size: 1.567568
+T/P: 1.567568
+T: 116, P: 74, N: 42
+Max ROC: 0.948842
+Max AUPR: 0.976641
