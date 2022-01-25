@@ -552,7 +552,8 @@ def __induced_subgraph__(neighbors_collections, \
 
         observed_edge_types = sorted(list(observed_edge_types))
 
-        if observed_edge_types[-1] == len(observed_edge_types) - 1:
+        if len(observed_edge_types) == 0 or \
+                observed_edge_types[-1] == len(observed_edge_types) - 1:
             # If there is effectively no relabeling, don't bother to relabel.
             return (nodes_list, new_neighbors_collections, None)
 
