@@ -21,7 +21,7 @@ if __name__ == "__main__":
     K1 = 1
     KBET = 2
     phase = KBET
-    counter = None
+    searching = False
     for l in lines:
         if "k = " in l:
             k = l.strip()[4:]
@@ -37,9 +37,9 @@ if __name__ == "__main__":
             elif type(k) is str and k == "inf":
                 phase = KINF
 
-            counter = 0
+            searching = True
 
-        if counter is not None and counter == 6:
+        if searching and " ROC: " in l:
             value = float(l.strip().split(" ")[2])
 
             if phase == KINF:
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                     ROC_between_points[k] = []
                 ROC_between_points[k].append(value)
 
-        if counter is not None and counter == 7:
+        if searching and " AUPR: " in l:
             value = float(l.strip().split(" ")[2])
 
             if phase == KINF:
@@ -63,10 +63,7 @@ if __name__ == "__main__":
                     AUPR_between_points[k] = []
                 AUPR_between_points[k].append(value)
 
-            counter = None
-
-        if counter is not None:
-            counter += 1
+            searching = False
 
     #################### Get Means & Stdevs ####################
 
