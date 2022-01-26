@@ -1,0 +1,929 @@
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 995 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 103
+Num Classes: 103
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 103, P: 103, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53731 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 103
+Num Classes: 103
+Average Class Size: 1.009709
+T/P: 1.009709
+T: 104, P: 103, N: 1
+K1 ROC: 0.995146
+K1 AUPR: 0.999953
+-- Now Hashing Subgraphs --
+#
+#  53731 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 103
+Num Classes: 103
+Average Class Size: 1.009709
+T/P: 1.009709
+T: 104, P: 103, N: 1
+Max ROC: 0.995146
+Max AUPR: 0.999953
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 103
+Num Classes: 103
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 103, P: 103, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 982 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 116, P: 116, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53733 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.051724
+T/P: 1.051724
+T: 122, P: 116, N: 6
+K1 ROC: 0.985632
+K1 AUPR: 0.999272
+-- Now Hashing Subgraphs --
+#
+#  53733 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.051724
+T/P: 1.051724
+T: 122, P: 116, N: 6
+Max ROC: 0.985632
+Max AUPR: 0.999272
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 116, P: 116, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 982 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57361 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.043103
+T/P: 1.043103
+T: 121, P: 116, N: 5
+Max ROC: 0.978448
+Max AUPR: 0.999084
+#
+#  52816 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.068966
+T/P: 1.068966
+T: 124, P: 116, N: 8
+K1 ROC: 0.973060
+K1 AUPR: 0.998181
+-- Now Hashing Subgraphs --
+#
+#  52816 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.068966
+T/P: 1.068966
+T: 124, P: 116, N: 8
+Max ROC: 0.973060
+Max AUPR: 0.998181
+#
+#  57361 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.043103
+T/P: 1.043103
+T: 121, P: 116, N: 5
+Max ROC: 0.978448
+Max AUPR: 0.999084
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 989 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 109
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52337 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 109
+Num Classes: 107
+Average Class Size: 1.140187
+T/P: 1.129630
+T: 122, P: 108, N: 14
+K1 ROC: 0.986772
+K1 AUPR: 0.998382
+-- Now Hashing Subgraphs --
+#
+#  52337 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 109
+Num Classes: 107
+Average Class Size: 1.140187
+T/P: 1.129630
+T: 122, P: 108, N: 14
+Max ROC: 0.986772
+Max AUPR: 0.998382
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 109
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 997 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 101
+Num Classes: 101
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 101, P: 101, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53123 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 101
+Num Classes: 101
+Average Class Size: 1.099010
+T/P: 1.099010
+T: 111, P: 101, N: 10
+K1 ROC: 0.982178
+K1 AUPR: 0.998319
+-- Now Hashing Subgraphs --
+#
+#  53123 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 101
+Num Classes: 101
+Average Class Size: 1.099010
+T/P: 1.099010
+T: 111, P: 101, N: 10
+Max ROC: 0.982178
+Max AUPR: 0.998319
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 101
+Num Classes: 101
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 101, P: 101, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 983 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 115
+Num Classes: 115
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 115, P: 115, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52850 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 115
+Num Classes: 115
+Average Class Size: 1.095652
+T/P: 1.095652
+T: 126, P: 115, N: 11
+K1 ROC: 0.990119
+K1 AUPR: 0.999103
+-- Now Hashing Subgraphs --
+#
+#  52850 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 115
+Num Classes: 115
+Average Class Size: 1.095652
+T/P: 1.095652
+T: 126, P: 115, N: 11
+Max ROC: 0.990119
+Max AUPR: 0.999103
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 115
+Num Classes: 115
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 115, P: 115, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 990 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  54258 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.120370
+T/P: 1.120370
+T: 121, P: 108, N: 13
+K1 ROC: 0.986111
+K1 AUPR: 0.998405
+-- Now Hashing Subgraphs --
+#
+#  54258 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.120370
+T/P: 1.120370
+T: 121, P: 108, N: 13
+Max ROC: 0.986111
+Max AUPR: 0.998405
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 991 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 107
+Num Classes: 107
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 107, P: 107, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  54085 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 107
+Num Classes: 107
+Average Class Size: 1.037383
+T/P: 1.037383
+T: 111, P: 107, N: 4
+K1 ROC: 0.995327
+K1 AUPR: 0.999829
+-- Now Hashing Subgraphs --
+#
+#  54085 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 107
+Num Classes: 107
+Average Class Size: 1.037383
+T/P: 1.037383
+T: 111, P: 107, N: 4
+Max ROC: 0.995327
+Max AUPR: 0.999829
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 107
+Num Classes: 107
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 107, P: 107, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 987 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 111
+Num Classes: 111
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 111, P: 111, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53603 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 111
+Num Classes: 111
+Average Class Size: 1.099099
+T/P: 1.099099
+T: 122, P: 111, N: 11
+K1 ROC: 0.980753
+K1 AUPR: 0.998163
+-- Now Hashing Subgraphs --
+#
+#  53603 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 111
+Num Classes: 111
+Average Class Size: 1.099099
+T/P: 1.099099
+T: 122, P: 111, N: 11
+Max ROC: 0.980753
+Max AUPR: 0.998163
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 111
+Num Classes: 111
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 111, P: 111, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 979 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 119
+Num Classes: 119
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 119, P: 119, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53281 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 119
+Num Classes: 119
+Average Class Size: 1.016807
+T/P: 1.016807
+T: 121, P: 119, N: 2
+K1 ROC: 0.995798
+K1 AUPR: 0.999930
+-- Now Hashing Subgraphs --
+#
+#  53281 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 119
+Num Classes: 119
+Average Class Size: 1.016807
+T/P: 1.016807
+T: 121, P: 119, N: 2
+Max ROC: 0.995798
+Max AUPR: 0.999930
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 119
+Num Classes: 119
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 119, P: 119, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 990 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52430 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.138889
+T/P: 1.138889
+T: 123, P: 108, N: 15
+K1 ROC: 0.987963
+K1 AUPR: 0.998444
+-- Now Hashing Subgraphs --
+#
+#  52430 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.138889
+T/P: 1.138889
+T: 123, P: 108, N: 15
+Max ROC: 0.987963
+Max AUPR: 0.998444
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 108
+Num Classes: 108
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 108, P: 108, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 982 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 116, P: 116, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53365 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.086207
+T/P: 1.086207
+T: 126, P: 116, N: 10
+K1 ROC: 0.987069
+K1 AUPR: 0.998930
+-- Now Hashing Subgraphs --
+#
+#  53365 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.086207
+T/P: 1.086207
+T: 126, P: 116, N: 10
+Max ROC: 0.987069
+Max AUPR: 0.998930
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 116
+Num Classes: 116
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 116, P: 116, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 1004 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 94
+Num Classes: 94
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 94, P: 94, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53114 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 94
+Num Classes: 94
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 94, P: 94, N: 0
+K1 ROC: 1.000000
+K1 AUPR: 1.000000
+-- Now Hashing Subgraphs --
+#
+#  53114 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 94
+Num Classes: 94
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 94, P: 94, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 987 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 111
+Num Classes: 110
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 110, P: 110, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52977 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 111
+Num Classes: 110
+Average Class Size: 1.063636
+T/P: 1.063636
+T: 117, P: 110, N: 7
+K1 ROC: 0.982468
+K1 AUPR: 0.998907
+-- Now Hashing Subgraphs --
+#
+#  52977 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 111
+Num Classes: 110
+Average Class Size: 1.063636
+T/P: 1.063636
+T: 117, P: 110, N: 7
+Max ROC: 0.982468
+Max AUPR: 0.998907
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 111
+Num Classes: 110
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 110, P: 110, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 986 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 112
+Num Classes: 112
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 112, P: 112, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53542 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 112
+Num Classes: 112
+Average Class Size: 1.116071
+T/P: 1.116071
+T: 125, P: 112, N: 13
+K1 ROC: 0.986607
+K1 AUPR: 0.998535
+-- Now Hashing Subgraphs --
+#
+#  53542 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 112
+Num Classes: 112
+Average Class Size: 1.116071
+T/P: 1.116071
+T: 125, P: 112, N: 13
+Max ROC: 0.986607
+Max AUPR: 0.998535
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 112
+Num Classes: 112
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 112, P: 112, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 1003 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 95
+Num Classes: 94
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 94, P: 94, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52450 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 95
+Num Classes: 94
+Average Class Size: 1.138298
+T/P: 1.138298
+T: 107, P: 94, N: 13
+K1 ROC: 0.992226
+K1 AUPR: 0.998993
+-- Now Hashing Subgraphs --
+#
+#  52450 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 95
+Num Classes: 94
+Average Class Size: 1.138298
+T/P: 1.138298
+T: 107, P: 94, N: 13
+Max ROC: 0.992226
+Max AUPR: 0.998993
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 95
+Num Classes: 94
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 94, P: 94, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 973 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 125
+Num Classes: 125
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 125, P: 125, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  51742 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 125
+Num Classes: 125
+Average Class Size: 1.144000
+T/P: 1.144000
+T: 143, P: 125, N: 18
+K1 ROC: 0.989778
+K1 AUPR: 0.998621
+-- Now Hashing Subgraphs --
+#
+#  51742 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 125
+Num Classes: 125
+Average Class Size: 1.144000
+T/P: 1.144000
+T: 143, P: 125, N: 18
+Max ROC: 0.989778
+Max AUPR: 0.998621
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 125
+Num Classes: 125
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 125, P: 125, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 989 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 109
+Num Classes: 109
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 109, P: 109, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  52105 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 109
+Num Classes: 109
+Average Class Size: 1.036697
+T/P: 1.036697
+T: 113, P: 109, N: 4
+K1 ROC: 0.988532
+K1 AUPR: 0.999585
+-- Now Hashing Subgraphs --
+#
+#  52105 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 109
+Num Classes: 109
+Average Class Size: 1.036697
+T/P: 1.036697
+T: 113, P: 109, N: 4
+Max ROC: 0.988532
+Max AUPR: 0.999585
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 109
+Num Classes: 109
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 109, P: 109, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 988 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 110
+Num Classes: 109
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 109, P: 109, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53093 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 110
+Num Classes: 109
+Average Class Size: 1.036697
+T/P: 1.036697
+T: 113, P: 109, N: 4
+K1 ROC: 0.988532
+K1 AUPR: 0.999585
+-- Now Hashing Subgraphs --
+#
+#  53093 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 110
+Num Classes: 109
+Average Class Size: 1.036697
+T/P: 1.036697
+T: 113, P: 109, N: 4
+Max ROC: 0.988532
+Max AUPR: 0.999585
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 110
+Num Classes: 109
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 109, P: 109, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+(Re)Loading real_world_graphs/moreno_innovation.g and randomly removing edges.
+INFO: Input graph has 241 nodes, 976 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = inf
+Num True Edges: 122
+Num Classes: 122
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 122, P: 122, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000
+#
+#  53582 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 122
+Num Classes: 122
+Average Class Size: 1.049180
+T/P: 1.049180
+T: 128, P: 122, N: 6
+K1 ROC: 0.990437
+K1 AUPR: 0.999540
+-- Now Hashing Subgraphs --
+#
+#  53582 Edge Classes for 57840 Observed Edges
+#
+k = 1
+Num True Edges: 122
+Num Classes: 122
+Average Class Size: 1.049180
+T/P: 1.049180
+T: 128, P: 122, N: 6
+Max ROC: 0.990437
+Max AUPR: 0.999540
+#
+#  57840 Edge Classes for 57840 Observed Edges
+#
+k = 2
+Num True Edges: 122
+Num Classes: 122
+Average Class Size: 1.000000
+T/P: 1.000000
+T: 122, P: 122, N: 0
+Max ROC: 1.000000
+Max AUPR: 1.000000

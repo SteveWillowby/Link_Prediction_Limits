@@ -1,0 +1,995 @@
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1837 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  91831 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 188
+Num Classes: 188
+Average Class Size: 1.101064
+T/P: 1.101064
+T: 207, P: 188, N: 19
+Max ROC: 0.971585
+Max AUPR: 0.997206
+#
+#  57258 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 188
+Num Classes: 186
+Average Class Size: 11.376344
+T/P: 11.255319
+T: 2116, P: 188, N: 1928
+K1 ROC: 0.981521
+K1 AUPR: 0.943423
+-- Now Hashing Subgraphs --
+#
+#  57258 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 188
+Num Classes: 186
+Average Class Size: 11.376344
+T/P: 11.255319
+T: 2116, P: 188, N: 1928
+Max ROC: 0.981521
+Max AUPR: 0.943423
+#
+#  91830 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 188
+Num Classes: 188
+Average Class Size: 1.101064
+T/P: 1.101064
+T: 207, P: 188, N: 19
+Max ROC: 0.971585
+Max AUPR: 0.997206
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1822 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  90977 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 203
+Num Classes: 203
+Average Class Size: 1.093596
+T/P: 1.093596
+T: 222, P: 203, N: 19
+Max ROC: 0.953202
+Max AUPR: 0.995744
+#
+#  58346 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 203
+Num Classes: 203
+Average Class Size: 4.078818
+T/P: 4.078818
+T: 828, P: 203, N: 625
+K1 ROC: 0.966577
+K1 AUPR: 0.941790
+-- Now Hashing Subgraphs --
+#
+#  58346 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 203
+Num Classes: 203
+Average Class Size: 4.078818
+T/P: 4.078818
+T: 828, P: 203, N: 625
+Max ROC: 0.966577
+Max AUPR: 0.941790
+#
+#  90947 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 203
+Num Classes: 203
+Average Class Size: 1.093596
+T/P: 1.093596
+T: 222, P: 203, N: 19
+Max ROC: 0.953202
+Max AUPR: 0.995744
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1834 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  88876 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 191
+Num Classes: 191
+Average Class Size: 1.287958
+T/P: 1.287958
+T: 246, P: 191, N: 55
+Max ROC: 0.958829
+Max AUPR: 0.989043
+#
+#  56542 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 191
+Num Classes: 190
+Average Class Size: 8.715789
+T/P: 8.670157
+T: 1656, P: 191, N: 1465
+K1 ROC: 0.962348
+K1 AUPR: 0.904177
+-- Now Hashing Subgraphs --
+#
+#  56542 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 191
+Num Classes: 190
+Average Class Size: 8.715789
+T/P: 8.670157
+T: 1656, P: 191, N: 1465
+Max ROC: 0.962348
+Max AUPR: 0.904177
+#
+#  88837 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 191
+Num Classes: 191
+Average Class Size: 1.413613
+T/P: 1.413613
+T: 270, P: 191, N: 79
+Max ROC: 0.970541
+Max AUPR: 0.988851
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1813 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92262 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 212
+Num Classes: 211
+Average Class Size: 1.099526
+T/P: 1.094340
+T: 232, P: 212, N: 20
+Max ROC: 0.961557
+Max AUPR: 0.996470
+#
+#  57762 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 212
+Num Classes: 207
+Average Class Size: 6.193237
+T/P: 6.047170
+T: 1282, P: 212, N: 1070
+K1 ROC: 0.969113
+K1 AUPR: 0.922794
+-- Now Hashing Subgraphs --
+#
+#  57762 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 212
+Num Classes: 207
+Average Class Size: 6.193237
+T/P: 6.047170
+T: 1282, P: 212, N: 1070
+Max ROC: 0.969113
+Max AUPR: 0.922794
+#
+#  91892 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 212
+Num Classes: 211
+Average Class Size: 1.104265
+T/P: 1.099057
+T: 233, P: 212, N: 21
+Max ROC: 0.959232
+Max AUPR: 0.996075
+#
+#  92261 Edge Classes for 102378 Observed Edges
+#
+k = 3
+Num True Edges: 212
+Num Classes: 211
+Average Class Size: 1.099526
+T/P: 1.094340
+T: 232, P: 212, N: 20
+Max ROC: 0.961557
+Max AUPR: 0.996470
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1809 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92266 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 216
+Num Classes: 216
+Average Class Size: 1.060185
+T/P: 1.060185
+T: 229, P: 216, N: 13
+Max ROC: 0.978098
+Max AUPR: 0.998705
+#
+#  60280 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 216
+Num Classes: 215
+Average Class Size: 6.032558
+T/P: 6.004630
+T: 1297, P: 216, N: 1081
+K1 ROC: 0.975321
+K1 AUPR: 0.942417
+-- Now Hashing Subgraphs --
+#
+#  60280 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 216
+Num Classes: 215
+Average Class Size: 6.032558
+T/P: 6.004630
+T: 1297, P: 216, N: 1081
+Max ROC: 0.975321
+Max AUPR: 0.942417
+#
+#  92142 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 216
+Num Classes: 216
+Average Class Size: 1.060185
+T/P: 1.060185
+T: 229, P: 216, N: 13
+Max ROC: 0.978098
+Max AUPR: 0.998705
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1849 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  91403 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 176
+Num Classes: 176
+Average Class Size: 1.045455
+T/P: 1.045455
+T: 184, P: 176, N: 8
+Max ROC: 0.985795
+Max AUPR: 0.999365
+#
+#  57554 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 176
+Num Classes: 175
+Average Class Size: 4.845714
+T/P: 4.818182
+T: 848, P: 176, N: 672
+K1 ROC: 0.979048
+K1 AUPR: 0.953977
+-- Now Hashing Subgraphs --
+#
+#  57554 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 176
+Num Classes: 175
+Average Class Size: 4.845714
+T/P: 4.818182
+T: 848, P: 176, N: 672
+Max ROC: 0.979048
+Max AUPR: 0.953977
+#
+#  91031 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 176
+Num Classes: 176
+Average Class Size: 1.045455
+T/P: 1.045455
+T: 184, P: 176, N: 8
+Max ROC: 0.985795
+Max AUPR: 0.999365
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1828 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  90129 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 197
+Num Classes: 197
+Average Class Size: 1.096447
+T/P: 1.096447
+T: 216, P: 197, N: 19
+Max ROC: 0.965135
+Max AUPR: 0.996729
+#
+#  58471 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 197
+Num Classes: 194
+Average Class Size: 5.953608
+T/P: 5.862944
+T: 1155, P: 197, N: 958
+K1 ROC: 0.982411
+K1 AUPR: 0.951944
+-- Now Hashing Subgraphs --
+#
+#  58471 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 197
+Num Classes: 194
+Average Class Size: 5.953608
+T/P: 5.862944
+T: 1155, P: 197, N: 958
+Max ROC: 0.982411
+Max AUPR: 0.951944
+#
+#  90086 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 197
+Num Classes: 197
+Average Class Size: 1.096447
+T/P: 1.096447
+T: 216, P: 197, N: 19
+Max ROC: 0.965135
+Max AUPR: 0.996729
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1825 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  93551 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 200
+Num Classes: 200
+Average Class Size: 1.095000
+T/P: 1.095000
+T: 219, P: 200, N: 19
+Max ROC: 0.979079
+Max AUPR: 0.998068
+#
+#  60931 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 200
+Num Classes: 199
+Average Class Size: 6.613065
+T/P: 6.580000
+T: 1316, P: 200, N: 1116
+K1 ROC: 0.979662
+K1 AUPR: 0.948723
+-- Now Hashing Subgraphs --
+#
+#  60931 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 200
+Num Classes: 199
+Average Class Size: 6.613065
+T/P: 6.580000
+T: 1316, P: 200, N: 1116
+Max ROC: 0.979662
+Max AUPR: 0.948723
+#
+#  93506 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 200
+Num Classes: 200
+Average Class Size: 1.095000
+T/P: 1.095000
+T: 219, P: 200, N: 19
+Max ROC: 0.979079
+Max AUPR: 0.998068
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1796 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  89707 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 229
+Num Classes: 228
+Average Class Size: 1.153509
+T/P: 1.148472
+T: 263, P: 229, N: 34
+Max ROC: 0.970717
+Max AUPR: 0.995841
+#
+#  58717 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 229
+Num Classes: 227
+Average Class Size: 3.938326
+T/P: 3.903930
+T: 894, P: 229, N: 665
+K1 ROC: 0.965118
+K1 AUPR: 0.945751
+-- Now Hashing Subgraphs --
+#
+#  58717 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 229
+Num Classes: 227
+Average Class Size: 3.938326
+T/P: 3.903930
+T: 894, P: 229, N: 665
+Max ROC: 0.965118
+Max AUPR: 0.945751
+#
+#  89584 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 229
+Num Classes: 228
+Average Class Size: 1.179825
+T/P: 1.174672
+T: 269, P: 229, N: 40
+Max ROC: 0.972162
+Max AUPR: 0.995415
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1842 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  93116 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 183
+Num Classes: 183
+Average Class Size: 1.032787
+T/P: 1.032787
+T: 189, P: 183, N: 6
+Max ROC: 0.988160
+Max AUPR: 0.999616
+#
+#  56765 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 183
+Num Classes: 183
+Average Class Size: 3.415301
+T/P: 3.415301
+T: 625, P: 183, N: 442
+K1 ROC: 0.968412
+K1 AUPR: 0.951132
+-- Now Hashing Subgraphs --
+#
+#  56765 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 183
+Num Classes: 183
+Average Class Size: 3.415301
+T/P: 3.415301
+T: 625, P: 183, N: 442
+Max ROC: 0.968412
+Max AUPR: 0.951132
+#
+#  92691 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 183
+Num Classes: 183
+Average Class Size: 1.032787
+T/P: 1.032787
+T: 189, P: 183, N: 6
+Max ROC: 0.988160
+Max AUPR: 0.999616
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1816 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  90128 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 209
+Num Classes: 209
+Average Class Size: 1.191388
+T/P: 1.191388
+T: 249, P: 209, N: 40
+Max ROC: 0.940191
+Max AUPR: 0.989238
+#
+#  58825 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 209
+Num Classes: 208
+Average Class Size: 11.625000
+T/P: 11.569378
+T: 2418, P: 209, N: 2209
+K1 ROC: 0.973794
+K1 AUPR: 0.914946
+-- Now Hashing Subgraphs --
+#
+#  58825 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 209
+Num Classes: 208
+Average Class Size: 11.625000
+T/P: 11.569378
+T: 2418, P: 209, N: 2209
+Max ROC: 0.973794
+Max AUPR: 0.914946
+#
+#  89847 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 209
+Num Classes: 209
+Average Class Size: 1.191388
+T/P: 1.191388
+T: 249, P: 209, N: 40
+Max ROC: 0.940191
+Max AUPR: 0.989238
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1830 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  93547 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 195
+Num Classes: 195
+Average Class Size: 1.097436
+T/P: 1.097436
+T: 214, P: 195, N: 19
+Max ROC: 0.968286
+Max AUPR: 0.996998
+#
+#  58643 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 195
+Num Classes: 195
+Average Class Size: 8.312821
+T/P: 8.312821
+T: 1621, P: 195, N: 1426
+K1 ROC: 0.969623
+K1 AUPR: 0.916317
+-- Now Hashing Subgraphs --
+#
+#  58643 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 195
+Num Classes: 195
+Average Class Size: 8.312821
+T/P: 8.312821
+T: 1621, P: 195, N: 1426
+Max ROC: 0.969623
+Max AUPR: 0.916317
+#
+#  93334 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 195
+Num Classes: 195
+Average Class Size: 1.097436
+T/P: 1.097436
+T: 214, P: 195, N: 19
+Max ROC: 0.968286
+Max AUPR: 0.996998
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1818 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92686 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 207
+Num Classes: 206
+Average Class Size: 1.058252
+T/P: 1.058252
+T: 218, P: 206, N: 12
+Max ROC: 0.970874
+Max AUPR: 0.998334
+#
+#  56174 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 207
+Num Classes: 205
+Average Class Size: 10.258537
+T/P: 10.208738
+T: 2103, P: 206, N: 1897
+K1 ROC: 0.979005
+K1 AUPR: 0.926758
+-- Now Hashing Subgraphs --
+#
+#  56174 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 207
+Num Classes: 205
+Average Class Size: 10.258537
+T/P: 10.208738
+T: 2103, P: 206, N: 1897
+Max ROC: 0.979005
+Max AUPR: 0.926758
+#
+#  92636 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 207
+Num Classes: 206
+Average Class Size: 1.058252
+T/P: 1.058252
+T: 218, P: 206, N: 12
+Max ROC: 0.970874
+Max AUPR: 0.998334
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1820 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  91830 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 205
+Num Classes: 205
+Average Class Size: 1.112195
+T/P: 1.112195
+T: 228, P: 205, N: 23
+Max ROC: 0.943902
+Max AUPR: 0.993917
+#
+#  56704 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 205
+Num Classes: 202
+Average Class Size: 5.678218
+T/P: 5.595122
+T: 1147, P: 205, N: 942
+K1 ROC: 0.967456
+K1 AUPR: 0.933546
+-- Now Hashing Subgraphs --
+#
+#  56704 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 205
+Num Classes: 202
+Average Class Size: 5.678218
+T/P: 5.595122
+T: 1147, P: 205, N: 942
+Max ROC: 0.967456
+Max AUPR: 0.933546
+#
+#  91581 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 205
+Num Classes: 205
+Average Class Size: 1.112195
+T/P: 1.112195
+T: 228, P: 205, N: 23
+Max ROC: 0.943902
+Max AUPR: 0.993917
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1837 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92258 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 188
+Num Classes: 188
+Average Class Size: 1.117021
+T/P: 1.117021
+T: 210, P: 188, N: 22
+Max ROC: 0.962041
+Max AUPR: 0.995724
+#
+#  59557 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 188
+Num Classes: 187
+Average Class Size: 4.652406
+T/P: 4.627660
+T: 870, P: 188, N: 682
+K1 ROC: 0.969668
+K1 AUPR: 0.942396
+-- Now Hashing Subgraphs --
+#
+#  59557 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 188
+Num Classes: 187
+Average Class Size: 4.652406
+T/P: 4.627660
+T: 870, P: 188, N: 682
+Max ROC: 0.969668
+Max AUPR: 0.942396
+#
+#  91941 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 188
+Num Classes: 188
+Average Class Size: 1.117021
+T/P: 1.117021
+T: 210, P: 188, N: 22
+Max ROC: 0.962041
+Max AUPR: 0.995724
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1820 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  94847 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 205
+Num Classes: 205
+Average Class Size: 1.112195
+T/P: 1.112195
+T: 228, P: 205, N: 23
+Max ROC: 0.953022
+Max AUPR: 0.994895
+#
+#  58454 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 205
+Num Classes: 203
+Average Class Size: 5.738916
+T/P: 5.682927
+T: 1165, P: 205, N: 960
+K1 ROC: 0.973440
+K1 AUPR: 0.940493
+-- Now Hashing Subgraphs --
+#
+#  58454 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 205
+Num Classes: 203
+Average Class Size: 5.738916
+T/P: 5.682927
+T: 1165, P: 205, N: 960
+Max ROC: 0.973440
+Max AUPR: 0.940493
+#
+#  94817 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 205
+Num Classes: 205
+Average Class Size: 1.112195
+T/P: 1.112195
+T: 228, P: 205, N: 23
+Max ROC: 0.953022
+Max AUPR: 0.994895
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1824 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  90129 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 201
+Num Classes: 200
+Average Class Size: 1.125000
+T/P: 1.125000
+T: 225, P: 200, N: 25
+Max ROC: 0.951100
+Max AUPR: 0.994098
+#
+#  58032 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 201
+Num Classes: 199
+Average Class Size: 3.386935
+T/P: 3.370000
+T: 674, P: 200, N: 474
+K1 ROC: 0.956271
+K1 AUPR: 0.936226
+-- Now Hashing Subgraphs --
+#
+#  58032 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 201
+Num Classes: 199
+Average Class Size: 3.386935
+T/P: 3.370000
+T: 674, P: 200, N: 474
+Max ROC: 0.956271
+Max AUPR: 0.936226
+#
+#  90085 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 201
+Num Classes: 200
+Average Class Size: 1.125000
+T/P: 1.125000
+T: 225, P: 200, N: 25
+Max ROC: 0.951100
+Max AUPR: 0.994098
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1824 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92259 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.074627
+T/P: 1.074627
+T: 216, P: 201, N: 15
+Max ROC: 0.978275
+Max AUPR: 0.998417
+#
+#  57399 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 8.587065
+T/P: 8.587065
+T: 1726, P: 201, N: 1525
+K1 ROC: 0.967287
+K1 AUPR: 0.914047
+-- Now Hashing Subgraphs --
+#
+#  57399 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 8.587065
+T/P: 8.587065
+T: 1726, P: 201, N: 1525
+Max ROC: 0.967287
+Max AUPR: 0.914047
+#
+#  92089 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.084577
+T/P: 1.084577
+T: 218, P: 201, N: 17
+Max ROC: 0.976441
+Max AUPR: 0.998063
+#
+#  92257 Edge Classes for 102378 Observed Edges
+#
+k = 3
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.084577
+T/P: 1.084577
+T: 218, P: 201, N: 17
+Max ROC: 0.976441
+Max AUPR: 0.998063
+#
+#  92257 Edge Classes for 102378 Observed Edges
+#
+k = 4
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.084577
+T/P: 1.084577
+T: 218, P: 201, N: 17
+Max ROC: 0.976441
+Max AUPR: 0.998063
+#
+#  92258 Edge Classes for 102378 Observed Edges
+#
+k = 5
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.084577
+T/P: 1.084577
+T: 218, P: 201, N: 17
+Max ROC: 0.976441
+Max AUPR: 0.998063
+#
+#  92259 Edge Classes for 102378 Observed Edges
+#
+k = 6
+Num True Edges: 201
+Num Classes: 201
+Average Class Size: 1.074627
+T/P: 1.074627
+T: 216, P: 201, N: 15
+Max ROC: 0.978275
+Max AUPR: 0.998417
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1841 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  92688 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 184
+Num Classes: 184
+Average Class Size: 1.059783
+T/P: 1.059783
+T: 195, P: 184, N: 11
+Max ROC: 0.970109
+Max AUPR: 0.998247
+#
+#  56916 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 184
+Num Classes: 181
+Average Class Size: 6.281768
+T/P: 6.179348
+T: 1137, P: 184, N: 953
+K1 ROC: 0.970189
+K1 AUPR: 0.926679
+-- Now Hashing Subgraphs --
+#
+#  56916 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 184
+Num Classes: 181
+Average Class Size: 6.281768
+T/P: 6.179348
+T: 1137, P: 184, N: 953
+Max ROC: 0.970189
+Max AUPR: 0.926679
+#
+#  92193 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 184
+Num Classes: 184
+Average Class Size: 1.059783
+T/P: 1.059783
+T: 195, P: 184, N: 11
+Max ROC: 0.970109
+Max AUPR: 0.998247
+(Re)Loading real_world_graphs/celegans_metabolic.g and randomly removing edges.
+INFO: Input graph has 453 nodes, 1818 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  91402 Edge Classes for 102378 Observed Edges
+#
+k = inf
+Num True Edges: 207
+Num Classes: 207
+Average Class Size: 1.082126
+T/P: 1.082126
+T: 224, P: 207, N: 17
+Max ROC: 0.970872
+Max AUPR: 0.997669
+#
+#  58530 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 207
+Num Classes: 204
+Average Class Size: 5.073529
+T/P: 5.000000
+T: 1035, P: 207, N: 828
+K1 ROC: 0.971260
+K1 AUPR: 0.948393
+-- Now Hashing Subgraphs --
+#
+#  58530 Edge Classes for 102378 Observed Edges
+#
+k = 1
+Num True Edges: 207
+Num Classes: 204
+Average Class Size: 5.073529
+T/P: 5.000000
+T: 1035, P: 207, N: 828
+Max ROC: 0.971260
+Max AUPR: 0.948393
+#
+#  91394 Edge Classes for 102378 Observed Edges
+#
+k = 2
+Num True Edges: 207
+Num Classes: 207
+Average Class Size: 1.082126
+T/P: 1.082126
+T: 224, P: 207, N: 17
+Max ROC: 0.970872
+Max AUPR: 0.997669

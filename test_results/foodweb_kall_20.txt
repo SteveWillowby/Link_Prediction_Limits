@@ -1,0 +1,784 @@
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 15 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2263 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23120 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 216
+Num Classes: 212
+Average Class Size: 1.589623
+T/P: 1.560185
+T: 337, P: 216, N: 121
+Max ROC: 0.977445
+Max AUPR: 0.989349
+#
+#  22988 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 216
+Num Classes: 212
+Average Class Size: 1.594340
+T/P: 1.564815
+T: 338, P: 216, N: 122
+K1 ROC: 0.976700
+K1 AUPR: 0.988887
+-- Now Hashing Subgraphs --
+#
+#  22988 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 216
+Num Classes: 212
+Average Class Size: 1.594340
+T/P: 1.564815
+T: 338, P: 216, N: 122
+Max ROC: 0.976700
+Max AUPR: 0.988887
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 15 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2222 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24346 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 257
+Num Classes: 253
+Average Class Size: 1.418972
+T/P: 1.396887
+T: 359, P: 257, N: 102
+Max ROC: 0.958267
+Max AUPR: 0.985770
+#
+#  24152 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 257
+Num Classes: 253
+Average Class Size: 1.426877
+T/P: 1.404669
+T: 361, P: 257, N: 104
+K1 ROC: 0.957423
+K1 AUPR: 0.985263
+-- Now Hashing Subgraphs --
+#
+#  24152 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 257
+Num Classes: 253
+Average Class Size: 1.426877
+T/P: 1.404669
+T: 361, P: 257, N: 104
+Max ROC: 0.957423
+Max AUPR: 0.985263
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2233 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23120 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 244
+Num Classes: 237
+Average Class Size: 1.632911
+T/P: 1.586066
+T: 387, P: 244, N: 143
+Max ROC: 0.956896
+Max AUPR: 0.979768
+#
+#  22971 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 244
+Num Classes: 237
+Average Class Size: 1.670886
+T/P: 1.622951
+T: 396, P: 244, N: 152
+K1 ROC: 0.958922
+K1 AUPR: 0.979623
+-- Now Hashing Subgraphs --
+#
+#  22971 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 244
+Num Classes: 237
+Average Class Size: 1.670886
+T/P: 1.622951
+T: 396, P: 244, N: 152
+Max ROC: 0.958922
+Max AUPR: 0.979623
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2208 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  25289 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 270
+Num Classes: 265
+Average Class Size: 1.456604
+T/P: 1.434944
+T: 386, P: 269, N: 117
+Max ROC: 0.987465
+Max AUPR: 0.995211
+#
+#  24726 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 270
+Num Classes: 265
+Average Class Size: 1.456604
+T/P: 1.434944
+T: 386, P: 269, N: 117
+K1 ROC: 0.987465
+K1 AUPR: 0.995211
+-- Now Hashing Subgraphs --
+#
+#  24726 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 270
+Num Classes: 265
+Average Class Size: 1.456604
+T/P: 1.434944
+T: 386, P: 269, N: 117
+Max ROC: 0.987465
+Max AUPR: 0.995211
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2247 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24975 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 230
+Num Classes: 222
+Average Class Size: 1.509009
+T/P: 1.456522
+T: 335, P: 230, N: 105
+Max ROC: 0.946770
+Max AUPR: 0.980225
+#
+#  24561 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 230
+Num Classes: 222
+Average Class Size: 1.518018
+T/P: 1.465217
+T: 337, P: 230, N: 107
+K1 ROC: 0.945165
+K1 AUPR: 0.979252
+-- Now Hashing Subgraphs --
+#
+#  24561 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 230
+Num Classes: 222
+Average Class Size: 1.518018
+T/P: 1.465217
+T: 337, P: 230, N: 107
+Max ROC: 0.945165
+Max AUPR: 0.979252
+#
+#  24972 Edge Classes for 33489 Observed Edges
+#
+k = 2
+Num True Edges: 230
+Num Classes: 222
+Average Class Size: 1.509009
+T/P: 1.456522
+T: 335, P: 230, N: 105
+Max ROC: 0.946770
+Max AUPR: 0.980225
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2181 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  25292 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 296
+Num Classes: 288
+Average Class Size: 1.229167
+T/P: 1.195946
+T: 354, P: 296, N: 58
+Max ROC: 0.963304
+Max AUPR: 0.993352
+#
+#  24964 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 296
+Num Classes: 288
+Average Class Size: 1.250000
+T/P: 1.216216
+T: 360, P: 296, N: 64
+K1 ROC: 0.963181
+K1 AUPR: 0.992700
+-- Now Hashing Subgraphs --
+#
+#  24964 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 296
+Num Classes: 288
+Average Class Size: 1.250000
+T/P: 1.216216
+T: 360, P: 296, N: 64
+Max ROC: 0.963181
+Max AUPR: 0.992700
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 18 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2241 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24194 Edge Classes for 33306 Observed Edges
+#
+k = inf
+Num True Edges: 235
+Num Classes: 229
+Average Class Size: 1.532751
+T/P: 1.493617
+T: 351, P: 235, N: 116
+Max ROC: 0.969699
+Max AUPR: 0.987671
+#
+#  23750 Edge Classes for 33306 Observed Edges
+#
+k = 1
+Num True Edges: 235
+Num Classes: 229
+Average Class Size: 1.532751
+T/P: 1.493617
+T: 351, P: 235, N: 116
+K1 ROC: 0.969699
+K1 AUPR: 0.987671
+-- Now Hashing Subgraphs --
+#
+#  23750 Edge Classes for 33306 Observed Edges
+#
+k = 1
+Num True Edges: 235
+Num Classes: 229
+Average Class Size: 1.532751
+T/P: 1.493617
+T: 351, P: 235, N: 116
+Max ROC: 0.969699
+Max AUPR: 0.987671
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 14 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2220 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23114 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 260
+Num Classes: 256
+Average Class Size: 1.710938
+T/P: 1.684615
+T: 438, P: 260, N: 178
+Max ROC: 0.964369
+Max AUPR: 0.981201
+#
+#  22845 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 260
+Num Classes: 256
+Average Class Size: 1.710938
+T/P: 1.684615
+T: 438, P: 260, N: 178
+K1 ROC: 0.964369
+K1 AUPR: 0.981201
+-- Now Hashing Subgraphs --
+#
+#  22845 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 260
+Num Classes: 256
+Average Class Size: 1.710938
+T/P: 1.684615
+T: 438, P: 260, N: 178
+Max ROC: 0.964369
+Max AUPR: 0.981201
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 15 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2247 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  22519 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 232
+Num Classes: 229
+Average Class Size: 1.650655
+T/P: 1.629310
+T: 378, P: 232, N: 146
+Max ROC: 0.976854
+Max AUPR: 0.987636
+#
+#  21979 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 232
+Num Classes: 229
+Average Class Size: 1.659389
+T/P: 1.637931
+T: 380, P: 232, N: 148
+K1 ROC: 0.976206
+K1 AUPR: 0.987177
+-- Now Hashing Subgraphs --
+#
+#  21979 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 232
+Num Classes: 229
+Average Class Size: 1.659389
+T/P: 1.637931
+T: 380, P: 232, N: 148
+Max ROC: 0.976206
+Max AUPR: 0.987177
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2222 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23729 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 255
+Num Classes: 247
+Average Class Size: 1.485830
+T/P: 1.439216
+T: 367, P: 255, N: 112
+Max ROC: 0.968662
+Max AUPR: 0.988160
+#
+#  23496 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 255
+Num Classes: 247
+Average Class Size: 1.497976
+T/P: 1.450980
+T: 370, P: 255, N: 115
+K1 ROC: 0.968474
+K1 AUPR: 0.987857
+-- Now Hashing Subgraphs --
+#
+#  23496 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 255
+Num Classes: 247
+Average Class Size: 1.497976
+T/P: 1.450980
+T: 370, P: 255, N: 115
+Max ROC: 0.968474
+Max AUPR: 0.987857
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2215 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23728 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 263
+Num Classes: 258
+Average Class Size: 1.414729
+T/P: 1.387833
+T: 365, P: 263, N: 102
+Max ROC: 0.964363
+Max AUPR: 0.988272
+#
+#  23595 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 263
+Num Classes: 258
+Average Class Size: 1.414729
+T/P: 1.387833
+T: 365, P: 263, N: 102
+K1 ROC: 0.964363
+K1 AUPR: 0.988272
+-- Now Hashing Subgraphs --
+#
+#  23595 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 263
+Num Classes: 258
+Average Class Size: 1.414729
+T/P: 1.387833
+T: 365, P: 263, N: 102
+Max ROC: 0.964363
+Max AUPR: 0.988272
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2239 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23727 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 238
+Num Classes: 236
+Average Class Size: 1.542373
+T/P: 1.529412
+T: 364, P: 238, N: 126
+Max ROC: 0.973223
+Max AUPR: 0.988228
+#
+#  23472 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 238
+Num Classes: 236
+Average Class Size: 1.542373
+T/P: 1.529412
+T: 364, P: 238, N: 126
+K1 ROC: 0.973223
+K1 AUPR: 0.988228
+-- Now Hashing Subgraphs --
+#
+#  23472 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 238
+Num Classes: 236
+Average Class Size: 1.542373
+T/P: 1.529412
+T: 364, P: 238, N: 126
+Max ROC: 0.973223
+Max AUPR: 0.988228
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2215 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23417 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 263
+Num Classes: 259
+Average Class Size: 1.463320
+T/P: 1.441065
+T: 379, P: 263, N: 116
+Max ROC: 0.963616
+Max AUPR: 0.986407
+#
+#  23323 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 263
+Num Classes: 259
+Average Class Size: 1.463320
+T/P: 1.441065
+T: 379, P: 263, N: 116
+K1 ROC: 0.963616
+K1 AUPR: 0.986407
+-- Now Hashing Subgraphs --
+#
+#  23323 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 263
+Num Classes: 259
+Average Class Size: 1.463320
+T/P: 1.441065
+T: 379, P: 263, N: 116
+Max ROC: 0.963616
+Max AUPR: 0.986407
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 18 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2221 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24195 Edge Classes for 33306 Observed Edges
+#
+k = inf
+Num True Edges: 255
+Num Classes: 250
+Average Class Size: 1.532000
+T/P: 1.501961
+T: 383, P: 255, N: 128
+Max ROC: 0.969884
+Max AUPR: 0.987151
+#
+#  23813 Edge Classes for 33306 Observed Edges
+#
+k = 1
+Num True Edges: 255
+Num Classes: 249
+Average Class Size: 1.554217
+T/P: 1.517647
+T: 387, P: 255, N: 132
+K1 ROC: 0.970024
+K1 AUPR: 0.986915
+-- Now Hashing Subgraphs --
+#
+#  23813 Edge Classes for 33306 Observed Edges
+#
+k = 1
+Num True Edges: 255
+Num Classes: 249
+Average Class Size: 1.554217
+T/P: 1.517647
+T: 387, P: 255, N: 132
+Max ROC: 0.970024
+Max AUPR: 0.986915
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 14 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2235 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24656 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 245
+Num Classes: 240
+Average Class Size: 1.300000
+T/P: 1.273469
+T: 312, P: 245, N: 67
+Max ROC: 0.962230
+Max AUPR: 0.990787
+#
+#  24095 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 245
+Num Classes: 240
+Average Class Size: 1.304167
+T/P: 1.277551
+T: 313, P: 245, N: 68
+K1 ROC: 0.961134
+K1 AUPR: 0.990375
+-- Now Hashing Subgraphs --
+#
+#  24095 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 245
+Num Classes: 240
+Average Class Size: 1.304167
+T/P: 1.277551
+T: 313, P: 245, N: 68
+Max ROC: 0.961134
+Max AUPR: 0.990375
+#
+#  24657 Edge Classes for 33489 Observed Edges
+#
+k = 2
+Num True Edges: 245
+Num Classes: 240
+Average Class Size: 1.300000
+T/P: 1.273469
+T: 312, P: 245, N: 67
+Max ROC: 0.962230
+Max AUPR: 0.990787
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2227 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23728 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 251
+Num Classes: 246
+Average Class Size: 1.630081
+T/P: 1.604000
+T: 401, P: 250, N: 151
+Max ROC: 0.967060
+Max AUPR: 0.983465
+#
+#  23490 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 251
+Num Classes: 246
+Average Class Size: 1.630081
+T/P: 1.604000
+T: 401, P: 250, N: 151
+K1 ROC: 0.967060
+K1 AUPR: 0.983465
+-- Now Hashing Subgraphs --
+#
+#  23490 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 251
+Num Classes: 246
+Average Class Size: 1.630081
+T/P: 1.604000
+T: 401, P: 250, N: 151
+Max ROC: 0.967060
+Max AUPR: 0.983465
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2239 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  23417 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 239
+Num Classes: 235
+Average Class Size: 1.557447
+T/P: 1.531381
+T: 366, P: 239, N: 127
+Max ROC: 0.976361
+Max AUPR: 0.989317
+#
+#  22422 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 239
+Num Classes: 235
+Average Class Size: 1.565957
+T/P: 1.539749
+T: 368, P: 239, N: 129
+K1 ROC: 0.975204
+K1 AUPR: 0.988619
+-- Now Hashing Subgraphs --
+#
+#  22422 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 239
+Num Classes: 235
+Average Class Size: 1.565957
+T/P: 1.539749
+T: 368, P: 239, N: 129
+Max ROC: 0.975204
+Max AUPR: 0.988619
+#
+#  23418 Edge Classes for 33489 Observed Edges
+#
+k = 2
+Num True Edges: 239
+Num Classes: 235
+Average Class Size: 1.557447
+T/P: 1.531381
+T: 366, P: 239, N: 127
+Max ROC: 0.976361
+Max AUPR: 0.989317
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2225 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  25610 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 252
+Num Classes: 246
+Average Class Size: 1.471545
+T/P: 1.442231
+T: 362, P: 251, N: 111
+Max ROC: 0.983651
+Max AUPR: 0.993877
+#
+#  25274 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 252
+Num Classes: 246
+Average Class Size: 1.471545
+T/P: 1.442231
+T: 362, P: 251, N: 111
+K1 ROC: 0.983651
+K1 AUPR: 0.993877
+-- Now Hashing Subgraphs --
+#
+#  25274 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 252
+Num Classes: 246
+Average Class Size: 1.471545
+T/P: 1.442231
+T: 362, P: 251, N: 111
+Max ROC: 0.983651
+Max AUPR: 0.993877
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 17 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2238 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24654 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 239
+Num Classes: 237
+Average Class Size: 1.421941
+T/P: 1.410042
+T: 337, P: 239, N: 98
+Max ROC: 0.973849
+Max AUPR: 0.990621
+#
+#  24076 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 239
+Num Classes: 237
+Average Class Size: 1.443038
+T/P: 1.430962
+T: 342, P: 239, N: 103
+K1 ROC: 0.972580
+K1 AUPR: 0.989744
+-- Now Hashing Subgraphs --
+#
+#  24076 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 239
+Num Classes: 237
+Average Class Size: 1.443038
+T/P: 1.430962
+T: 342, P: 239, N: 103
+Max ROC: 0.972580
+Max AUPR: 0.989744
+#
+#  24658 Edge Classes for 33489 Observed Edges
+#
+k = 2
+Num True Edges: 239
+Num Classes: 237
+Average Class Size: 1.421941
+T/P: 1.410042
+T: 337, P: 239, N: 98
+Max ROC: 0.973849
+Max AUPR: 0.990621
+(Re)Loading real_world_graphs/maayan-foodweb.g and randomly removing edges.
+NOTE: Input file real_world_graphs/maayan-foodweb.g had 16 nodes with 1 or more self-loops.
+INFO: Input graph has 183 nodes, 2205 edges, 2 node types (accounting for self-loops), and 1 edge types.
+#
+#  24973 Edge Classes for 33489 Observed Edges
+#
+k = inf
+Num True Edges: 273
+Num Classes: 268
+Average Class Size: 1.473881
+T/P: 1.446886
+T: 395, P: 273, N: 122
+Max ROC: 0.983261
+Max AUPR: 0.993608
+#
+#  24777 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 273
+Num Classes: 268
+Average Class Size: 1.473881
+T/P: 1.446886
+T: 395, P: 273, N: 122
+K1 ROC: 0.983261
+K1 AUPR: 0.993608
+-- Now Hashing Subgraphs --
+#
+#  24777 Edge Classes for 33489 Observed Edges
+#
+k = 1
+Num True Edges: 273
+Num Classes: 268
+Average Class Size: 1.473881
+T/P: 1.446886
+T: 395, P: 273, N: 122
+Max ROC: 0.983261
+Max AUPR: 0.993608
