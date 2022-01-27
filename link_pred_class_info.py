@@ -304,6 +304,8 @@ def __parallel_collection_function__(arg):
      basic_edge_classes, positives_in_edge_class, \
      print_progress, edge_percent) = arg
 
+    PRE_NEIGHBORHOOD_COMP = True
+
     if hash_subgraphs:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
 
@@ -333,6 +335,9 @@ def __parallel_collection_function__(arg):
         if (a % parallelism_2x != task_type_A) and \
                 (a % parallelism_2x != task_type_B):
             continue
+        if k != "inf" and PRE_NEIGHBORHOOD_COMP:
+            (k_hop_nodes_a, cfc_a) = __k_hop_nodes__(neighbors, k, [a])
+
         for b in range(a + int(not self_loops_in_true_edges), num_nodes):
             # Only print progress if you are the first process.
             if proc_thread_idx == 0 and \
@@ -368,7 +373,13 @@ def __parallel_collection_function__(arg):
                 #   component(s) is/are maximal.
                 #
                 # i.e. cfc --> maximal component
-                (k_hop_nodes, cfc) = __k_hop_nodes__(neighbors, k, [a, b])
+                if PRE_NEIGHBORHOOD_COMP:
+                    (k_hop_nodes_b, cfc_b) = __k_hop_nodes__(neighbors, k, [b])
+                    cfc = cfc_a and cfc_b
+                    k_hop_nodes = k_hop_nodes_a | k_hop_nodes_b
+                else:
+                    (k_hop_nodes, cfc) = __k_hop_nodes__(neighbors, k, [a, b])
+
                 if (not cfc) and len(k_hop_nodes) < num_nodes:
                     (new_node_to_old, new_neighbors_collections, \
                         observed_edge_types) = \
