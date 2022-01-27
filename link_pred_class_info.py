@@ -478,9 +478,10 @@ def __parallel_collection_function__(arg):
                     orig_colors[b] = old_b_color
 
                     if hash_subgraphs:
-                        h = blake2b(digest_size=HASH_BYTES)
-                        h.update(bytes(str(EC), 'ascii'))
-                        EC = __ALREADY_HASHED__(int.from_bytes(h.digest(), "big"))
+                        # h = blake2b(digest_size=HASH_BYTES)
+                        # h.update(bytes(str(EC), 'ascii'))
+                        # EC = __ALREADY_HASHED__(int.from_bytes(h.digest(), "big"))
+                        EC = __ALREADY_HASHED__(EC.__hash__())
 
                 if EC not in basic_edge_classes:
                     basic_edge_classes[EC] = 0
