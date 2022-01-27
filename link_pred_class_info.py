@@ -31,7 +31,11 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
-    edge_percent = float(percent_of_non_edges) / 100.0
+    if percent_of_non_edges == 100:
+        # Ensure no rounding errors.
+        edge_percent = 1.0
+    else:
+        edge_percent = float(percent_of_non_edges) / 100.0
 
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors
@@ -350,7 +354,7 @@ def __parallel_collection_function__(arg):
             else:
                 ab_pairs = [(a, b)]
 
-            if random.random() >= edge_percent:
+            if edge_percent < 1.0 and random.random() >= edge_percent:
                 if len(ab_pairs) == 1 or random.random() >= edge_percent:
                     continue
                 ab_pairs = [ab_pairs[random.randint(0, 1)]]
