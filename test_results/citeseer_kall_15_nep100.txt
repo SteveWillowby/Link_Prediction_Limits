@@ -1,0 +1,80 @@
+(Re)Loading real_world_graphs/citeseer.g and randomly removing edges.
+INFO: Input graph has 3264 nodes, 4122 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  4650278 Edge Classes for 10650432 Observed Edges
+#
+k = inf
+Num True Edges: 414
+Num Classes: 407
+Average Class Size: 980.808354
+T/P: 964.224638
+T: 399189, P: 414, N: 398775
+Max ROC: 0.981276
+Max AUPR: 0.695724
+#
+#  242240 Edge Classes for 10650432 Observed Edges
+#
+k = 1
+Num True Edges: 414
+Num Classes: 277
+Average Class Size: 18125.877256
+T/P: 12127.700483
+T: 5020868, P: 414, N: 5020454
+K1 ROC: 0.827870
+K1 AUPR: 0.074934
+-- Now Hashing Subgraphs --
+#
+#  242240 Edge Classes for 10650432 Observed Edges
+#
+k = 1
+Num True Edges: 414
+Num Classes: 277
+Average Class Size: 18125.877256
+T/P: 12127.700483
+T: 5020868, P: 414, N: 5020454
+Max ROC: 0.827870
+Max AUPR: 0.074934
+#
+#  2973112 Edge Classes for 10650432 Observed Edges
+#
+k = 2
+Num True Edges: 414
+Num Classes: 401
+Average Class Size: 1574.142145
+T/P: 1524.712560
+T: 631231, P: 414, N: 630817
+Max ROC: 0.963429
+Max AUPR: 0.500336
+#
+#  4369221 Edge Classes for 10650432 Observed Edges
+#
+k = 3
+Num True Edges: 414
+Num Classes: 406
+Average Class Size: 998.389163
+T/P: 979.096618
+T: 405346, P: 414, N: 404932
+Max ROC: 0.980155
+Max AUPR: 0.674111
+#
+#  4629070 Edge Classes for 10650432 Observed Edges
+#
+k = 4
+Num True Edges: 414
+Num Classes: 407
+Average Class Size: 982.402948
+T/P: 965.792271
+T: 399838, P: 414, N: 399424
+Max ROC: 0.981208
+Max AUPR: 0.694541
+#
+#  4646284 Edge Classes for 10650432 Observed Edges
+#
+k = 5
+Num True Edges: 414
+Num Classes: 407
+Average Class Size: 982.400491
+T/P: 965.789855
+T: 399837, P: 414, N: 399423
+Max ROC: 0.981209
+Max AUPR: 0.695227
