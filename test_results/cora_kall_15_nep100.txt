@@ -440,3 +440,36 @@ T/P: 3194.731908
 T: 1942397, P: 608, N: 1941789
 Max ROC: 0.888394
 Max AUPR: 0.138770
+#
+#  4872547 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 608
+Num Classes: 607
+Average Class Size: 26.278418
+T/P: 26.235197
+T: 15951, P: 608, N: 15343
+Max ROC: 0.977807
+Max AUPR: 0.867466
+#
+#  5647441 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 608
+Num Classes: 608
+Average Class Size: 15.197368
+T/P: 15.197368
+T: 9240, P: 608, N: 8632
+Max ROC: 0.983179
+Max AUPR: 0.932228
+#
+#  5695758 Edge Classes for 7330556 Observed Edges
+#
+k = 4
+Num True Edges: 608
+Num Classes: 608
+Average Class Size: 15.157895
+T/P: 15.157895
+T: 9216, P: 608, N: 8608
+Max ROC: 0.983523
+Max AUPR: 0.934673
