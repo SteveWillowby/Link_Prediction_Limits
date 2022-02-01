@@ -76,6 +76,13 @@ if __name__ == "__main__":
         while len(l) < AUPR_max_k:
             l.append(l[-1])
 
+    # for l in ROC_between_points:
+    #     for i in range(0, len(l) - 1):
+    #         assert l[0] <= l[i + 1]
+    for l in AUPR_between_points:
+        for i in range(0, len(l) - 1):
+            assert l[0] <= l[i + 1]
+
     ################## Convert to Dictionaries #################
 
     ROC_between_points = {i + 1: [l[i] for l in ROC_between_points] \
