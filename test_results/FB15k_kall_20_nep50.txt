@@ -1,0 +1,14 @@
+Loading real_world_graphs/FB15k-237/FB15k-237_train_and_valid_edges.txt
+NOTE: Input file real_world_graphs/FB15k-237/FB15k-237_train_and_valid_edges.txt had 1246 nodes with 1 or more self-loops.
+INFO: Input graph has 14541 nodes, 262445 edges, 26 node types (accounting for self-loops), and 728 edge types.
+#
+#  127681761 Edge Classes for 211440681 Observed Edges
+#
+k = inf
+Num True Edges: 20466
+Num Classes: 12798
+Average Class Size: 1.022347
+T/P: 1.021469
+T: 13084, P: 12809, N: 275
+Max ROC: 0.999300
+Max AUPR: 0.999985
