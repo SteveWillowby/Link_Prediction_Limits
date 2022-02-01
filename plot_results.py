@@ -11,9 +11,9 @@ if __name__ == "__main__":
     graph_name = filename.split("/")[1].split("_")[0]
 
     ROC_endpoints = [[], []]
-    ROC_between_points = {}
+    ROC_between_points = []
     AUPR_endpoints = [[], []]
-    AUPR_between_points = {}
+    AUPR_between_points = []
     with open(filename, "r") as f:
         lines = f.readlines()
 
@@ -46,10 +46,9 @@ if __name__ == "__main__":
                 ROC_endpoints[1].append(value)
             elif phase == K1:
                 ROC_endpoints[0].append(value)
+                ROC_between_points.append([])
             else:
-                if k not in ROC_between_points:
-                    ROC_between_points[k] = []
-                ROC_between_points[k].append(value)
+                ROC_between_points[-1].append(value)
 
         if searching and " AUPR: " in l:
             value = float(l.strip().split(" ")[2])
@@ -58,12 +57,31 @@ if __name__ == "__main__":
                 AUPR_endpoints[1].append(value)
             elif phase == K1:
                 AUPR_endpoints[0].append(value)
+                AUPR_between_points.append([])
             else:
-                if k not in AUPR_between_points:
-                    AUPR_between_points[k] = []
-                AUPR_between_points[k].append(value)
+                AUPR_between_points[-1].append(value)
 
             searching = False
+
+    #################### Extend Out Values ####################
+
+    ROC_max_k = max([len(l) for l in ROC_between_points])
+    AUPR_max_k = max([len(l) for l in AUPR_between_points])
+    assert ROC_max_k == AUPR_max_k
+
+    for l in ROC_between_points:
+        while len(l) < ROC_max_k:
+            l.append(l[-1])
+    for l in AUPR_between_points:
+        while len(l) < AUPR_max_k:
+            l.append(l[-1])
+
+    ################## Convert to Dictionaries #################
+
+    ROC_between_points = {i + 1: [l[i] for l in ROC_between_points] \
+                            for i in range(0, ROC_max_k)}
+    AUPR_between_points = {i + 1: [l[i] for l in AUPR_between_points] \
+                            for i in range(0, AUPR_max_k)}
 
     #################### Get Means & Stdevs ####################
 
@@ -71,9 +89,6 @@ if __name__ == "__main__":
                                for k, l in ROC_between_points.items()}
     AUPR_avg_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
                                for k, l in AUPR_between_points.items()}
-
-    ROC_max_k = max([k for k, l in ROC_avg_between_points.items()])
-    AUPR_max_k = max([k for k, l in AUPR_avg_between_points.items()])
 
     ROC_avg_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
                           for l in ROC_endpoints]
