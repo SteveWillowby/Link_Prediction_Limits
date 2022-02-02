@@ -8,7 +8,10 @@ if __name__ == "__main__":
     #################### Read the Results ####################
 
     filename = sys.argv[1]
-    graph_name = filename.split("/")[1].split("_")[0]
+    plot_name = filename.split("/")[1].split(".")[0]
+    graph_name = plot_name.split("_")[0]
+
+    table_dir = "plots/data/"
 
     ROC_endpoints = [[], []]
     ROC_between_points = []
@@ -79,9 +82,9 @@ if __name__ == "__main__":
     # for l in ROC_between_points:
     #     for i in range(0, len(l) - 1):
     #         assert l[0] <= l[i + 1]
-    for l in AUPR_between_points:
-        for i in range(0, len(l) - 1):
-            assert l[0] <= l[i + 1]
+    # for l in AUPR_between_points:  # only true if 100% non-edges used
+    #     for i in range(0, len(l) - 1):
+    #         assert l[0] <= l[i + 1]
 
     ################## Convert to Dictionaries #################
 
@@ -103,6 +106,8 @@ if __name__ == "__main__":
                            for l in AUPR_endpoints]
 
     #################### Create Plots ####################
+
+    ############## Also Export Values to pgfplots Tables ############
 
     SPS_BASE = 0.0025
     STARTPOINT_SHIFTS = SPS_BASE * ROC_max_k
@@ -126,6 +131,23 @@ if __name__ == "__main__":
     yerr_end = [ROC_avg_endpoints[1][1]]
     plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", linewidth=LW, label="k = inf")
 
+    avg_points_table_file = table_dir + plot_name + "_AUROC_average_points.tex"
+    f1 = open(avg_points_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUROC\tstdev\n")
+    # For now, skip the exact points since the hashed ones are good enough.
+    # f1.write("%f\t%f\t%f\n" % (x_start[0], y_start[0], yerr_start[0]))
+    for i in range(0, len(x_plotted)):
+        f1.write("%f\t%f\t%f\n" % (x_plotted[i], y[i], yerr[i]))
+    f1.write("%f\t%f\t%f\n" % (x_end[0], y_end[0], yerr_end[0]))
+    f1.write("}{\\" + plot_name + "_AUROC_average_points}")
+    f1.close()
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUROC_between_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUROC\n")
+
     # Add the raw points.
     for x_val in x:
         sub_y = ROC_between_points[x_val]
@@ -134,11 +156,38 @@ if __name__ == "__main__":
         sub_x = [x_val + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
         plt.scatter(sub_x, sub_y, color="teal", alpha=A)
 
+        for i in range(0, len(sub_y)):
+            f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+
+    f1.write("}{\\" + plot_name + "_AUROC_between_points}")
+    f1.close()
+
     sub_y = ROC_endpoints[0]
     sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUROC_start_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUROC\n")
+    for i in range(0, len(sub_y)):
+        f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+    f1.write("}{\\" + plot_name + "_AUROC_start_points}")
+    f1.close()
+
     plt.scatter(sub_x, sub_y, color="brown", alpha=A)
+
     sub_y = ROC_endpoints[1]
     sub_x = [x_end[0] + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUROC_end_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUROC\n")
+    for i in range(0, len(sub_y)):
+        f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+    f1.write("}{\\" + plot_name + "_AUROC_end_points}")
+    f1.close()
+
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
     plt.title("Maximum Possible Link Prediction ROC Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
@@ -171,6 +220,23 @@ if __name__ == "__main__":
     yerr_end = [AUPR_avg_endpoints[1][1]]
     plt.errorbar(x_end, y_end, yerr=yerr_end, color="orange", linewidth=LW, label="k = inf")
 
+    avg_points_table_file = table_dir + plot_name + "_AUPR_average_points.tex"
+    f1 = open(avg_points_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUPR\tstdev\n")
+    # For now, skip the exact points since the hashed ones are good enough.
+    # f1.write("%f\t%f\t%f\n" % (x_start[0], y_start[0], yerr_start[0]))
+    for i in range(0, len(x_plotted)):
+        f1.write("%f\t%f\t%f\n" % (x_plotted[i], y[i], yerr[i]))
+    f1.write("%f\t%f\t%f\n" % (x_end[0], y_end[0], yerr_end[0]))
+    f1.write("}{\\" + plot_name + "_AUPR_average_points}")
+    f1.close()
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUPR_between_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUPR\n")
+
     # Add the raw points.
     for x_val in x:
         sub_y = AUPR_between_points[x_val]
@@ -179,11 +245,37 @@ if __name__ == "__main__":
         sub_x = [x_val + 0.05 * (random.random() - 0.5) for _ in sub_y]
         plt.scatter(sub_x, sub_y, color="teal", alpha=A)
 
+        for i in range(0, len(sub_y)):
+            f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+
+    f1.write("}{\\" + plot_name + "_AUPR_between_points}")
+    f1.close()
+
     sub_y = AUPR_endpoints[0]
     sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUPR_start_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUPR\n")
+    for i in range(0, len(sub_y)):
+        f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+    f1.write("}{\\" + plot_name + "_AUPR_start_points}")
+    f1.close()
+
     plt.scatter(sub_x, sub_y, color="brown", alpha=A)
     sub_y = AUPR_endpoints[1]
     sub_x = [x_end[0] + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
+
+    scatterpoint_table_file = table_dir + plot_name + "_AUPR_end_points.tex"
+    f1 = open(scatterpoint_table_file, "w")
+    f1.write("\\pgfplotstableread{\n")
+    f1.write("k\tAUPR\n")
+    for i in range(0, len(sub_y)):
+        f1.write("%f\t%f\n" % (sub_x[i], sub_y[i]))
+    f1.write("}{\\" + plot_name + "_AUPR_end_points}")
+    f1.close()
+
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
     plt.title("Maximum Possible Link Prediction AUPR Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
