@@ -1,4 +1,6 @@
 import math
+import random
+import statistics
 
 # Functions:
 #   get_max_AUPR(class_info)
@@ -7,7 +9,7 @@ import math
 # where `class_info` is a collection of triples:
 #   (class_label, class_size, num_positives_in_class)
 
-def get_max_AUPR(class_info):
+def get_max_AUPR(class_info, mention_errors=True):
     class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
@@ -37,9 +39,10 @@ def get_max_AUPR(class_info):
             addition = ((a * a) / c) * (1.0 + ((b / a) - (d / c)) * math.log((d + c) / d))
             # TODO: Look into the meaning of this assertion margin.
             assert_margin = 0.0001
-            if addition + assert_margin < (a * a) / c:
+            if addition + assert_margin < (a * a) / c and mention_errors:
                 print("Err1 -- math.log(%f) = %f" % ((d + c) / d, math.log((d + c) / d)))
-            if addition - assert_margin > a * (((a + b) / (c + d)) + (b / c)) / 2.0:
+            if addition - assert_margin > a * (((a + b) / (c + d)) + (b / c)) / 2.0 \
+                    and mention_errors:
                 print("Err2 -- math.log(%f) = %f" % ((d + c) / d, math.log((d + c) / d)))
 
         assert addition >= 0.0
@@ -93,3 +96,81 @@ def get_max_ROC(class_info, full_T):
         assert addition >= 0.0
         ROC += addition
     return ROC
+
+def estimate_min_frac_for_AUPR(class_info, desired_stdev):
+    MARGIN_EXP = 10
+    ITERATIONS = 20
+    PROB_A_TRUE_IS_INCLUDED = 0.99999
+    PROB_NO_TRUE_IS_INCLUDED = 1.0 - PROB_A_TRUE_IS_INCLUDED
+
+    T = sum([x[1] for x in class_info])
+
+    # Set min_frac so that the probability ALL T elements are excluded is
+    #   <= PROB_NO_TRUE_IS_INCLUDED
+    #
+    # I.e.
+    #   (1.0 - min_frac)^T <= PROB_NO_TRUE_IS_INCLUDED
+    #   -->
+    #       log_2(1.0 - min_frac) <= log_2(PROB_NO_TRUE_IS_INCLUDED) / T
+    #   -->
+    #       1.0 - min_frac <= 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / T)
+    #   -->
+    #       min_frac >= 1.0 - 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / T)
+    min_frac = 1.0 - 2.0 ** (math.log2(PROB_NO_TRUE_IS_INCLUDED) / float(T))
+    # print("Initial min_frac: %f" % min_frac)
+
+    if min_frac >= 1.0:
+        print("Unsuccessful min_frac calculation -- " + \
+                "got 1 or more rather than a small number.")
+        return 1.0
+
+    if min_frac <= 0.0:
+        print("Unsuccessful min_frac calculation -- got %f" % min_frac)
+        min_frac = 0.5 ** MARGIN_EXP
+
+    max_frac = 1.0
+
+    FRAC_MARGIN = 0.5 ** MARGIN_EXP
+
+    while (max_frac - min_frac) > FRAC_MARGIN:
+        frac = (min_frac + max_frac) / 2.0
+
+        AUPR_values = []
+        for _ in range(0, ITERATIONS):
+            fake_class_info = []
+            for (class_ID, t, p) in class_info:
+                fake_n = 0
+                fake_p = 0
+                n = t - p
+                for __ in range(0, p):
+                    if random.random() < frac:
+                        fake_p += 1
+                if fake_p == 0:
+                    continue
+                for __ in range(0, n):
+                    if random.random() < frac:
+                        fake_n += 1
+                fake_class_info.append((class_ID, fake_p + fake_n, fake_p))
+
+            if len(fake_class_info) == 0:
+                print(("Error! A 1-in-%f event " % ((1.0 / (1.0 - frac))**T)) +\
+                        "has occurred, or we have FP errors -- or both.")
+
+            AUPR_values.append(get_max_AUPR(fake_class_info, \
+                                            mention_errors=False))
+
+        stdev = statistics.stdev(AUPR_values)
+        if stdev <= desired_stdev:
+            max_frac = frac
+        else:
+            min_frac = frac
+
+    return (max_frac + min_frac) / 2.0
+
+if __name__ == "__main__":
+    test_class_info = [("A", 5, 4), ("B", 7, 2), ("C", 10, 10)]
+    print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
+
+    test_class_info = [("A", 500, 400), ("B", 700, 200), \
+                       ("C", 10, 10), ("D", 1000, 10)]
+    print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))

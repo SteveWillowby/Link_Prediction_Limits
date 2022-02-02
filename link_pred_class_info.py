@@ -26,7 +26,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
                                          has_edge_types, \
                                          true_edges, k, \
-                                         percent_of_non_edges=100, \
+                                         fraction_of_non_edges=1.0, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
@@ -34,11 +34,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
-    if percent_of_non_edges == 100:
-        # Ensure no rounding errors.
-        edge_percent = 1.0
-    else:
-        edge_percent = float(percent_of_non_edges) / 100.0
+    edge_percent = fraction_of_non_edges
 
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors

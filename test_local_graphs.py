@@ -1,6 +1,6 @@
 from graph_loader import read_graph, read_edges, random_edge_remover
 from link_pred_class_info import get_k_hop_info_classes_for_link_pred
-from max_score_functions import get_max_AUPR, get_max_ROC
+from max_score_functions import get_max_AUPR, get_max_ROC, estimate_min_frac_for_AUPR
 import sys
 
 def __argstr_parser__(s):
@@ -25,6 +25,15 @@ if __name__ == "__main__":
 
     TEST_EDGE_FRACTION = 0.1
 
+    # STOP_MARGIN is how close the k-hop performance has to be to the observed
+    #   k-inf performance in order to stop.
+    STOP_MARGIN = 0.001
+    # DESIRED_STDEV is the maximum expected stdev of the measured AUPR from the
+    #   real AUPR for a given edge set. Making it larger allows looking at
+    #   fewer non-edges. However, making it larger may mean that runs sometimes
+    #   use larger k.
+    DESIRED_STDEV = 0.02  # -- only relevant if k=all and percent_non_edges=auto
+
     np = int(argv[1])
     ntpp = int(argv[2])
     k = argv[3]
@@ -33,7 +42,19 @@ if __name__ == "__main__":
     py_iso = argv[4]
     assert py_iso in ["1", "0", "true", "false", "True", "False"]
     py_iso = py_iso in ["1", "true", "True"]
-    percent_of_non_edges = float(argv[5])
+
+    if argv[5] == "auto":
+        if k == "all":
+            fraction_of_non_edges = "auto"
+        else:
+            fraction_of_non_edges = 1.0
+    else:
+        fraction_of_non_edges = float(argv[5])
+        if fraction_of_non_edges == 100.0:
+            fraction_of_non_edges = 1.0
+        else:
+            fraction_of_non_edges = fraction_of_non_edges / 100.0
+
     num_runs = int(argv[6])
     graph_name = argv[7]
 
@@ -92,6 +113,33 @@ if __name__ == "__main__":
         sys.stdout.flush()
 
         if k == "all":
+
+            if fraction_of_non_edges == "auto":
+                (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
+                                neighbors_collections=neighbors_collections, \
+                                orig_colors=node_coloring, \
+                                directed=directed, \
+                                has_edge_types=has_edge_types, \
+                                true_edges=true_edges, \
+                                k=1, \
+                                fraction_of_non_edges=1.0, \
+                                num_processes=np, \
+                                num_threads_per_process=ntpp, \
+                                use_py_iso=py_iso, \
+                                hash_subgraphs=False, \
+                                print_progress=False)
+                print("Completed estimate run.")
+                sys.stdout.flush()
+                fraction_of_non_edges = \
+                    estimate_min_frac_for_AUPR(class_info, \
+                                               desired_stdev=DESIRED_STDEV)
+                print("Based on an initial estimate, choosing to look at " + \
+                        "%f percent of all non-edges." % (fraction_of_non_edges * 100))
+                if fraction_of_non_edges >= 0.85:
+                    fraction_of_non_edges = 1.0
+                    print("...but rounding up to 100% so as to avoid coin tosses.")
+                sys.stdout.flush()
+                
             assert len(true_edges) > 0
             # First do exact computations for k=inf and k=1.
             sub_k = "inf"
@@ -102,7 +150,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=sub_k, \
-                            percent_of_non_edges=percent_of_non_edges, \
+                            fraction_of_non_edges=fraction_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -127,7 +175,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=sub_k, \
-                            percent_of_non_edges=percent_of_non_edges, \
+                            fraction_of_non_edges=fraction_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -146,11 +194,10 @@ if __name__ == "__main__":
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
-            MARGIN = 0.001
             sub_k = 1
             k_ROC = None
             k_AUPR = None
-            while k_ROC is None or k_AUPR < (inf_AUPR - MARGIN):
+            while k_ROC is None or k_AUPR < (inf_AUPR - STOP_MARGIN):
 
                 (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                                 neighbors_collections=neighbors_collections, \
@@ -159,7 +206,7 @@ if __name__ == "__main__":
                                 has_edge_types=has_edge_types, \
                                 true_edges=true_edges, \
                                 k=sub_k, \
-                                percent_of_non_edges=percent_of_non_edges, \
+                                fraction_of_non_edges=fraction_of_non_edges, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
@@ -187,7 +234,7 @@ if __name__ == "__main__":
                             has_edge_types=has_edge_types, \
                             true_edges=true_edges, \
                             k=k, \
-                            percent_of_non_edges=percent_of_non_edges, \
+                            fraction_of_non_edges=fraction_of_non_edges, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
