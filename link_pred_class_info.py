@@ -251,7 +251,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         full_edge_classes.append((next_int_label, basic_edge_classes[EC], c))
         next_int_label += 1
 
-    return full_edge_classes
+    return (full_edge_classes, observed_edges)
 
 def __parallel_proc_func__(arg):
     (proc_idx, k, graph, directed, has_edge_types, \

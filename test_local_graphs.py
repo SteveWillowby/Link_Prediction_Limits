@@ -95,7 +95,7 @@ if __name__ == "__main__":
             assert len(true_edges) > 0
             # First do exact computations for k=inf and k=1.
             sub_k = "inf"
-            class_info = get_k_hop_info_classes_for_link_pred(\
+            (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
@@ -113,14 +113,14 @@ if __name__ == "__main__":
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
             print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-            inf_ROC = get_max_ROC(class_info)
+            inf_ROC = get_max_ROC(class_info, full_T=OE)
             inf_AUPR = get_max_AUPR(class_info)
             print("Max ROC: %f" % inf_ROC)
             print("Max AUPR: %f" % inf_AUPR)
             sys.stdout.flush()
 
             sub_k = 1
-            class_info = get_k_hop_info_classes_for_link_pred(\
+            (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
@@ -139,7 +139,7 @@ if __name__ == "__main__":
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
             print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-            k1_ROC = get_max_ROC(class_info)
+            k1_ROC = get_max_ROC(class_info, full_T=OE)
             k1_AUPR = get_max_AUPR(class_info)
             print("K1 ROC: %f" % k1_ROC)
             print("K1 AUPR: %f" % k1_AUPR)
@@ -150,10 +150,9 @@ if __name__ == "__main__":
             sub_k = 1
             k_ROC = None
             k_AUPR = None
-            while k_ROC is None or k_ROC < (inf_ROC - MARGIN) or \
-                                   k_AUPR < (inf_AUPR - MARGIN):
+            while k_ROC is None or k_AUPR < (inf_AUPR - MARGIN):
 
-                class_info = get_k_hop_info_classes_for_link_pred(\
+                (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                                 neighbors_collections=neighbors_collections, \
                                 orig_colors=node_coloring, \
                                 directed=directed, \
@@ -172,7 +171,7 @@ if __name__ == "__main__":
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
                 print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
-                k_ROC = get_max_ROC(class_info)
+                k_ROC = get_max_ROC(class_info, full_T=OE)
                 k_AUPR = get_max_AUPR(class_info)
                 print("Max ROC: %f" % k_ROC)
                 print("Max AUPR: %f" % k_AUPR)
@@ -181,7 +180,7 @@ if __name__ == "__main__":
                 sub_k += 1
 
         else:
-            class_info = get_k_hop_info_classes_for_link_pred(\
+            (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
@@ -206,6 +205,6 @@ if __name__ == "__main__":
             print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
             print("T/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[2] for x in class_info])))
 
-            print("Max ROC: %f" % get_max_ROC(class_info))
+            print("Max ROC: %f" % get_max_ROC(class_info, full_T=OE))
             print("Max AUPR: %f" % get_max_AUPR(class_info))
             sys.stdout.flush()

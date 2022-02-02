@@ -54,13 +54,14 @@ def get_max_AUPR(class_info):
     AUPR /= float(P)
     return AUPR
 
-def get_max_ROC(class_info):
+def get_max_ROC(class_info, full_T):
     class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
     P = sum([x[0] for x in class_info])
     T = sum([x[1] for x in class_info])
     N = T - P
+    full_N = full_T - P
     print("T: %d, P: %d, N: %d" % (T, P, N))
     assert P > 0
     n_acc = 0
@@ -74,10 +75,10 @@ def get_max_ROC(class_info):
 
         TPR.append(float(p_acc) / P)
 
-        if N == 0:
+        if full_N == 0:
             FPR.append(0.0)
         else:
-            FPR.append(float(n_acc) / N)
+            FPR.append(float(n_acc) / full_N)
 
     # I chose to add the corners.
     TPR.append(1.0)
