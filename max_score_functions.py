@@ -167,10 +167,47 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
 
     return (max_frac + min_frac) / 2.0
 
+def __manual_AUPR_checker__(class_info):
+    STEPS = 10000 + 1
+
+    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
+    class_info.sort()
+    class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
+    P = sum([x[0] for x in class_info])
+    # T = sum([x[1] for x in class_info])
+    AUPR = 0.0
+    p_sum = 0
+    t_sum = 0
+    for (p, t) in class_info:
+        precision_sum = 0.0
+        for i in range(0, STEPS):
+            alpha = float(i) / (STEPS - 1)
+            if i == 0 and t_sum == 0:
+                precision = float(p) / t
+            else:
+                precision = (p_sum + alpha * p) / (t_sum + alpha * t)
+            precision_sum += precision
+        p_sum += p
+        t_sum += t
+        avg_precision = precision_sum / STEPS
+        change_in_recall = float(p) / P
+        AUPR += avg_precision * change_in_recall
+    return AUPR
+
 if __name__ == "__main__":
     test_class_info = [("A", 5, 4), ("B", 7, 2), ("C", 10, 10)]
+    print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
+                get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
 
     test_class_info = [("A", 500, 400), ("B", 700, 200), \
                        ("C", 10, 10), ("D", 1000, 10)]
+    print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
+                get_max_AUPR(test_class_info)))
+    print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
+
+    test_class_info = [("A", 500, 40), ("B", 700, 20), \
+                       ("C", 10, 2), ("D", 1000, 10)]
+    print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
+                get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
