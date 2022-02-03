@@ -181,6 +181,7 @@ def __manual_AUPR_checker__(class_info):
     for (p, t) in class_info:
         precision_sum = 0.0
         for i in range(0, STEPS):
+            # Change in alpha is linear with change in recall.
             alpha = float(i) / (STEPS - 1)
             if i == 0 and t_sum == 0:
                 precision = float(p) / t
