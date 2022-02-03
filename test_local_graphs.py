@@ -27,12 +27,12 @@ if __name__ == "__main__":
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
-    STOP_MARGIN = 0.004
+    STOP_MARGIN = 0.005
     # DESIRED_STDEV is the maximum expected stdev of the measured AUPR from the
     #   real AUPR for a given edge set. Making it larger allows looking at
     #   fewer non-edges. However, making it larger may mean that runs sometimes
     #   use larger k.
-    DESIRED_STDEV = 0.02  # -- only relevant if k=all and percent_non_edges=auto
+    DESIRED_STDEV = 0.025  # -- only relevant if k=all and percent_non_edges=auto
 
     np = int(argv[1])
     ntpp = int(argv[2])
