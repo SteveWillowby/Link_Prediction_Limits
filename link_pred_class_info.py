@@ -31,7 +31,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
-                                         hash_subgraphs=False, \
+                                         hash_edge_reps=False, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
@@ -192,7 +192,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_py_iso, hash_subgraphs, \
+                 use_py_iso, hash_edge_reps, \
                  num_processes, num_threads_per_process, {}, {}, \
                  print_progress, edge_percent, base_seed) \
                         for i in range(0, num_processes)]
@@ -226,7 +226,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_py_iso, hash_subgraphs, \
+                 use_py_iso, hash_edge_reps, \
                  1, num_threads_per_process, {}, {}, \
                  print_progress, edge_percent, base_seed)
 
@@ -260,7 +260,7 @@ def __parallel_proc_func__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_py_iso, hash_subgraphs, \
+     use_py_iso, hash_edge_reps, \
      num_processes, num_threads_per_process, _, __, \
      print_progress, edge_percent, base_seed) = arg
 
@@ -275,7 +275,7 @@ def __parallel_proc_func__(arg):
          next_orig_color, \
          list(orbit_colors), [list(o) for o in orbit_partitions], \
          self_loops_in_true_edges, has_repeat_edges, \
-         use_py_iso, hash_subgraphs, \
+         use_py_iso, hash_edge_reps, \
          num_processes, num_threads_per_process, \
          {}, {}, print_progress, edge_percent, base_seed) \
             for i in range(0, num_threads_per_process)]
@@ -303,7 +303,7 @@ def __parallel_collection_function__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_py_iso, hash_subgraphs, \
+     use_py_iso, hash_edge_reps, \
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class, \
      print_progress, edge_percent, base_seed) = arg
@@ -315,7 +315,7 @@ def __parallel_collection_function__(arg):
 
     PRE_NEIGHBORHOOD_COMP = True
 
-    if hash_subgraphs:
+    if hash_edge_reps:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
 
     (neighbors_collections, neighbors) = graph
@@ -508,11 +508,11 @@ def __parallel_collection_function__(arg):
                     orig_colors[a] = old_a_color
                     orig_colors[b] = old_b_color
 
-                    if hash_subgraphs:
-                        # h = blake2b(digest_size=HASH_BYTES)
-                        # h.update(bytes(str(EC), 'ascii'))
-                        # EC = __ALREADY_HASHED__(int.from_bytes(h.digest(), "big"))
-                        EC = __ALREADY_HASHED__(EC.__hash__())
+                if hash_edge_reps:
+                    # h = blake2b(digest_size=HASH_BYTES)
+                    # h.update(bytes(str(EC), 'ascii'))
+                    # EC = __ALREADY_HASHED__(int.from_bytes(h.digest(), "big"))
+                    EC = __ALREADY_HASHED__(EC.__hash__())
 
                 if EC not in basic_edge_classes:
                     basic_edge_classes[EC] = 0

@@ -17,11 +17,11 @@ if __name__ == "__main__":
     argv = [__argstr_parser__(s) for s in sys.argv]
 
     n_args = len(argv) - 1
-    if n_args != 8:
-        raise ValueError("Error! Must pass five arguments:\n" + \
+    if n_args != 9:
+        raise ValueError("Error! Must pass nine arguments:\n" + \
                 "number of processes, number of threads per process, " + \
                 "k, py_iso, percent of removed edges, percent of (non)edges" + \
-                ",\nnumber of runs, graph name.\n" + \
+                ",\nnumber of runs, hash endpoints, graph name.\n" + \
                 "options for graph name are:\n" + \
                 "karate, eucore, college, citeseer, cora, highschool,\n" + \
                 "convote, FB15k, celegans_m, foodweb, innovation, and wiki")
@@ -68,7 +68,12 @@ if __name__ == "__main__":
         assert 0.0 < fraction_of_non_edges and fraction_of_non_edges <= 1.0
 
     num_runs = int(argv[7])
-    graph_name = argv[8]
+
+    hash_endpoints = argv[8]
+    assert hash_endpoints in ["1", "0", "true", "false", "True", "False"]
+    hash_endpoints = hash_endpoints in ["1", "true", "True"]
+
+    graph_name = argv[9]
 
     assert graph_name in ["karate", "eucore", "college", "citeseer", \
                           "cora", "FB15k", "wiki", "highschool", \
@@ -89,9 +94,9 @@ if __name__ == "__main__":
                   "foodweb": ("maayan-foodweb.g", True), \
                   "innovation": ("moreno_innovation.g", True)}[graph_name]
 
-    raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_raw.txt" % \
+    raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
                             (graph_name, k, fraction_of_removed_edges, \
-                             fraction_of_non_edges)
+                             fraction_of_non_edges, str(hash_endpoints).lower())
     raw_output_file = open(raw_output_filename, "w")
 
     if len(graph_info) == 2:
@@ -119,7 +124,7 @@ if __name__ == "__main__":
     if fraction_of_non_edges == "auto":
         fraction_of_non_edges = []
 
-        for _ in range(0, AUTO_ESTIMATES):
+        for i in range(0, AUTO_ESTIMATES):
             ((directed, has_edge_types, nodes, neighbors_collections), \
                 node_coloring, removed_edges) = \
                     read_graph(edge_list, directed, \
@@ -140,10 +145,10 @@ if __name__ == "__main__":
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_subgraphs=True, \
+                                hash_edge_reps=True, \
                                 print_progress=False)
 
-            print("Completed estimate run.")
+            print("Completed estimate run %d of %d." % (i + 1, AUTO_ESTIMATES))
             sys.stdout.flush()
             fraction_of_non_edges.append(\
                 estimate_min_frac_for_AUPR(class_info, \
@@ -204,7 +209,8 @@ if __name__ == "__main__":
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
-                            print_progress=False)
+                            print_progress=False, \
+                            hash_edge_reps=hash_endpoints)
             sys.stdout.flush()
             print("k = %s" % sub_k)
             print("Num True Edges: %d" % len(true_edges))
@@ -221,45 +227,39 @@ if __name__ == "__main__":
             raw_output_file.write("full_T=%d\n" % full_T)
             raw_output_file.write("observed_T=%d\n" % OE)
 
-            # TODO: Remove this segment
-            test_OE = 0
-            for __ in range(0, full_T):
-                if random.random() < fraction_of_non_edges:
-                    test_OE += 1
-            print("Observed OE = %d; Reference OE = %d" % (OE, test_OE))
-
             raw_output_file.write("k=inf\n")
             raw_output_file.write("raw_classes=%s\n" % (class_info))
 
-            sub_k = 1
-            (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
-                            neighbors_collections=neighbors_collections, \
-                            orig_colors=node_coloring, \
-                            directed=directed, \
-                            has_edge_types=has_edge_types, \
-                            true_edges=true_edges, \
-                            k=sub_k, \
-                            fraction_of_non_edges=fraction_of_non_edges, \
-                            base_seed=base_seed, \
-                            num_processes=np, \
-                            num_threads_per_process=ntpp, \
-                            use_py_iso=py_iso, \
-                            hash_subgraphs=False, \
-                            print_progress=False)
-            sys.stdout.flush()
-            print("k = %s" % sub_k)
-            print("Num True Edges: %d" % len(true_edges))
-            print("Num Classes: %d" % len(class_info))
-            print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
-            print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
-            k1_ROC = get_max_ROC(class_info, observed_edges=OE)
-            k1_AUPR = get_max_AUPR(class_info)
-            print("K1 ROC: %f" % k1_ROC)
-            print("K1 AUPR: %f" % k1_AUPR)
-            sys.stdout.flush()
+            if not hash_endpoints:
+                sub_k = 1
+                (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+                                neighbors_collections=neighbors_collections, \
+                                orig_colors=node_coloring, \
+                                directed=directed, \
+                                has_edge_types=has_edge_types, \
+                                true_edges=true_edges, \
+                                k=sub_k, \
+                                fraction_of_non_edges=fraction_of_non_edges, \
+                                base_seed=base_seed, \
+                                num_processes=np, \
+                                num_threads_per_process=ntpp, \
+                                use_py_iso=py_iso, \
+                                hash_edge_reps=False, \
+                                print_progress=False)
+                sys.stdout.flush()
+                print("k = %s" % sub_k)
+                print("Num True Edges: %d" % len(true_edges))
+                print("Num Classes: %d" % len(class_info))
+                print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
+                print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
+                k1_ROC = get_max_ROC(class_info, observed_edges=OE)
+                k1_AUPR = get_max_AUPR(class_info)
+                print("K1 ROC: %f" % k1_ROC)
+                print("K1 AUPR: %f" % k1_AUPR)
+                sys.stdout.flush()
 
-            raw_output_file.write("k=1\n")
-            raw_output_file.write("raw_classes=%s\n" % (class_info))
+                raw_output_file.write("k=1\n")
+                raw_output_file.write("raw_classes=%s\n" % (class_info))
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
@@ -280,7 +280,7 @@ if __name__ == "__main__":
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_subgraphs=True, \
+                                hash_edge_reps=True, \
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
@@ -296,6 +296,9 @@ if __name__ == "__main__":
 
                 raw_output_file.write("k=%s\n" % sub_k)
                 raw_output_file.write("raw_classes=%s\n" % (class_info))
+                if sub_k == 1 and hash_endpoints:
+                    raw_output_file.write("k=%s\n" % sub_k)
+                    raw_output_file.write("raw_classes=%s\n" % (class_info))
 
                 sub_k += 1
 
@@ -311,7 +314,7 @@ if __name__ == "__main__":
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
-                            hash_subgraphs=True, \
+                            hash_edge_reps=True, \
                             print_progress=True)
             sys.stdout.flush()
 
