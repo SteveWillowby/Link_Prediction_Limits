@@ -171,6 +171,10 @@ if __name__ == "__main__":
             print("Max AUPR: %f" % inf_AUPR)
             sys.stdout.flush()
 
+            f = open("raw_classes.txt", "a")
+            f.write("k=%s: %s\n" % (sub_k, [(x[1], x[2]) for x in class_info]))
+            f.close()
+
             sub_k = 1
             (class_info, OE) = get_k_hop_info_classes_for_link_pred(\
                             neighbors_collections=neighbors_collections, \
@@ -196,6 +200,11 @@ if __name__ == "__main__":
             k1_AUPR = get_max_AUPR(class_info)
             print("K1 ROC: %f" % k1_ROC)
             print("K1 AUPR: %f" % k1_AUPR)
+            sys.stdout.flush()
+
+            f = open("raw_classes.txt", "a")
+            f.write("k=%s: %s\n" % (sub_k, [(x[1], x[2]) for x in class_info]))
+            f.close()
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
@@ -229,6 +238,10 @@ if __name__ == "__main__":
                 print("Max ROC: %f" % k_ROC)
                 print("Max AUPR: %f" % k_AUPR)
                 sys.stdout.flush()
+
+                f = open("raw_classes.txt", "a")
+                f.write("k=%s: %s\n" % (sub_k, [(x[1], x[2]) for x in class_info]))
+                f.close()
 
                 sub_k += 1
 
