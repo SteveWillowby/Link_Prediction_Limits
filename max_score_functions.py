@@ -98,7 +98,7 @@ def get_max_ROC(class_info, observed_edges):
 
 def estimate_min_frac_for_AUPR(class_info, desired_stdev):
     MARGIN_EXP = 10
-    ITERATIONS = 20
+    ITERATIONS = 100
     PROB_A_TRUE_IS_INCLUDED = 0.99999
     PROB_NO_TRUE_IS_INCLUDED = 1.0 - PROB_A_TRUE_IS_INCLUDED
 
