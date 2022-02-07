@@ -148,11 +148,11 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                        int(self_loops_in_true_edges) * num_nodes - \
                        int(not has_repeat_edges) * num_edges
     if directed:
-        observed_edges = num_nodes * (num_nodes - 1) + \
-                         int(self_loops_in_true_edges) * num_nodes - \
-                         int(not has_repeat_edges) * num_edges
+        full_observed_edges = num_nodes * (num_nodes - 1) + \
+                              int(self_loops_in_true_edges) * num_nodes - \
+                              int(not has_repeat_edges) * num_edges
     else:
-        observed_edges = total_iterations
+        full_observed_edges = total_iterations
 
     if use_py_iso and not __USE_RF_FOR_FULL_GRAPH__:
         session = PyNTSession(directed=directed, \
@@ -211,7 +211,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
         if print_progress:
             print("Pool joined. Aggregating results...")
             sys.stdout.flush()
-        (basic_edge_classes, positives_in_edge_class) = \
+        (basic_edge_classes, positives_in_edge_class, observed_edges) = \
             __parallel_aggregator__(result)
         if print_progress:
             print("Results aggregated.")
@@ -230,7 +230,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  1, num_threads_per_process, {}, {}, \
                  print_progress, edge_percent, base_seed)
 
-        (basic_edge_classes, positives_in_edge_class) = \
+        (basic_edge_classes, positives_in_edge_class, observed_edges) = \
             __parallel_proc_func__(arg)
 
 
@@ -242,13 +242,17 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     #     print("%s -- %d" % (ec, count))
 
     full_edge_classes = []
-    next_int_label = 0
+    # next_int_label = 0
     for label, c in positives_in_edge_class.items():
         (EC, _) = label
-        full_edge_classes.append((next_int_label, basic_edge_classes[EC], c))
-        next_int_label += 1
+        full_edge_classes.append((basic_edge_classes[EC], c))
+        # next_int_label += 1
 
-    return (full_edge_classes, observed_edges)
+    # `full_observed_edges` is the number of non-edges that could have been
+    #   looked at (i.e. the number of coin flips)
+    # `observed_edges` is the number of non-edges actually looked at (i.e. the
+    #   number of "heads" tossed)
+    return (full_edge_classes, full_observed_edges, observed_edges)
 
 def __parallel_proc_func__(arg):
     (proc_idx, k, graph, directed, has_edge_types, \
@@ -334,6 +338,7 @@ def __parallel_collection_function__(arg):
     task_type_A = proc_thread_idx
     task_type_B = parallelism_2x - (proc_thread_idx + 1)
 
+    observed_edges = 0
     iteration = 0
     percent_done = 0
     for a in range(0, num_nodes):
@@ -363,11 +368,21 @@ def __parallel_collection_function__(arg):
                 ab_pairs = [(a, b), (b, a)]
             else:
                 ab_pairs = [(a, b)]
-
-            if edge_percent < 1.0 and local_random.random() >= edge_percent:
-                if len(ab_pairs) == 1 or local_random.random() >= edge_percent:
+            # Filter out any edges that are already in the graph, if the true
+            #   edges do not contain any such "repeat" edges.
+            new_ab_pairs = []
+            for (c, d) in ab_pairs:
+                if (not has_repeat_edges) and d in neighbors_collections[c]:
                     continue
-                ab_pairs = [ab_pairs[local_random.randint(0, 1)]]
+
+                if edge_percent < 1.0 and local_random.random() >= edge_percent:
+                    continue
+
+                new_ab_pairs.append((c, d))
+            ab_pairs = new_ab_pairs
+
+            if len(ab_pairs) == 0:
+                continue
 
             if k == "inf":
                 new_neighbors_collections = None
@@ -399,8 +414,8 @@ def __parallel_collection_function__(arg):
             old_b_color = orig_colors[b]
 
             for (c, d) in ab_pairs:
-                if (not has_repeat_edges) and d in neighbors_collections[c]:
-                    continue
+
+                observed_edges += 1
 
                 if k == "inf" or cfc or len(k_hop_nodes) == num_nodes:
                     c_color = orbit_colors[c]
@@ -521,15 +536,16 @@ def __parallel_collection_function__(arg):
     if print_progress:
         print("Process-thread idx %d finished collecting." % proc_thread_idx)
         sys.stdout.flush()
-    return (basic_edge_classes, positives_in_edge_class)
+    return (basic_edge_classes, positives_in_edge_class, observed_edges)
 
 # NOTE: Destroys `results`
 def __parallel_aggregator__(results):
-    (basic_edge_classes, positives_in_edge_class) = results[0]
+    (basic_edge_classes, positives_in_edge_class, observed_edges) = results[0]
     results[0] = None
 
     for i in range(1, len(results)):
-        (proc_bec, proc_piec) = results[i]
+        (proc_bec, proc_piec, oe) = results[i]
+        observed_edges += oe
         results[i] = None
 
         for label, c in proc_piec.items():
@@ -545,7 +561,7 @@ def __parallel_aggregator__(results):
             else:
                 basic_edge_classes[EC] += c
         del proc_bec
-    return (basic_edge_classes, positives_in_edge_class)
+    return (basic_edge_classes, positives_in_edge_class, observed_edges)
 
 
 def __k_hop_nodes__(neighbors, k, init_nodes):

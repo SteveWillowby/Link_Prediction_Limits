@@ -10,7 +10,7 @@ import statistics
 #   (class_label, class_size, num_positives_in_class)
 
 def get_max_AUPR(class_info, mention_errors=True):
-    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
+    class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
     P = sum([x[0] for x in class_info])
@@ -57,15 +57,14 @@ def get_max_AUPR(class_info, mention_errors=True):
     AUPR /= float(P)
     return AUPR
 
-def get_max_ROC(class_info, full_T):
-    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
+def get_max_ROC(class_info, observed_edges):
+    class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
     P = sum([x[0] for x in class_info])
     T = sum([x[1] for x in class_info])
     N = T - P
-    full_N = full_T - P
-    print("T: %d, P: %d, N: %d" % (T, P, N))
+    observed_N = observed_edges - P
     assert P > 0
     n_acc = 0
     p_acc = 0
@@ -78,10 +77,10 @@ def get_max_ROC(class_info, full_T):
 
         TPR.append(float(p_acc) / P)
 
-        if full_N == 0:
+        if observed_N == 0:
             FPR.append(0.0)
         else:
-            FPR.append(float(n_acc) / full_N)
+            FPR.append(float(n_acc) / observed_N)
 
     # I chose to add the corners.
     TPR.append(1.0)
@@ -103,7 +102,7 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
     PROB_A_TRUE_IS_INCLUDED = 0.99999
     PROB_NO_TRUE_IS_INCLUDED = 1.0 - PROB_A_TRUE_IS_INCLUDED
 
-    T = sum([x[1] for x in class_info])
+    T = sum([x[0] for x in class_info])
 
     # Set min_frac so that the probability ALL T elements are excluded is
     #   <= PROB_NO_TRUE_IS_INCLUDED
@@ -138,7 +137,7 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
         AUPR_values = []
         for _ in range(0, ITERATIONS):
             fake_class_info = []
-            for (class_ID, t, p) in class_info:
+            for (t, p) in class_info:
                 fake_n = 0
                 fake_p = 0
                 n = t - p
@@ -150,7 +149,7 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
                 for __ in range(0, n):
                     if random.random() < frac:
                         fake_n += 1
-                fake_class_info.append((class_ID, fake_p + fake_n, fake_p))
+                fake_class_info.append((fake_p + fake_n, fake_p))
 
             if len(fake_class_info) == 0:
                 print(("Error! A 1-in-%f event " % ((1.0 / (1.0 - frac))**T)) +\
@@ -170,7 +169,7 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
 def __manual_AUPR_checker__(class_info):
     STEPS = 10000 + 1
 
-    class_info = [(float(x[1]) / x[2], x[2], x[1]) for x in class_info]
+    class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
     P = sum([x[0] for x in class_info])
@@ -196,19 +195,19 @@ def __manual_AUPR_checker__(class_info):
     return AUPR
 
 if __name__ == "__main__":
-    test_class_info = [("A", 5, 4), ("B", 7, 2), ("C", 10, 10)]
+    test_class_info = [(5, 4), (7, 2), (10, 10)]
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
 
-    test_class_info = [("A", 500, 400), ("B", 700, 200), \
-                       ("C", 10, 10), ("D", 1000, 10)]
+    test_class_info = [(500, 400), (700, 200), \
+                       (10, 10), (1000, 10)]
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
 
-    test_class_info = [("A", 500, 40), ("B", 700, 20), \
-                       ("C", 10, 2), ("D", 1000, 10)]
+    test_class_info = [(500, 40), (700, 20), \
+                       (10, 2), (1000, 10)]
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
