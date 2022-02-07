@@ -135,7 +135,7 @@ if __name__ == "__main__":
                                                desired_stdev=DESIRED_STDEV)
                 print("Based on an initial estimate, choosing to look at " + \
                         "%f percent of all non-edges." % (fraction_of_non_edges * 100))
-                if fraction_of_non_edges >= 0.85:
+                if fraction_of_non_edges >= 0.9:
                     fraction_of_non_edges = 1.0
                     print("...but rounding up to 100% so as to avoid coin tosses.")
                 sys.stdout.flush()
