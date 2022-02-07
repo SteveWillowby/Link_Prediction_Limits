@@ -2,6 +2,7 @@ from graph_loader import read_graph, read_edges, random_edge_remover
 from link_pred_class_info import get_k_hop_info_classes_for_link_pred
 from max_score_functions import get_max_AUPR, get_max_ROC, estimate_min_frac_for_AUPR
 import sys
+import time
 
 def __argstr_parser__(s):
     if "=" not in s:
@@ -30,8 +31,7 @@ if __name__ == "__main__":
     STOP_MARGIN = 0.005
     # DESIRED_STDEV is the maximum expected stdev of the measured AUPR from the
     #   real AUPR for a given edge set. Making it larger allows looking at
-    #   fewer non-edges. However, making it larger may mean that runs sometimes
-    #   use larger k.
+    #   fewer non-edges.
     DESIRED_STDEV = 0.025  # -- only relevant if k=all and percent_non_edges=auto
 
     np = int(argv[1])
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_subgraphs=False, \
+                                hash_subgraphs=True, \
                                 print_progress=False)
                 print("Completed estimate run.")
                 sys.stdout.flush()
@@ -139,6 +139,9 @@ if __name__ == "__main__":
                     fraction_of_non_edges = 1.0
                     print("...but rounding up to 100% so as to avoid coin tosses.")
                 sys.stdout.flush()
+
+            base_seed = time.time()
+            print("Using base_seed %s" % (base_seed))
                 
             assert len(true_edges) > 0
             # First do exact computations for k=inf and k=1.
@@ -151,6 +154,7 @@ if __name__ == "__main__":
                             true_edges=true_edges, \
                             k=sub_k, \
                             fraction_of_non_edges=fraction_of_non_edges, \
+                            base_seed=base_seed, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -176,6 +180,7 @@ if __name__ == "__main__":
                             true_edges=true_edges, \
                             k=sub_k, \
                             fraction_of_non_edges=fraction_of_non_edges, \
+                            base_seed=base_seed, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
@@ -207,6 +212,7 @@ if __name__ == "__main__":
                                 true_edges=true_edges, \
                                 k=sub_k, \
                                 fraction_of_non_edges=fraction_of_non_edges, \
+                                base_seed=base_seed, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \

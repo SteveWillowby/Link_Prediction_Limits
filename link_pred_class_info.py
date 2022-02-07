@@ -27,6 +27,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          has_edge_types, \
                                          true_edges, k, \
                                          fraction_of_non_edges=1.0, \
+                                         base_seed=None, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
@@ -193,7 +194,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  self_loops_in_true_edges, has_repeat_edges, \
                  use_py_iso, hash_subgraphs, \
                  num_processes, num_threads_per_process, {}, {}, \
-                 print_progress, edge_percent) \
+                 print_progress, edge_percent, base_seed) \
                         for i in range(0, num_processes)]
  
         process_pool = Pool(num_processes)
@@ -227,7 +228,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  self_loops_in_true_edges, has_repeat_edges, \
                  use_py_iso, hash_subgraphs, \
                  1, num_threads_per_process, {}, {}, \
-                 print_progress, edge_percent)
+                 print_progress, edge_percent, base_seed)
 
         (basic_edge_classes, positives_in_edge_class) = \
             __parallel_proc_func__(arg)
@@ -257,7 +258,7 @@ def __parallel_proc_func__(arg):
      self_loops_in_true_edges, has_repeat_edges, \
      use_py_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, _, __, \
-     print_progress, edge_percent) = arg
+     print_progress, edge_percent, base_seed) = arg
 
     if num_threads_per_process == 1:
         return __parallel_collection_function__(arg)
@@ -272,7 +273,7 @@ def __parallel_proc_func__(arg):
          self_loops_in_true_edges, has_repeat_edges, \
          use_py_iso, hash_subgraphs, \
          num_processes, num_threads_per_process, \
-         {}, {}, print_progress, edge_percent) \
+         {}, {}, print_progress, edge_percent, base_seed) \
             for i in range(0, num_threads_per_process)]
 
     result = [None for i in range(0, num_threads_per_process)]
@@ -301,7 +302,12 @@ def __parallel_collection_function__(arg):
      use_py_iso, hash_subgraphs, \
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class, \
-     print_progress, edge_percent) = arg
+     print_progress, edge_percent, base_seed) = arg
+
+    if base_seed is not None:
+        local_random = random.Random(base_seed + proc_thread_idx)
+    else:
+        local_random = random
 
     PRE_NEIGHBORHOOD_COMP = True
 
@@ -358,10 +364,10 @@ def __parallel_collection_function__(arg):
             else:
                 ab_pairs = [(a, b)]
 
-            if edge_percent < 1.0 and random.random() >= edge_percent:
-                if len(ab_pairs) == 1 or random.random() >= edge_percent:
+            if edge_percent < 1.0 and local_random.random() >= edge_percent:
+                if len(ab_pairs) == 1 or local_random.random() >= edge_percent:
                     continue
-                ab_pairs = [ab_pairs[random.randint(0, 1)]]
+                ab_pairs = [ab_pairs[local_random.randint(0, 1)]]
 
             if k == "inf":
                 new_neighbors_collections = None
