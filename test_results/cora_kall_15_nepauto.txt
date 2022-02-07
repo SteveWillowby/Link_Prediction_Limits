@@ -1,0 +1,526 @@
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4854 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  527475 Edge Classes for 7330556 Observed Edges
+#
+Completed estimate run.
+Based on an initial estimate, choosing to look at 24.853962 percent of all non-edges.
+#
+#  2072614 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 575
+Num Classes: 187
+Average Class Size: 4.213904
+T/P: 4.213904
+T: 788, P: 187, N: 601
+Max ROC: 0.999994
+Max AUPR: 0.902094
+#
+#  265552 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 575
+Num Classes: 197
+Average Class Size: 2072.994924
+T/P: 1953.971292
+T: 408380, P: 209, N: 408171
+K1 ROC: 0.994541
+K1 AUPR: 0.210326
+-- Now Hashing Subgraphs --
+#
+#  265830 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 575
+Num Classes: 184
+Average Class Size: 2206.538043
+T/P: 1990.210784
+T: 406003, P: 204, N: 405799
+Max ROC: 0.994195
+Max AUPR: 0.173422
+#
+#  1836289 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 575
+Num Classes: 201
+Average Class Size: 9.079602
+T/P: 9.079602
+T: 1825, P: 201, N: 1624
+Max ROC: 0.999991
+Max AUPR: 0.878805
+#
+#  2056812 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 575
+Num Classes: 202
+Average Class Size: 16.361386
+T/P: 16.361386
+T: 3305, P: 202, N: 3103
+Max ROC: 0.999992
+Max AUPR: 0.913351
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4889 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2112196 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 540
+Num Classes: 191
+Average Class Size: 3.073298
+T/P: 3.073298
+T: 587, P: 191, N: 396
+Max ROC: 0.999997
+Max AUPR: 0.949122
+#
+#  271217 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 540
+Num Classes: 175
+Average Class Size: 1876.371429
+T/P: 1719.188482
+T: 328365, P: 191, N: 328174
+K1 ROC: 0.995906
+K1 AUPR: 0.151123
+-- Now Hashing Subgraphs --
+#
+#  271603 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 540
+Num Classes: 162
+Average Class Size: 2003.851852
+T/P: 1887.348837
+T: 324624, P: 172, N: 324452
+Max ROC: 0.995846
+Max AUPR: 0.157559
+#
+#  1872810 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 540
+Num Classes: 193
+Average Class Size: 6.621762
+T/P: 6.621762
+T: 1278, P: 193, N: 1085
+Max ROC: 0.999996
+Max AUPR: 0.925645
+#
+#  2102882 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 540
+Num Classes: 181
+Average Class Size: 8.176796
+T/P: 8.176796
+T: 1480, P: 181, N: 1299
+Err2 -- math.log(2.873786) = 1.055630
+Max ROC: 0.999998
+Max AUPR: 0.954446
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4897 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2088672 Edge Classes for 7325659 Observed Edges
+#
+k = inf
+Num True Edges: 532
+Num Classes: 181
+Average Class Size: 3.138122
+T/P: 3.138122
+T: 568, P: 181, N: 387
+Max ROC: 0.999998
+Max AUPR: 0.950014
+#
+#  270205 Edge Classes for 7325659 Observed Edges
+#
+k = 1
+Num True Edges: 532
+Num Classes: 174
+Average Class Size: 2263.344828
+T/P: 2106.000000
+T: 393822, P: 187, N: 393635
+K1 ROC: 0.994779
+K1 AUPR: 0.184112
+-- Now Hashing Subgraphs --
+#
+#  270739 Edge Classes for 7325659 Observed Edges
+#
+k = 1
+Num True Edges: 532
+Num Classes: 174
+Average Class Size: 2235.321839
+T/P: 2091.107527
+T: 388946, P: 186, N: 388760
+Max ROC: 0.994549
+Max AUPR: 0.183939
+#
+#  1847513 Edge Classes for 7325659 Observed Edges
+#
+k = 2
+Num True Edges: 532
+Num Classes: 167
+Average Class Size: 9.586826
+T/P: 9.586826
+T: 1601, P: 167, N: 1434
+Max ROC: 0.999993
+Max AUPR: 0.896536
+#
+#  2081398 Edge Classes for 7325659 Observed Edges
+#
+k = 3
+Num True Edges: 532
+Num Classes: 178
+Average Class Size: 4.758427
+T/P: 4.758427
+T: 847, P: 178, N: 669
+Max ROC: 0.999996
+Max AUPR: 0.929259
+#
+#  2085952 Edge Classes for 7325659 Observed Edges
+#
+k = 4
+Num True Edges: 532
+Num Classes: 192
+Average Class Size: 9.515625
+T/P: 9.515625
+T: 1827, P: 192, N: 1635
+Err2 -- math.log(2.462264) = 0.901081
+Max ROC: 0.999995
+Max AUPR: 0.924242
+#
+#  2086155 Edge Classes for 7325659 Observed Edges
+#
+k = 5
+Num True Edges: 532
+Num Classes: 192
+Average Class Size: 2.802083
+T/P: 2.787565
+T: 538, P: 193, N: 345
+Max ROC: 0.999998
+Max AUPR: 0.962198
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4883 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2088942 Edge Classes for 7325673 Observed Edges
+#
+k = inf
+Num True Edges: 546
+Num Classes: 197
+Average Class Size: 8.253807
+T/P: 8.253807
+T: 1626, P: 197, N: 1429
+Err2 -- math.log(3.565789) = 1.271385
+Max ROC: 0.999998
+Max AUPR: 0.969609
+#
+#  266569 Edge Classes for 7325673 Observed Edges
+#
+k = 1
+Num True Edges: 546
+Num Classes: 180
+Average Class Size: 1788.483333
+T/P: 1694.352632
+T: 321927, P: 190, N: 321737
+K1 ROC: 0.996182
+K1 AUPR: 0.208010
+-- Now Hashing Subgraphs --
+#
+#  267673 Edge Classes for 7325673 Observed Edges
+#
+k = 1
+Num True Edges: 546
+Num Classes: 176
+Average Class Size: 1875.051136
+T/P: 1701.077320
+T: 330009, P: 194, N: 329815
+Max ROC: 0.995785
+Max AUPR: 0.209013
+#
+#  1840905 Edge Classes for 7325673 Observed Edges
+#
+k = 2
+Num True Edges: 546
+Num Classes: 193
+Average Class Size: 6.440415
+T/P: 6.440415
+T: 1243, P: 193, N: 1050
+Max ROC: 0.999995
+Max AUPR: 0.913805
+#
+#  2077404 Edge Classes for 7325673 Observed Edges
+#
+k = 3
+Num True Edges: 546
+Num Classes: 176
+Average Class Size: 3.369318
+T/P: 3.369318
+T: 593, P: 176, N: 417
+Max ROC: 0.999999
+Max AUPR: 0.973619
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4879 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2077524 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 550
+Num Classes: 181
+Average Class Size: 10.138122
+T/P: 10.138122
+T: 1835, P: 181, N: 1654
+Err2 -- math.log(3.196864) = 1.162170
+Max ROC: 0.999996
+Max AUPR: 0.942939
+#
+#  272825 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 550
+Num Classes: 159
+Average Class Size: 2124.943396
+T/P: 1898.123596
+T: 337866, P: 178, N: 337688
+K1 ROC: 0.994851
+K1 AUPR: 0.219271
+-- Now Hashing Subgraphs --
+#
+#  273112 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 550
+Num Classes: 186
+Average Class Size: 2087.790323
+T/P: 1885.092233
+T: 388329, P: 206, N: 388123
+Max ROC: 0.993879
+Max AUPR: 0.176389
+#
+#  1840210 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 550
+Num Classes: 201
+Average Class Size: 8.462687
+T/P: 8.462687
+T: 1701, P: 201, N: 1500
+Max ROC: 0.999994
+Max AUPR: 0.913290
+#
+#  2065624 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 550
+Num Classes: 189
+Average Class Size: 2.666667
+T/P: 2.666667
+T: 504, P: 189, N: 315
+Max ROC: 0.999998
+Max AUPR: 0.961703
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4884 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2095627 Edge Classes for 7325672 Observed Edges
+#
+k = inf
+Num True Edges: 545
+Num Classes: 182
+Average Class Size: 10.395604
+T/P: 10.395604
+T: 1892, P: 182, N: 1710
+Err2 -- math.log(2.631433) = 0.967528
+Max ROC: 0.999995
+Max AUPR: 0.917611
+#
+#  272804 Edge Classes for 7325672 Observed Edges
+#
+k = 1
+Num True Edges: 545
+Num Classes: 187
+Average Class Size: 2118.128342
+T/P: 2010.609137
+T: 396090, P: 197, N: 395893
+K1 ROC: 0.994825
+K1 AUPR: 0.188898
+-- Now Hashing Subgraphs --
+#
+#  272037 Edge Classes for 7325672 Observed Edges
+#
+k = 1
+Num True Edges: 545
+Num Classes: 192
+Average Class Size: 1646.994792
+T/P: 1589.060302
+T: 316223, P: 199, N: 316024
+Max ROC: 0.996093
+Max AUPR: 0.175866
+#
+#  1847181 Edge Classes for 7325672 Observed Edges
+#
+k = 2
+Num True Edges: 545
+Num Classes: 156
+Average Class Size: 6.147436
+T/P: 6.147436
+T: 959, P: 156, N: 803
+Max ROC: 0.999996
+Max AUPR: 0.917520
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4913 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2107866 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 516
+Num Classes: 177
+Average Class Size: 12.293785
+T/P: 12.293785
+T: 2176, P: 177, N: 1999
+Err2 -- math.log(2.628180) = 0.966292
+Max ROC: 0.999997
+Max AUPR: 0.953493
+#
+#  267459 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 516
+Num Classes: 156
+Average Class Size: 1974.589744
+T/P: 1811.976471
+T: 308036, P: 170, N: 307866
+K1 ROC: 0.995486
+K1 AUPR: 0.151560
+-- Now Hashing Subgraphs --
+#
+#  267943 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 516
+Num Classes: 175
+Average Class Size: 1930.200000
+T/P: 1866.215470
+T: 337785, P: 181, N: 337604
+Max ROC: 0.996025
+Max AUPR: 0.202013
+#
+#  1856357 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 516
+Num Classes: 180
+Average Class Size: 4.966667
+T/P: 4.966667
+T: 894, P: 180, N: 714
+Max ROC: 0.999991
+Max AUPR: 0.857103
+#
+#  2089756 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 516
+Num Classes: 162
+Average Class Size: 8.179012
+T/P: 8.179012
+T: 1325, P: 162, N: 1163
+Err2 -- math.log(2.867965) = 1.053603
+Max ROC: 0.999997
+Max AUPR: 0.945410
+#
+#  2109821 Edge Classes for 7330556 Observed Edges
+#
+k = 4
+Num True Edges: 516
+Num Classes: 169
+Average Class Size: 7.710059
+T/P: 7.710059
+T: 1303, P: 169, N: 1134
+Err2 -- math.log(2.870044) = 1.054327
+Max ROC: 0.999997
+Max AUPR: 0.948857
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4918 edges, 1 node types (accounting for self-loops), and 1 edge types.
+#
+#  2096954 Edge Classes for 7330556 Observed Edges
+#
+k = inf
+Num True Edges: 511
+Num Classes: 181
+Average Class Size: 7.972376
+T/P: 7.972376
+T: 1443, P: 181, N: 1262
+Err2 -- math.log(3.123377) = 1.138915
+Max ROC: 0.999998
+Max AUPR: 0.962609
+#
+#  272707 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 511
+Num Classes: 170
+Average Class Size: 1788.447059
+T/P: 1708.067416
+T: 304036, P: 178, N: 303858
+K1 ROC: 0.995717
+K1 AUPR: 0.177422
+-- Now Hashing Subgraphs --
+#
+#  273904 Edge Classes for 7330556 Observed Edges
+#
+k = 1
+Num True Edges: 511
+Num Classes: 165
+Average Class Size: 1542.806061
+T/P: 1480.017442
+T: 254563, P: 172, N: 254391
+Max ROC: 0.997305
+Max AUPR: 0.232514
+#
+#  1881658 Edge Classes for 7330556 Observed Edges
+#
+k = 2
+Num True Edges: 511
+Num Classes: 175
+Average Class Size: 10.028571
+T/P: 10.028571
+T: 1755, P: 175, N: 1580
+Err2 -- math.log(2.270375) = 0.819945
+Max ROC: 0.999995
+Max AUPR: 0.913084
+#
+#  2093423 Edge Classes for 7330556 Observed Edges
+#
+k = 3
+Num True Edges: 511
+Num Classes: 185
+Average Class Size: 3.021622
+T/P: 3.021622
+T: 559, P: 185, N: 374
+Max ROC: 0.999997
+Max AUPR: 0.950007
+#
+#  2098505 Edge Classes for 7330556 Observed Edges
+#
+k = 4
+Num True Edges: 511
+Num Classes: 174
+Average Class Size: 8.965517
+T/P: 8.965517
+T: 1560, P: 174, N: 1386
+Err2 -- math.log(2.736842) = 1.006805
+Max ROC: 0.999997
+Max AUPR: 0.940267
+#
+#  2097676 Edge Classes for 7330556 Observed Edges
+#
+k = 5
+Num True Edges: 511
+Num Classes: 161
+Average Class Size: 3.031056
+T/P: 3.031056
+T: 488, P: 161, N: 327
+Max ROC: 0.999998
+Max AUPR: 0.957993
+(Re)Loading real_world_graphs/cora.g and randomly removing edges.
+INFO: Input graph has 2708 nodes, 4885 edges, 1 node types (accounting for self-loops), and 1 edge types.
