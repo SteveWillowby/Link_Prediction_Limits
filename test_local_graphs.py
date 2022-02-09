@@ -23,8 +23,10 @@ if __name__ == "__main__":
                 "k, py_iso, percent of removed edges, percent of (non)edges" + \
                 ",\nnumber of runs, hash endpoints, graph name.\n" + \
                 "options for graph name are:\n" + \
-                "karate, eucore, college, citeseer, cora, highschool,\n" + \
-                "convote, FB15k, celegans_m, foodweb, innovation, and wiki")
+                "karate, eucore, college_10_predict_end, " + \
+                "college_10_predict_any, college_28_predict_end,\n" + \
+                "college_28_predict_any, citeseer, cora, highschool," + \
+                "convote, FB15k, celegans_m,\nfoodweb, innovation, and wiki")
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
@@ -45,12 +47,15 @@ if __name__ == "__main__":
     assert py_iso in ["1", "0", "true", "false", "True", "False"]
     py_iso = py_iso in ["1", "true", "True"]
 
-    fraction_of_removed_edges = float(argv[5])
-    if fraction_of_removed_edges == 100.0:
-        fraction_of_removed_edges = 1.0
+    if argv[5] == "auto":
+        fraction_of_removed_edges = 0.1
     else:
-        fraction_of_removed_edges = fraction_of_removed_edges / 100.0
-    assert 0.0 < fraction_of_removed_edges and fraction_of_removed_edges < 1.0
+        fraction_of_removed_edges = float(argv[5])
+        if fraction_of_removed_edges == 100.0:
+            fraction_of_removed_edges = 1.0
+        else:
+            fraction_of_removed_edges = fraction_of_removed_edges / 100.0
+        assert 0.0 < fraction_of_removed_edges and fraction_of_removed_edges < 1.0
 
     if argv[6] == "auto":
         if k == "all":
@@ -75,13 +80,26 @@ if __name__ == "__main__":
 
     graph_name = argv[9]
 
-    assert graph_name in ["karate", "eucore", "college", "citeseer", \
+    assert graph_name in ["karate", "eucore", "citeseer", \
                           "cora", "FB15k", "wiki", "highschool", \
-                          "convote", "celegans_m", "foodweb", "innovation"]
+                          "convote", "celegans_m", "foodweb", "innovation", \
+                          "college_10_predict_end", "college_10_predict_any", \
+                          "college_28_predict_end", "college_28_predict_any"]
 
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
-                  "college": ("college-temporal.g", True), \
+                  "college_10_predict_end": \
+                        ("college-temporal_10-periods_train-and-valid.txt", \
+                         "college-temporal_nodes.txt", \
+                         "college-temporal_10-periods_test.txt", True), \
+                  "college_28_predict_end": \
+                        ("college-temporal_28-weeks_train-and-valid.txt", \
+                         "college-temporal_nodes.txt", \
+                         "college-temporal_28-weeks_test.txt", True), \
+                  "college_10_predict_any": \
+                        ("college-temporal_10-periods.g", True), \
+                  "college_28_predict_any": \
+                        ("college-temporal_28-weeks.g", True), \
                   "citeseer": ("citeseer.g", True), \
                   "cora": ("cora.g", True), \
                   "FB15k": ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
@@ -93,6 +111,9 @@ if __name__ == "__main__":
                   "celegans_m": ("celegans_metabolic.g", False), \
                   "foodweb": ("maayan-foodweb.g", True), \
                   "innovation": ("moreno_innovation.g", True)}[graph_name]
+
+    if len(graph_info) > 2:
+        fraction_of_removed_edges = "NA"
 
     raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
                             (graph_name, k, fraction_of_removed_edges, \
@@ -122,15 +143,22 @@ if __name__ == "__main__":
         true_edges = read_edges(test_edge_list, directed)
 
     if fraction_of_non_edges == "auto":
+        if test_edge_list is not None:
+            print("Why are you doing auto estimates with a specified test " + \
+                  "edge list? Oh well. Here goes!")
+            AUTO_ESTIMATES = 1
+
         fraction_of_non_edges = []
 
         for i in range(0, AUTO_ESTIMATES):
-            ((directed, has_edge_types, nodes, neighbors_collections), \
-                node_coloring, removed_edges) = \
-                    read_graph(edge_list, directed, \
-                               node_list_filename=node_list, \
-                               edge_remover=\
-                                 random_edge_remover(fraction_of_removed_edges))
+            if test_edge_list is None:
+                print("(Re)Loading %s and randomly removing edges." % edge_list)
+                ((directed, has_edge_types, nodes, neighbors_collections), \
+                    node_coloring, removed_edges) = \
+                        read_graph(edge_list, directed, \
+                                   node_list_filename=node_list, \
+                                   edge_remover=\
+                                     random_edge_remover(fraction_of_removed_edges))
 
             true_edges = removed_edges
 
