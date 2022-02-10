@@ -61,9 +61,9 @@ def get_max_ROC(class_info, observed_edges):
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
-    P = sum([x[0] for x in class_info])
-    T = sum([x[1] for x in class_info])
-    N = T - P
+    P = sum([x[0] for x in class_info])  # P is the same as "observed P"
+    # T = sum([x[1] for x in class_info])
+    # N = T - P
     observed_N = observed_edges - P
     assert P > 0
     n_acc = 0
