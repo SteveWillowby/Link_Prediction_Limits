@@ -1,3 +1,4 @@
+import math
 import matplotlib.pyplot as plt
 from max_score_functions import get_max_AUPR, get_max_ROC
 import random
@@ -96,20 +97,20 @@ if __name__ == "__main__":
     CI_constant = 1.96  # For 95% confidence interval
 
     ROC_avg_between_points = {k: (sum(l) / float(len(l)), \
-                              (CI_constant * statistics.pstdev(l)) / \
+                              (2.0 * CI_constant * statistics.pstdev(l)) / \
                                 math.sqrt(float(len(l)))) \
                                for k, l in ROC_between_points.items()}
     AUPR_avg_between_points = {k: (sum(l) / float(len(l)), \
-                               (CI_constant * statistics.pstdev(l)) / \
+                               (2.0 * CI_constant * statistics.pstdev(l)) / \
                                 math.sqrt(float(len(l)))) \
                                for k, l in AUPR_between_points.items()}
 
     ROC_avg_endpoints = [(sum(l) / float(len(l)), \
-                            (CI_constant * statistics.pstdev(l)) / \
+                            (2.0 * CI_constant * statistics.pstdev(l)) / \
                              math.sqrt(float(len(l)))) \
                           for l in ROC_endpoints]
     AUPR_avg_endpoints = [(sum(l) / float(len(l)), \
-                            (CI_constant * statistics.pstdev(l)) / \
+                            (2.0 * CI_constant * statistics.pstdev(l)) / \
                              math.sqrt(float(len(l)))) \
                            for l in AUPR_endpoints]
 
@@ -142,7 +143,7 @@ if __name__ == "__main__":
     avg_points_table_file = table_dir + plot_name + "_AUROC_average_points.tex"
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
-    f1.write("k\tAUROC\tconfint\tlabel\n")
+    f1.write("k\tAUROC\tconfintwidth\tlabel\n")
     f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
@@ -220,7 +221,7 @@ if __name__ == "__main__":
     avg_points_table_file = table_dir + plot_name + "_AUPR_average_points.tex"
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
-    f1.write("k\tAUPR\tconfint\tlabel\n")
+    f1.write("k\tAUPR\tconfintwidth\tlabel\n")
     f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
