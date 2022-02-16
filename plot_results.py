@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from max_score_functions import get_max_AUPR, get_max_ROC
 import random
 import statistics
 import sys
@@ -24,10 +25,13 @@ if __name__ == "__main__":
     K1 = 1
     KBET = 2
     phase = KBET
-    searching = False
+    observed_T = None
     for l in lines:
-        if "k = " in l:
-            k = l.strip()[4:]
+        if len(l) > 11 and l[:11] == "observed_T=":
+            observed_T = int(l.strip()[11:])
+
+        if len(l) > 2 and "k=" == l[:2]:
+            k = l.strip()[2:]
             if k != "inf":
                 k = int(k)
 
@@ -40,31 +44,25 @@ if __name__ == "__main__":
             elif type(k) is str and k == "inf":
                 phase = KINF
 
-            searching = True
+        if len(l) > 12 and l[:12] == "raw_classes=":
+            l = l.strip()[14:-2].split("), (")
+            l = [x.split(", ") for x in l]
+            l = [(int(x[0]), int(x[1])) for x in l]
 
-        if searching and " ROC: " in l:
-            value = float(l.strip().split(" ")[2])
+            ROC_value = get_max_ROC(l, observed_edges=observed_T)
+            AUPR_value = get_max_AUPR(l)
 
             if phase == KINF:
-                ROC_endpoints[1].append(value)
+                ROC_endpoints[1].append(ROC_value)
+                AUPR_endpoints[1].append(AUPR_value)
             elif phase == K1:
-                ROC_endpoints[0].append(value)
+                ROC_endpoints[0].append(ROC_value)
                 ROC_between_points.append([])
-            else:
-                ROC_between_points[-1].append(value)
-
-        if searching and " AUPR: " in l:
-            value = float(l.strip().split(" ")[2])
-
-            if phase == KINF:
-                AUPR_endpoints[1].append(value)
-            elif phase == K1:
-                AUPR_endpoints[0].append(value)
+                AUPR_endpoints[0].append(AUPR_value)
                 AUPR_between_points.append([])
             else:
-                AUPR_between_points[-1].append(value)
-
-            searching = False
+                ROC_between_points[-1].append(ROC_value)
+                AUPR_between_points[-1].append(AUPR_value)
 
     #################### Extend Out Values ####################
 
