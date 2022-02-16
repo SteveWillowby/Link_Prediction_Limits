@@ -91,16 +91,26 @@ if __name__ == "__main__":
     AUPR_between_points = {i + 1: [l[i] for l in AUPR_between_points] \
                             for i in range(0, AUPR_max_k)}
 
-    #################### Get Means & Stdevs ####################
+    ################ Get Means & Conf. Interval ################
 
-    ROC_avg_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
+    CI_constant = 1.96  # For 95% confidence interval
+
+    ROC_avg_between_points = {k: (sum(l) / float(len(l)), \
+                              (CI_constant * statistics.pstdev(l)) / \
+                                math.sqrt(float(len(l)))) \
                                for k, l in ROC_between_points.items()}
-    AUPR_avg_between_points = {k: (sum(l) / float(len(l)), statistics.pstdev(l)) \
+    AUPR_avg_between_points = {k: (sum(l) / float(len(l)), \
+                               (CI_constant * statistics.pstdev(l)) / \
+                                math.sqrt(float(len(l)))) \
                                for k, l in AUPR_between_points.items()}
 
-    ROC_avg_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
+    ROC_avg_endpoints = [(sum(l) / float(len(l)), \
+                            (CI_constant * statistics.pstdev(l)) / \
+                             math.sqrt(float(len(l)))) \
                           for l in ROC_endpoints]
-    AUPR_avg_endpoints = [(sum(l) / float(len(l)), statistics.pstdev(l)) \
+    AUPR_avg_endpoints = [(sum(l) / float(len(l)), \
+                            (CI_constant * statistics.pstdev(l)) / \
+                             math.sqrt(float(len(l)))) \
                            for l in AUPR_endpoints]
 
     #################### Create Plots ####################
@@ -132,12 +142,13 @@ if __name__ == "__main__":
     avg_points_table_file = table_dir + plot_name + "_AUROC_average_points.tex"
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
-    f1.write("k\tAUROC\tstdev\tlabel\n")
+    f1.write("k\tAUROC\tconfint\tlabel\n")
     f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
     f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
-    f1.write("}{\\" + plot_name + "_AUROC_average_points}")
+    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
+                        "AUROCaveragepoints}")
     f1.close()
 
     scatterpoint_table_file = table_dir + plot_name + "_AUROC_raw_points.tex"
@@ -172,12 +183,13 @@ if __name__ == "__main__":
 
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
-    f1.write("}{\\" + plot_name + "_AUROC_raw_points}")
+    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
+                        "AUROCrawpoints}")
     f1.close()
 
     plt.title("Maximum Possible Link Prediction ROC Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
     plt.xlabel("number of hops (\"k\") of information")
-    plt.ylabel("ROC")
+    plt.ylabel("AUROC")
     plt.xticks(x)
     margin = 0.05
     plt.ylim([-margin, 1 + margin])
@@ -208,12 +220,13 @@ if __name__ == "__main__":
     avg_points_table_file = table_dir + plot_name + "_AUPR_average_points.tex"
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
-    f1.write("k\tAUPR\tstdev\tlabel\n")
+    f1.write("k\tAUPR\tconfint\tlabel\n")
     f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
     f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
-    f1.write("}{\\" + plot_name + "_AUPR_average_points}")
+    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
+                        "AUPRaveragepoints}")
     f1.close()
 
     scatterpoint_table_file = table_dir + plot_name + "_AUPR_raw_points.tex"
@@ -248,7 +261,8 @@ if __name__ == "__main__":
 
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
-    f1.write("}{\\" + plot_name + "_AUPR_raw_points}")
+    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
+                        "AUPRrawpoints}")
     f1.close()
 
     plt.title("Maximum Possible Link Prediction AUPR Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
