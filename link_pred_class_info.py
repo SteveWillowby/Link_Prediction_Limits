@@ -320,6 +320,7 @@ def __parallel_collection_function__(arg):
         local_random = random
 
     PRE_NEIGHBORHOOD_COMP = True
+    SET_FRONTIER_AS_SPIKES = False
 
     if hash_reps:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
@@ -352,7 +353,7 @@ def __parallel_collection_function__(arg):
                 (a % parallelism_2x != task_type_B):
             continue
         if k != "inf" and PRE_NEIGHBORHOOD_COMP:
-            (k_hop_nodes_a, cfc_a) = __k_hop_nodes__(neighbors, k, [a])
+            (k_hop_nodes_a, frontier_a, cfc_a) = __k_hop_nodes__(neighbors, k, [a])
 
         for b in range(a + int(not self_loops_in_true_edges), num_nodes):
             # Only print progress if you are the first process.
@@ -400,17 +401,23 @@ def __parallel_collection_function__(arg):
                 #
                 # i.e. cfc --> maximal component
                 if PRE_NEIGHBORHOOD_COMP:
-                    (k_hop_nodes_b, cfc_b) = __k_hop_nodes__(neighbors, k, [b])
+                    (k_hop_nodes_b, frontier_b, cfc_b) = __k_hop_nodes__(neighbors, k, [b])
                     cfc = cfc_a and cfc_b
                     k_hop_nodes = k_hop_nodes_a | k_hop_nodes_b
+                    if SET_FRONTIER_AS_SPIKES:
+                        frontier = (frontier_b - (k_hop_nodes_a - frontier_a)) | \
+                                   (frontier_a - (k_hop_nodes_b - frontier_b))
                 else:
-                    (k_hop_nodes, cfc) = __k_hop_nodes__(neighbors, k, [a, b])
+                    (k_hop_nodes, frontier, cfc) = __k_hop_nodes__(neighbors, k, [a, b])
 
                 if (not cfc) and len(k_hop_nodes) < num_nodes:
+                    if not SET_FRONTIER_AS_SPIKES:
+                        frontier = None
                     (new_node_to_old, new_neighbors_collections, \
                         observed_edge_types) = \
                             __induced_subgraph__(neighbors_collections, \
-                                                 k_hop_nodes, has_edge_types)
+                                                 k_hop_nodes, has_edge_types, \
+                                                 frontier_as_spikes=frontier)
                 else:
                     new_neighbors_collections = None
                     new_node_to_old = None
@@ -584,10 +591,13 @@ def __k_hop_nodes__(neighbors, k, init_nodes):
             break
         visited |= new_frontier
         frontier = new_frontier
-    return (visited, certainly_full_component)
+
+    return (visited, new_frontier, certainly_full_component)
 
 def __induced_subgraph__(neighbors_collections, \
-                         nodes, has_edge_types):
+                         nodes, has_edge_types, \
+                         frontier_as_spikes=None):
+
     num_nodes = len(nodes)
     nodes_list = sorted(list(nodes))
     nodes = {nodes_list[i]: i for i in range(0, num_nodes)}
@@ -598,7 +608,10 @@ def __induced_subgraph__(neighbors_collections, \
         for a in range(0, num_nodes):
             old_a = nodes_list[a]
             for old_b, t in neighbors_collections[old_a].items():
-                if old_b in nodes:
+                if old_b in nodes and \
+                        (frontier_as_spikes is None or \
+                         old_b not in frontier_as_spikes or \
+                         old_a not in frontier_as_spikes):
                     observed_edge_types.add(t)
                     new_neighbors_collections[a][nodes[old_b]] = t
 
@@ -625,7 +638,10 @@ def __induced_subgraph__(neighbors_collections, \
         for n in range(0, num_nodes):
             old_n = nodes_list[n]
             for old_neighbor in neighbors_collections[old_n]:
-                if old_neighbor in nodes:
+                if old_neighbor in nodes and \
+                        (frontier_as_spikes is None or \
+                         old_neighbor not in frontier_as_spikes or \
+                         old_n not in frontier_as_spikes):
                     new_neighbors_collections[n].append(nodes[old_neighbor])
         return (nodes_list, new_neighbors_collections, None)
 
