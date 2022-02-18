@@ -21,8 +21,9 @@ if __name__ == "__main__":
     if n_args != 9:
         raise ValueError("Error! Must pass nine arguments:\n" + \
                 "number of processes, number of threads per process, " + \
-                "k, py_iso, percent of removed edges, percent of (non)edges" + \
-                ",\nnumber of runs, hash endpoints, graph name.\n" + \
+                "k, py_iso,\npercent of removed/hidden entities, " + \
+                "percent of (non)entities looked at,\n" + \
+                "number of runs, hash endpoints, graph name.\n" + \
                 "options for graph name are:\n" + \
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
@@ -293,7 +294,7 @@ if __name__ == "__main__":
                             hash_reps=hash_endpoints)
             sys.stdout.flush()
             print("k = %s" % sub_k)
-            print("Num True Edges: %d" % len(true_entities))
+            print("Num True Entities: %d" % len(true_entities))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -328,7 +329,7 @@ if __name__ == "__main__":
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Edges: %d" % len(true_entities))
+                print("Num True Entities: %d" % len(true_entities))
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -364,7 +365,7 @@ if __name__ == "__main__":
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Edges: %d" % len(true_entities))
+                print("Num True Entities: %d" % len(true_entities))
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -403,7 +404,7 @@ if __name__ == "__main__":
                 sys.stdout.flush()
                 continue
 
-            print("Num True Edges: %d" % len(true_entities))
+            print("Num True Entities: %d" % len(true_entities))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
