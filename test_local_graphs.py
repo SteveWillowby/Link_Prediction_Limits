@@ -182,10 +182,7 @@ if __name__ == "__main__":
                                    node_label_hider=\
                                      random_coin(fraction_of_removed_edges))
 
-                # hidden_nodes = [(n, new_node_color_to_orig_color[t]) \
-                #                    for n, t in hidden_nodes]
                 true_entities = hidden_nodes  # techincally only half are "true entities"
-                ente = sum([t for (n, t) in hidden_nodes])
                 assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
                 
             elif test_edge_list is None:
@@ -198,8 +195,15 @@ if __name__ == "__main__":
                                    edge_remover=\
                                      random_coin(fraction_of_removed_edges))
 
-                true_entities = removed_edges
-                ente = len(removed_edges)
+                true_entities = {}
+                for edge in removed_edges:
+                    if edge not in true_entities:
+                        true_entities[edge] = 0
+                    true_entities[edge] += 1
+                if len(removed_edges[0]) == 2:
+                    true_entities = [(a, c, b) for (a, b), c in true_entities.items()]
+                else:
+                    true_entities = [(a, (t, c), b) for (a, t, b), c in true_entities.items()]
 
             (class_info, full_T, OE) = main_function(\
                                 neighbors_collections=neighbors_collections, \
@@ -214,6 +218,12 @@ if __name__ == "__main__":
                                 use_py_iso=py_iso, \
                                 hash_reps=True, \
                                 print_progress=False)
+
+            if mode != "Node Classification":
+                if len(true_entities) != sum([p for (t, p) in class_info]):
+                    print("%d vs %d" % (len(true_entities), sum([p for (t, p) in class_info])))
+                    print("All vs %d" % (len(set([(a, b) for (a, t, b) in true_entities]))))
+                assert len(true_entities) == sum([p for (t, p) in class_info])
 
             print("Completed estimate run %d of %d." % (i + 1, AUTO_ESTIMATES))
             sys.stdout.flush()
@@ -269,7 +279,16 @@ if __name__ == "__main__":
                                edge_remover=\
                                  random_coin(fraction_of_removed_edges))
 
-            true_entities = removed_edges
+            true_entities = {}
+            for edge in removed_edges:
+                if edge not in true_entities:
+                    true_entities[edge] = 0
+                true_entities[edge] += 1
+            if len(removed_edges[0]) == 2:
+                true_entities = [(a, c, b) for (a, b), c in true_entities.items()]
+            else:
+                true_entities = [(a, (t, c), b) for (a, t, b), c in true_entities.items()]
+
             ente = len(true_entities)
 
         ente = ente * fraction_of_entities
