@@ -10,6 +10,10 @@ import statistics
 #   (class_label, class_size, num_positives_in_class)
 
 def get_max_AUPR(class_info, mention_errors=True):
+
+    if len(class_info) == 0:
+        return 1.0  # TODO: should this be zero instead of one?
+
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
@@ -58,6 +62,10 @@ def get_max_AUPR(class_info, mention_errors=True):
     return AUPR
 
 def get_max_ROC(class_info, observed_edges):
+
+    if len(class_info) == 0:
+        return 1.0  # TODO: should this be zero instead of one?
+
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
@@ -97,6 +105,8 @@ def get_max_ROC(class_info, observed_edges):
     return ROC
 
 def estimate_min_frac_for_AUPR(class_info, desired_stdev):
+    FULL_AUPR = get_max_AUPR(class_info)
+
     MARGIN_EXP = 10
     ITERATIONS = 100
     PROB_A_TRUE_IS_INCLUDED = 0.99999
@@ -158,8 +168,11 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
             AUPR_values.append(get_max_AUPR(fake_class_info, \
                                             mention_errors=False))
 
+        average = sum(AUPR_values) / float(len(AUPR_values))
         stdev = statistics.stdev(AUPR_values)
-        if stdev <= desired_stdev:
+
+        if stdev <= desired_stdev and \
+                abs(FULL_AUPR - average) <= desired_stdev:
             max_frac = frac
         else:
             min_frac = frac
