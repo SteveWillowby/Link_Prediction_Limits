@@ -182,8 +182,11 @@ if __name__ == "__main__":
                                    node_label_hider=\
                                      random_coin(fraction_of_removed_edges))
 
+                # hidden_nodes = [(n, new_node_color_to_orig_color[t]) \
+                #                    for n, t in hidden_nodes]
                 true_entities = hidden_nodes  # techincally only half are "true entities"
                 nte = sum([t for (n, t) in hidden_nodes])
+                assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
                 print(true_entities)
                 
             elif test_edge_list is None:
@@ -251,9 +254,12 @@ if __name__ == "__main__":
                                node_label_hider=\
                                  random_coin(fraction_of_removed_edges))
 
+            # hidden_nodes = [(n, new_node_color_to_orig_color[t]) \
+            #                     for n, t in hidden_nodes]
             true_entities = hidden_nodes  # techincally only half are "true entities"
             print(true_entities)
             nte = sum([t for (n, t) in hidden_nodes])
+            assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
 
         elif test_edge_list is None:
             print("(Re)Loading %s and randomly removing edges." % edge_list)
@@ -296,8 +302,8 @@ if __name__ == "__main__":
             print("k = %s" % sub_k)
             print("Num True Entities: %d" % nte)
             print("Num Classes: %d" % len(class_info))
-            print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
-            print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
+            print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+            print("PT/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[0] for x in class_info])))
             inf_ROC = get_max_ROC(class_info, observed_edges=OE)
             inf_AUPR = get_max_AUPR(class_info)
             print("Max ROC: %f" % inf_ROC)
@@ -331,8 +337,8 @@ if __name__ == "__main__":
                 print("k = %s" % sub_k)
                 print("Num True Entities: %d" % nte)
                 print("Num Classes: %d" % len(class_info))
-                print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
-                print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
+                print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+                print("PT/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[0] for x in class_info])))
                 k1_ROC = get_max_ROC(class_info, observed_edges=OE)
                 k1_AUPR = get_max_AUPR(class_info)
                 print("K1 ROC: %f" % k1_ROC)
@@ -367,8 +373,8 @@ if __name__ == "__main__":
                 print("k = %s" % sub_k)
                 print("Num True Entities: %d" % nte)
                 print("Num Classes: %d" % len(class_info))
-                print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
-                print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
+                print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+                print("PT/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[0] for x in class_info])))
                 k_ROC = get_max_ROC(class_info, observed_edges=OE)
                 k_AUPR = get_max_AUPR(class_info)
                 print("Max ROC: %f" % k_ROC)
@@ -406,8 +412,8 @@ if __name__ == "__main__":
 
             print("Num True Entities: %d" % nte)
             print("Num Classes: %d" % len(class_info))
-            print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
-            print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
+            print("Average Class Size: %f" % (float(sum([x[1] for x in class_info])) / len(class_info)))
+            print("PT/P: %f" % (float(sum([x[1] for x in class_info])) / sum([x[0] for x in class_info])))
             print("Max ROC: %f" % get_max_ROC(class_info, observed_edges=OE))
             print("Max AUPR: %f" % get_max_AUPR(class_info))
             sys.stdout.flush()
