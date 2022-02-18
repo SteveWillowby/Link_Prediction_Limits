@@ -203,9 +203,15 @@ def read_graph(edge_list_filename, directed, \
             if len(removed_edges[0]) == 3:
                 removed_edges = [(node_relabeling[a], t, node_relabeling[b]) \
                                     for (a, t, b) in removed_edges]
+                # The following was purely for testing purposes.
+                # removed_edges = [(random.randint(0, len(nodes) - 1), t, random.randint(0, len(nodes) - 1)) \
+                #                     for (a, t, b) in removed_edges]
             else:
                 removed_edges = [(node_relabeling[a], node_relabeling[b]) \
                                     for (a, b) in removed_edges]
+                # The following was purely for testing purposes.
+                # removed_edges = [(random.randint(0, len(nodes) - 1), random.randint(0, len(nodes) - 1)) \
+                #                     for _ in removed_edges]
 
         self_loop_info = {node_relabeling[n]: info \
                             for n, info in self_loop_info.items()}
