@@ -199,8 +199,13 @@ def read_graph(edge_list_filename, directed, \
         node_relabeling = {nodes[i]: i for i in range(0, len(nodes))}
         hidden_nodes = [(node_relabeling[n], t) for (n, t) in hidden_nodes]
 
-        removed_edges = [(node_relabeling[a], node_relabeling[b]) \
-                            for (a, b) in removed_edges]
+        if len(removed_edges) > 0:
+            if len(removed_edges[0]) == 3:
+                removed_edges = [(node_relabeling[a], t, node_relabeling[b]) \
+                                    for (a, t, b) in removed_edges]
+            else:
+                removed_edges = [(node_relabeling[a], node_relabeling[b]) \
+                                    for (a, b) in removed_edges]
 
         self_loop_info = {node_relabeling[n]: info \
                             for n, info in self_loop_info.items()}
