@@ -194,7 +194,17 @@ def read_graph(edge_list_filename, directed, \
     nodes = sorted(list(nodes))
 
     if nodes[0] != 0 or nodes[-1] != len(nodes) - 1:
+        print("Relabeling nodes.")
+
         node_relabeling = {nodes[i]: i for i in range(0, len(nodes))}
+        hidden_nodes = [(node_relabeling[n], t) for (n, t) in hidden_nodes]
+
+        removed_edges = [(node_relabeling[a], node_relabeling[b]) \
+                            for (a, b) in removed_edges]
+
+        self_loop_info = {node_relabeling[n]: info \
+                            for n, info in self_loop_info.items()}
+
         if has_node_types:
             new_node_types = [None for _ in range(0, len(nodes))]
             for n, i in node_relabeling.items():
