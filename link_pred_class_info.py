@@ -25,17 +25,18 @@ __USE_RF_FOR_FULL_GRAPH__ = True
 def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
                                          has_edge_types, \
-                                         true_edges, k, \
-                                         fraction_of_non_edges=1.0, \
+                                         true_entities, k, \
+                                         fraction_of_entities=1.0, \
                                          base_seed=None, \
                                          num_processes=1, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
-                                         hash_edge_reps=False, \
+                                         hash_reps=False, \
                                          print_progress=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
-    edge_percent = fraction_of_non_edges
+    edge_percent = fraction_of_entities
+    true_edges = true_entities
 
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors
@@ -192,7 +193,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_py_iso, hash_edge_reps, \
+                 use_py_iso, hash_reps, \
                  num_processes, num_threads_per_process, {}, {}, \
                  print_progress, edge_percent, base_seed) \
                         for i in range(0, num_processes)]
@@ -226,7 +227,7 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  self_loops_in_true_edges, has_repeat_edges, \
-                 use_py_iso, hash_edge_reps, \
+                 use_py_iso, hash_reps, \
                  1, num_threads_per_process, {}, {}, \
                  print_progress, edge_percent, base_seed)
 
@@ -260,7 +261,7 @@ def __parallel_proc_func__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_py_iso, hash_edge_reps, \
+     use_py_iso, hash_reps, \
      num_processes, num_threads_per_process, _, __, \
      print_progress, edge_percent, base_seed) = arg
 
@@ -275,7 +276,7 @@ def __parallel_proc_func__(arg):
          next_orig_color, \
          list(orbit_colors), [list(o) for o in orbit_partitions], \
          self_loops_in_true_edges, has_repeat_edges, \
-         use_py_iso, hash_edge_reps, \
+         use_py_iso, hash_reps, \
          num_processes, num_threads_per_process, \
          {}, {}, print_progress, edge_percent, base_seed) \
             for i in range(0, num_threads_per_process)]
@@ -303,7 +304,7 @@ def __parallel_collection_function__(arg):
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      self_loops_in_true_edges, has_repeat_edges, \
-     use_py_iso, hash_edge_reps, \
+     use_py_iso, hash_reps, \
      num_processes, num_threads_per_process, \
      basic_edge_classes, positives_in_edge_class, \
      print_progress, edge_percent, base_seed) = arg
@@ -315,7 +316,7 @@ def __parallel_collection_function__(arg):
 
     PRE_NEIGHBORHOOD_COMP = True
 
-    if hash_edge_reps:
+    if hash_reps:
         HASH_BYTES = 64  # Can be anywhere between 1 and 64
 
     (neighbors_collections, neighbors) = graph
@@ -508,7 +509,7 @@ def __parallel_collection_function__(arg):
                     orig_colors[a] = old_a_color
                     orig_colors[b] = old_b_color
 
-                if hash_edge_reps:
+                if hash_reps:
                     # h = blake2b(digest_size=HASH_BYTES)
                     # h.update(bytes(str(EC), 'ascii'))
                     # EC = __ALREADY_HASHED__(int.from_bytes(h.digest(), "big"))

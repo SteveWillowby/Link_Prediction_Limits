@@ -2,7 +2,7 @@ import random
 
 # Functions:
 #
-# random_edge_remover(p)
+# random_coin(p)
 #   -- Given a value p from the range (0, 1), returns a lambda function
 #       that returns true with probability p.
 #
@@ -35,7 +35,8 @@ import random
 # Returns:
 #   ((directed, has_edge_types, old_nodes, neighbors_collections),
 #    node_types,
-#    removed_edges)
+#    removed_edges,
+#    hidden_nodes, new_node_color_to_orig_color)
 #
 #   WHERE `directed` and `has_edge_types` are boolean values, `old_nodes` maps
 #    from the indices 0 to len(nodes) to the original node labels, and
@@ -47,16 +48,25 @@ import random
 #    i's neighbors.
 #    `node_types` is a list giving an integer `color` to each node.
 #    `removed_edges` is a list of any edges removed due to `edge_remover`.
+#    `hidden_nodes` is a list of (node, orig_color) tuples of nodes whose color
+#       has been replaced with a new "blank" color due to `node_label_hider`.
+#       Note that if there are self loops, the hidden nodes might have MULTIPLE
+#       "blank" colors - one for each type of self-loop found on blank nodes.
+#    `new_node_color_to_orig_color` maps final node colors to the colors
+#       obtained AFTER some nodes have had their colors hidden.
 
 def read_graph(edge_list_filename, directed, \
                node_list_filename=None, \
-               edge_remover=None):
+               edge_remover=None, \
+               node_label_hider=None):
 
     has_node_types = None
     has_edge_types = None
     edge_type_set = set()
     node_types = {}
     removed_edges = []
+    hidden_nodes = []
+    new_node_color_to_orig_color = {}
 
     if node_list_filename is not None:
         nodes = set()
@@ -66,10 +76,15 @@ def read_graph(edge_list_filename, directed, \
             line = line.split(" ")
             if has_node_types is None:
                 has_node_types = len(line) == 2
+
+            if (not has_node_types) and node_label_hider is not None:
+                raise ValueError("Error! Cannot use `node_label_hider` when" + \
+                                 " nodes have no types.")
+
             if len(line) != 1 + int(has_node_types):
                 raise ValueError(\
                         ("Error! All lines in %s" % node_list_filename) + \
-                        " must have the same number of integers: 1 or 2.")
+                         " must have the same number of integers: 1 or 2.")
             node = int(line[0])
             if node in nodes:
                 raise ValueError("Error! Node %d was repeated in file %s." % \
@@ -83,6 +98,18 @@ def read_graph(edge_list_filename, directed, \
     else:
         nodes = set()
         got_nodes = False
+
+        if node_label_hider is not None:
+            raise ValueError("Error! Cannot use `node_label_hider` when" + \
+                             " nodes have no types.")
+
+    if node_label_hider is not None:
+        max_label = max(node_types)
+        next_label = max_label + 1
+        for n in nodes:
+            if node_label_hider(n):
+                hidden_nodes.append((n, node_types[n]))
+                node_types[n] = next_label
 
     f = open(edge_list_filename, "r")
     neighbors_collections = {}
@@ -166,9 +193,13 @@ def read_graph(edge_list_filename, directed, \
     num_nodes = len(nodes)
     nodes = sorted(list(nodes))
 
-
     if nodes[0] != 0 or nodes[-1] != len(nodes) - 1:
         node_relabeling = {nodes[i]: i for i in range(0, len(nodes))}
+        if has_node_types:
+            new_node_types = [None for _ in range(0, len(nodes))]
+            for n, i in node_relabeling.items():
+                new_node_types[i] = node_types[n]
+            node_types = new_node_types
 
         # Convert from dict to list.
         nc = [{} for _ in range(0, num_nodes)]
@@ -229,10 +260,21 @@ def read_graph(edge_list_filename, directed, \
                         node_types[n] = (node_types[n], tuple([]))
                     else:
                         node_types[n] = (node_types[n], 0)
+        else:
+            new_node_color_to_orig_color = \
+                {t: t for t in set(node_types)}
 
         node_type_relabeling = sorted(list(set(node_types)))
         node_type_relabeling = {node_type_relabeling[i]: i \
                                    for i in range(0, len(node_type_relabeling))}
+
+        if not has_node_types:
+            new_node_color_to_orig_color = \
+                {i: 0 for i in range(0, len(node_type_relabeling))}
+        elif len(self_loop_info) > 0:
+            for ((orig_color, extra), new_t) in node_type_relabeling.items():
+                new_node_color_to_orig_color[new_t] = orig_color
+
         for n in range(0, num_nodes):
             node_types[n] = node_type_relabeling[node_types[n]]
     else:
@@ -270,7 +312,8 @@ def read_graph(edge_list_filename, directed, \
           ("%d node types (accounting for self-loops), and %d edge types." % (Nt, Mt)))
 
     return ((directed, has_edge_types, nodes, neighbors_collections), \
-                node_types, removed_edges)
+                node_types, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color)
 
 def read_edges(edge_list_filename, directed):
     f = open(edge_list_filename, "r")
@@ -304,10 +347,10 @@ def read_edges(edge_list_filename, directed):
     f.close()
     return edges
 
-def random_edge_remover(p):
+def random_coin(p):
     if p <= 0.0 or p >= 1.0:
         raise ValueError("Error! p must be in the range (0, 1) for " + \
-                         "random_edge_remover(). It was %f" % p)
+                         "random_coin(). It was %f" % p)
 
     return (lambda x: (lambda y: random.random() < x))(p)
 

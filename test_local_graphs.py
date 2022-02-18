@@ -1,5 +1,6 @@
-from graph_loader import read_graph, read_edges, random_edge_remover
+from graph_loader import read_graph, read_edges, random_coin
 from link_pred_class_info import get_k_hop_info_classes_for_link_pred
+from node_pred_class_info import get_k_hop_info_classes_for_node_pred
 from max_score_functions import get_max_AUPR, get_max_ROC, estimate_min_frac_for_AUPR
 import random
 import sys
@@ -26,7 +27,8 @@ if __name__ == "__main__":
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
                 "college_28_predict_any, citeseer, cora, highschool," + \
-                "convote, FB15k, celegans_m,\nfoodweb, innovation, and wiki")
+                "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki" + \
+                " and polblogs")
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
@@ -59,18 +61,18 @@ if __name__ == "__main__":
 
     if argv[6] == "auto":
         if k == "all":
-            fraction_of_non_edges = "auto"
+            fraction_of_entities = "auto"
         else:
-            fraction_of_non_edges = 1.0
+            fraction_of_entities = 1.0
     else:
-        fraction_of_non_edges = float(argv[6])
+        fraction_of_entities = float(argv[6])
 
-        if fraction_of_non_edges == 100.0:
-            fraction_of_non_edges = 1.0
+        if fraction_of_entities == 100.0:
+            fraction_of_entities = 1.0
         else:
-            fraction_of_non_edges = fraction_of_non_edges / 100.0
+            fraction_of_entities = fraction_of_entities / 100.0
 
-        assert 0.0 < fraction_of_non_edges and fraction_of_non_edges <= 1.0
+        assert 0.0 < fraction_of_entities and fraction_of_entities <= 1.0
 
     num_runs = int(argv[7])
 
@@ -84,7 +86,8 @@ if __name__ == "__main__":
                           "cora", "FB15k", "wiki", "highschool", \
                           "convote", "celegans_m", "foodweb", "innovation", \
                           "college_10_predict_end", "college_10_predict_any", \
-                          "college_28_predict_end", "college_28_predict_any"]
+                          "college_28_predict_end", "college_28_predict_any", \
+                          "polblogs"]
 
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
@@ -110,21 +113,37 @@ if __name__ == "__main__":
                   "highschool": ("moreno_highschool.g", True), \
                   "celegans_m": ("celegans_metabolic.g", False), \
                   "foodweb": ("maayan-foodweb.g", True), \
-                  "innovation": ("moreno_innovation.g", True)}[graph_name]
+                  "innovation": ("moreno_innovation.g", True), \
+                  "polblogs": ("pol_blogs.g", \
+                               "pol_blogs_node_labels.txt", True)}[graph_name]
 
-    if len(graph_info) > 2:
+    if len(graph_info) == 4:
         fraction_of_removed_edges = "NA"
 
     raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
                             (graph_name, k, fraction_of_removed_edges, \
-                             fraction_of_non_edges, str(hash_endpoints).lower())
+                             fraction_of_entities, str(hash_endpoints).lower())
     raw_output_file = open(raw_output_filename, "w")
+
+    mode = "Link Pred"
+    main_function = get_k_hop_info_classes_for_link_pred
 
     if len(graph_info) == 2:
         (name, directed) = graph_info
         edge_list = "real_world_graphs/%s" % name
         node_list = None
         test_edge_list = None
+
+    elif len(graph_info) == 3:
+        (name, node_name, directed) = graph_info
+        edge_list = "real_world_graphs/%s" % name
+        node_list = "real_world_graphs/%s" % node_name
+        test_edge_list = None
+
+        mode = "Node Classification"
+        main_function = get_k_hop_info_classes_for_node_pred
+        assert fraction_of_entities != "auto"
+
     elif len(graph_info) == 4:
         (name, node_name, test_name, directed) = graph_info
         edge_list = "real_world_graphs/%s" % name
@@ -136,84 +155,117 @@ if __name__ == "__main__":
     if test_edge_list is not None:
         print("Loading %s" % edge_list)
         ((directed, has_edge_types, nodes, neighbors_collections), \
-            node_coloring, removed_edges) = \
+            node_coloring, removed_edges, \
+            hidden_nodes, new_node_color_to_orig_color) = \
                 read_graph(edge_list, directed, node_list_filename=node_list, \
                            edge_remover=None)
 
-        true_edges = read_edges(test_edge_list, directed)
+        true_entities = read_edges(test_edge_list, directed)
 
-    if fraction_of_non_edges == "auto":
+    if fraction_of_entities == "auto":
         if test_edge_list is not None:
             print("Why are you doing auto estimates with a specified test " + \
                   "edge list? Oh well. Here goes!")
             AUTO_ESTIMATES = 1
 
-        fraction_of_non_edges = []
+        fraction_of_entities = []
 
         for i in range(0, AUTO_ESTIMATES):
-            if test_edge_list is None:
+            if mode == "Node Classification":
+                print("(Re)Loading %s and randomly hiding node labels." % edge_list)
+                ((directed, has_edge_types, nodes, neighbors_collections), \
+                    node_coloring, removed_edges, \
+                    hidden_nodes, new_node_color_to_orig_color) = \
+                        read_graph(edge_list, directed, \
+                                   node_list_filename=node_list, \
+                                   node_label_hider=\
+                                     random_coin(fraction_of_removed_edges))
+
+                true_entities = set()
+                for (node, orig_label) in hidden_nodes:
+                    if orig_label == 1:
+                        true_entities.add(node)
+                
+            elif test_edge_list is None:
                 print("(Re)Loading %s and randomly removing edges." % edge_list)
                 ((directed, has_edge_types, nodes, neighbors_collections), \
-                    node_coloring, removed_edges) = \
+                    node_coloring, removed_edges, \
+                    hidden_nodes, new_node_color_to_orig_color) = \
                         read_graph(edge_list, directed, \
                                    node_list_filename=node_list, \
                                    edge_remover=\
-                                     random_edge_remover(fraction_of_removed_edges))
+                                     random_coin(fraction_of_removed_edges))
 
-            true_edges = removed_edges
+                true_entities = removed_edges
 
-            (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+            (class_info, full_T, OE) = main_function(\
                                 neighbors_collections=neighbors_collections, \
                                 orig_colors=node_coloring, \
                                 directed=directed, \
                                 has_edge_types=has_edge_types, \
-                                true_edges=true_edges, \
+                                true_entities=true_entities, \
                                 k=1, \
-                                fraction_of_non_edges=1.0, \
+                                fraction_of_entities=1.0, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_edge_reps=True, \
+                                hash_reps=True, \
                                 print_progress=False)
 
             print("Completed estimate run %d of %d." % (i + 1, AUTO_ESTIMATES))
             sys.stdout.flush()
-            fraction_of_non_edges.append(\
+            fraction_of_entities.append(\
                 estimate_min_frac_for_AUPR(class_info, \
                                            desired_stdev=DESIRED_STDEV))
             del class_info
 
-        fnes = fraction_of_non_edges
-        fraction_of_non_edges = sum(fraction_of_non_edges) / float(AUTO_ESTIMATES)
+        fnes = fraction_of_entities
+        fraction_of_entities = sum(fraction_of_entities) / float(AUTO_ESTIMATES)
 
         print(("Based on initial estimates (%s), \n" % (fnes)) + \
                 "choosing to look at " + \
-                "%f percent of all non-edges." % (fraction_of_non_edges * 100))
-        if fraction_of_non_edges >= 0.9:
-            fraction_of_non_edges = 1.0
+                "%f percent of all non-edges." % (fraction_of_entities * 100))
+        if fraction_of_entities >= 0.9:
+            fraction_of_entities = 1.0
             print("...but rounding up to 100% so as to avoid coin tosses.")
         sys.stdout.flush()
 
         raw_output_file.write(("Based on initial estimate (%s)" % (fnes)) + \
                                 (",\nusing %f percent of all non-edges.\n" % \
-                                    (fraction_of_non_edges * 100)))
+                                    (fraction_of_entities * 100)))
     else:
         raw_output_file.write("Using %f percent of all non-edges.\n" % \
-                                    (fraction_of_non_edges * 100))
+                                    (fraction_of_entities * 100))
 
 
     for _ in range(0, num_runs):
 
-        if test_edge_list is None:
+        if mode == "Node Classification":
+            print("(Re)Loading %s and randomly hiding node labels." % edge_list)
+            ((directed, has_edge_types, nodes, neighbors_collections), \
+                node_coloring, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color) = \
+                    read_graph(edge_list, directed, \
+                               node_list_filename=node_list, \
+                               node_label_hider=\
+                                 random_coin(fraction_of_removed_edges))
+
+            true_entities = set()
+            for (node, orig_label) in hidden_nodes:
+                if orig_label == 1:
+                    true_entities.add(node)
+
+        elif test_edge_list is None:
             print("(Re)Loading %s and randomly removing edges." % edge_list)
             ((directed, has_edge_types, nodes, neighbors_collections), \
-                node_coloring, removed_edges) = \
+                node_coloring, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color) = \
                     read_graph(edge_list, directed, \
                                node_list_filename=node_list, \
                                edge_remover=\
-                                 random_edge_remover(fraction_of_removed_edges))
+                                 random_coin(fraction_of_removed_edges))
 
-            true_edges = removed_edges
+            true_entities = removed_edges
 
         sys.stdout.flush()
 
@@ -222,26 +274,26 @@ if __name__ == "__main__":
             base_seed = time.time()
             print("Using base_seed %s" % (base_seed))
                 
-            assert len(true_edges) > 0
+            assert len(true_entities) > 0
             # First do exact computations for k=inf and k=1.
             sub_k = "inf"
-            (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+            (class_info, full_T, OE) = main_function(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
                             has_edge_types=has_edge_types, \
-                            true_edges=true_edges, \
+                            true_entities=true_entities, \
                             k=sub_k, \
-                            fraction_of_non_edges=fraction_of_non_edges, \
+                            fraction_of_entities=fraction_of_entities, \
                             base_seed=base_seed, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
                             print_progress=False, \
-                            hash_edge_reps=hash_endpoints)
+                            hash_reps=hash_endpoints)
             sys.stdout.flush()
             print("k = %s" % sub_k)
-            print("Num True Edges: %d" % len(true_edges))
+            print("Num True Edges: %d" % len(true_entities))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -260,23 +312,23 @@ if __name__ == "__main__":
 
             if not hash_endpoints:
                 sub_k = 1
-                (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+                (class_info, full_T, OE) = main_function(\
                                 neighbors_collections=neighbors_collections, \
                                 orig_colors=node_coloring, \
                                 directed=directed, \
                                 has_edge_types=has_edge_types, \
-                                true_edges=true_edges, \
+                                true_entities=true_entities, \
                                 k=sub_k, \
-                                fraction_of_non_edges=fraction_of_non_edges, \
+                                fraction_of_entities=fraction_of_entities, \
                                 base_seed=base_seed, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_edge_reps=False, \
+                                hash_reps=False, \
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Edges: %d" % len(true_edges))
+                print("Num True Edges: %d" % len(true_entities))
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -296,23 +348,23 @@ if __name__ == "__main__":
             k_AUPR = None
             while k_ROC is None or k_AUPR < (inf_AUPR - STOP_MARGIN):
 
-                (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+                (class_info, full_T, OE) = main_function(\
                                 neighbors_collections=neighbors_collections, \
                                 orig_colors=node_coloring, \
                                 directed=directed, \
                                 has_edge_types=has_edge_types, \
-                                true_edges=true_edges, \
+                                true_entities=true_entities, \
                                 k=sub_k, \
-                                fraction_of_non_edges=fraction_of_non_edges, \
+                                fraction_of_entities=fraction_of_entities, \
                                 base_seed=base_seed, \
                                 num_processes=np, \
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
-                                hash_edge_reps=True, \
+                                hash_reps=True, \
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Edges: %d" % len(true_edges))
+                print("Num True Edges: %d" % len(true_entities))
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -331,27 +383,27 @@ if __name__ == "__main__":
                 sub_k += 1
 
         else:
-            (class_info, full_T, OE) = get_k_hop_info_classes_for_link_pred(\
+            (class_info, full_T, OE) = main_function(\
                             neighbors_collections=neighbors_collections, \
                             orig_colors=node_coloring, \
                             directed=directed, \
                             has_edge_types=has_edge_types, \
-                            true_edges=true_edges, \
+                            true_entities=true_entities, \
                             k=k, \
-                            fraction_of_non_edges=fraction_of_non_edges, \
+                            fraction_of_entities=fraction_of_entities, \
                             num_processes=np, \
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
-                            hash_edge_reps=True, \
+                            hash_reps=True, \
                             print_progress=True)
             sys.stdout.flush()
 
-            if len(true_edges) == 0:
+            if len(true_entities) == 0:
                 print("There were no test given edges for this graph.")
                 sys.stdout.flush()
                 continue
 
-            print("Num True Edges: %d" % len(true_edges))
+            print("Num True Edges: %d" % len(true_entities))
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
