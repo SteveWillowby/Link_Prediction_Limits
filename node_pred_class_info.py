@@ -23,7 +23,8 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
                                          hash_reps=False, \
-                                         print_progress=False):
+                                         print_progress=False, \
+                                         report_only_classes_with_positives=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
     node_percent = fraction_of_entities
@@ -166,12 +167,18 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
     # for (ec, count) in basic_node_classes.items():
     #     print("%s -- %d" % (ec, count))
 
+    EC_with_positives = set()
     full_node_classes = []
-    # next_int_label = 0
     for label, c in positives_in_node_class.items():
-        (NC, _) = label
-        full_node_classes.append((basic_node_classes[NC], c))
-        # next_int_label += 1
+        (EC, _) = label
+        full_node_classes.append((basic_node_classes[EC], c))
+        if not report_only_classes_with_positives:
+            EC_with_positives.add(EC)
+
+    if not report_only_classes_with_positives:
+        for EC, c in basic_node_classes.items():
+            if EC not in EC_with_positives:
+                full_node_classes.append((c, 0))
 
     # `full_observed_nodes` is the number of nodes that could have been
     #   looked at (i.e. the number of coin flips)

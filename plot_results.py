@@ -48,10 +48,15 @@ if __name__ == "__main__":
         if len(l) > 12 and l[:12] == "raw_classes=":
             l = l.strip()[14:-2].split("), (")
             l = [x.split(", ") for x in l]
-            l = [(int(x[0]), int(x[1])) for x in l]
+            l = [(int(x[0][1:]), int(x[1][:-1]), int(x[2]), int(x[3])) for x in l]
+            class_info = []
+            for (t, p, occ, _) in l:
+                if p > 0:
+                    for __ in range(0, occ):
+                        class_info.append((t, p))
 
-            ROC_value = get_max_ROC(l, observed_edges=observed_T)
-            AUPR_value = get_max_AUPR(l)
+            ROC_value = get_max_ROC(class_info, observed_edges=observed_T)
+            AUPR_value = get_max_AUPR(class_info)
 
             if phase == KINF:
                 ROC_endpoints[1].append(ROC_value)

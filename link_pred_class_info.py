@@ -32,7 +32,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          num_threads_per_process=1, \
                                          use_py_iso=True, \
                                          hash_reps=False, \
-                                         print_progress=True):
+                                         print_progress=False, \
+                                         report_only_classes_with_positives=True):
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
     edge_percent = fraction_of_entities
@@ -239,15 +240,19 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     print("#  %d Edge Classes for %d Observed Edges" % \
                     (len(basic_edge_classes), observed_edges))
     print("#")
-    # for (ec, count) in basic_edge_classes.items():
-    #     print("%s -- %d" % (ec, count))
 
+    EC_with_positives = set()
     full_edge_classes = []
-    # next_int_label = 0
     for label, c in positives_in_edge_class.items():
         (EC, _) = label
         full_edge_classes.append((basic_edge_classes[EC], c))
-        # next_int_label += 1
+        if not report_only_classes_with_positives:
+            EC_with_positives.add(EC)
+
+    if not report_only_classes_with_positives:
+        for EC, c in basic_edge_classes.items():
+            if EC not in EC_with_positives:
+                full_edge_classes.append((c, 0))
 
     # `full_observed_edges` is the number of non-edges that could have been
     #   looked at (i.e. the number of coin flips)

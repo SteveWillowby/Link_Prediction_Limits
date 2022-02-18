@@ -221,7 +221,8 @@ if __name__ == "__main__":
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
                                 hash_reps=True, \
-                                print_progress=False)
+                                print_progress=False, \
+                                report_only_classes_with_positives=False)
 
             if mode != "Node Classification":
                 if len(true_entities) != sum([p for (t, p) in class_info]):
@@ -323,7 +324,8 @@ if __name__ == "__main__":
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
                             print_progress=False, \
-                            hash_reps=hash_endpoints)
+                            hash_reps=hash_endpoints, \
+                            report_only_classes_with_positives=False)
             sys.stdout.flush()
             print("k = %s" % sub_k)
             print("Expected Num of Observed True Entities: %f" % ente)
@@ -341,7 +343,14 @@ if __name__ == "__main__":
             raw_output_file.write("observed_T=%d\n" % OE)
 
             raw_output_file.write("k=inf\n")
-            raw_output_file.write("raw_classes=%s\n" % (class_info))
+
+            condensed_class_info = {}
+            for CI in class_info:
+                if CI not in condensed_class_info:
+                    condensed_class_info[CI] = 0
+                condensed_class_info[CI] += 1
+            condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
+            raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
 
             if not hash_endpoints:
                 sub_k = 1
@@ -358,7 +367,8 @@ if __name__ == "__main__":
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
                                 hash_reps=False, \
-                                print_progress=False)
+                                print_progress=False, \
+                                report_only_classes_with_positives=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
                 print("Expected Num of Observed True Entities: %f" % ente)
@@ -372,7 +382,14 @@ if __name__ == "__main__":
                 sys.stdout.flush()
 
                 raw_output_file.write("k=1\n")
-                raw_output_file.write("raw_classes=%s\n" % (class_info))
+
+                condensed_class_info = {}
+                for CI in class_info:
+                    if CI not in condensed_class_info:
+                        condensed_class_info[CI] = 0
+                    condensed_class_info[CI] += 1
+                condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
+                raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
@@ -394,7 +411,8 @@ if __name__ == "__main__":
                                 num_threads_per_process=ntpp, \
                                 use_py_iso=py_iso, \
                                 hash_reps=True, \
-                                print_progress=False)
+                                print_progress=False, \
+                                report_only_classes_with_positives=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
                 print("Expected Num of Observed True Entities: %f" % ente)
@@ -408,10 +426,18 @@ if __name__ == "__main__":
                 sys.stdout.flush()
 
                 raw_output_file.write("k=%s\n" % sub_k)
-                raw_output_file.write("raw_classes=%s\n" % (class_info))
+
+                condensed_class_info = {}
+                for CI in class_info:
+                    if CI not in condensed_class_info:
+                        condensed_class_info[CI] = 0
+                    condensed_class_info[CI] += 1
+                condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
+                raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
+
                 if sub_k == 1 and hash_endpoints:
                     raw_output_file.write("k=%s\n" % sub_k)
-                    raw_output_file.write("raw_classes=%s\n" % (class_info))
+                    raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
 
                 sub_k += 1
 
@@ -428,7 +454,8 @@ if __name__ == "__main__":
                             num_threads_per_process=ntpp, \
                             use_py_iso=py_iso, \
                             hash_reps=True, \
-                            print_progress=True)
+                            print_progress=True, \
+                            report_only_classes_with_positives=False)
             sys.stdout.flush()
 
             if len(true_entities) == 0:

@@ -14,6 +14,12 @@ def get_max_AUPR(class_info, mention_errors=True):
     if len(class_info) == 0:
         return 1.0  # TODO: should this be zero instead of one?
 
+    refined_class_info = []
+    for (t, p) in class_info:
+        if p > 0:
+            refined_class_info.append((t, p))
+    class_info = refined_class_info
+
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
     class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
@@ -65,6 +71,12 @@ def get_max_ROC(class_info, observed_edges):
 
     if len(class_info) == 0:
         return 1.0  # TODO: should this be zero instead of one?
+
+    refined_class_info = []
+    for (t, p) in class_info:
+        if p > 0:
+            refined_class_info.append((t, p))
+    class_info = refined_class_info
 
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
