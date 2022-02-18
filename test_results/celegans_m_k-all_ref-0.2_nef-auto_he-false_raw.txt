@@ -1,0 +1,182 @@
+Based on initial estimate ([0.007191189261431783, 0.008198893932334562, 0.00849189137622938]),
+using 0.796066 percent of all non-edges.
+################ New Run ###############
+full_T=100793
+observed_T=815
+k=inf
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+################ New Run ###############
+full_T=100726
+observed_T=838
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100788
+observed_T=793
+k=inf
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+################ New Run ###############
+full_T=100771
+observed_T=789
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100759
+observed_T=834
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100771
+observed_T=772
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100759
+observed_T=804
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100744
+observed_T=800
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100770
+observed_T=787
+k=inf
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+################ New Run ###############
+full_T=100730
+observed_T=785
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100765
+observed_T=854
+k=inf
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+################ New Run ###############
+full_T=100758
+observed_T=824
+k=inf
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+################ New Run ###############
+full_T=100760
+observed_T=753
+k=inf
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+################ New Run ###############
+full_T=100761
+observed_T=798
+k=inf
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+################ New Run ###############
+full_T=100746
+observed_T=758
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100764
+observed_T=800
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100744
+observed_T=805
+k=inf
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+k=1
+raw_classes=[(1, 1)]
+################ New Run ###############
+full_T=100755
+observed_T=811
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100778
+observed_T=789
+k=inf
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1), (1, 1)]
+################ New Run ###############
+full_T=100780
+observed_T=767
+k=inf
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
+k=1
+raw_classes=[(1, 1), (1, 1)]
