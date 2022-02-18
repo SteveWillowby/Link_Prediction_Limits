@@ -182,10 +182,9 @@ if __name__ == "__main__":
                                    node_label_hider=\
                                      random_coin(fraction_of_removed_edges))
 
-                true_entities = set()
-                for (node, orig_label) in hidden_nodes:
-                    if orig_label == 1:
-                        true_entities.add(node)
+                true_entities = hidden_nodes  # techincally only half are "true entities"
+                nte = sum([t for (n, t) in hidden_nodes])
+                print(true_entities)
                 
             elif test_edge_list is None:
                 print("(Re)Loading %s and randomly removing edges." % edge_list)
@@ -198,6 +197,7 @@ if __name__ == "__main__":
                                      random_coin(fraction_of_removed_edges))
 
                 true_entities = removed_edges
+                nte = len(removed_edges)
 
             (class_info, full_T, OE) = main_function(\
                                 neighbors_collections=neighbors_collections, \
@@ -251,10 +251,9 @@ if __name__ == "__main__":
                                node_label_hider=\
                                  random_coin(fraction_of_removed_edges))
 
-            true_entities = set()
-            for (node, orig_label) in hidden_nodes:
-                if orig_label == 1:
-                    true_entities.add(node)
+            true_entities = hidden_nodes  # techincally only half are "true entities"
+            print(true_entities)
+            nte = sum([t for (n, t) in hidden_nodes])
 
         elif test_edge_list is None:
             print("(Re)Loading %s and randomly removing edges." % edge_list)
@@ -267,6 +266,7 @@ if __name__ == "__main__":
                                  random_coin(fraction_of_removed_edges))
 
             true_entities = removed_edges
+            nte = len(true_entities)
 
         sys.stdout.flush()
 
@@ -294,7 +294,7 @@ if __name__ == "__main__":
                             hash_reps=hash_endpoints)
             sys.stdout.flush()
             print("k = %s" % sub_k)
-            print("Num True Entities: %d" % len(true_entities))
+            print("Num True Entities: %d" % nte)
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -329,7 +329,7 @@ if __name__ == "__main__":
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Entities: %d" % len(true_entities))
+                print("Num True Entities: %d" % nte)
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -365,7 +365,7 @@ if __name__ == "__main__":
                                 print_progress=False)
                 sys.stdout.flush()
                 print("k = %s" % sub_k)
-                print("Num True Entities: %d" % len(true_entities))
+                print("Num True Entities: %d" % nte)
                 print("Num Classes: %d" % len(class_info))
                 print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
                 print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))
@@ -404,7 +404,7 @@ if __name__ == "__main__":
                 sys.stdout.flush()
                 continue
 
-            print("Num True Entities: %d" % len(true_entities))
+            print("Num True Entities: %d" % nte)
             print("Num Classes: %d" % len(class_info))
             print("Average Class Size: %f" % (float(sum([x[0] for x in class_info])) / len(class_info)))
             print("PT/P: %f" % (float(sum([x[0] for x in class_info])) / sum([x[1] for x in class_info])))

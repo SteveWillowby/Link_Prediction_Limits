@@ -27,7 +27,12 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
 
     assert type(orig_colors[0]) is int or type(orig_colors[0]) is list
     node_percent = fraction_of_entities
-    true_nodes = true_entities
+    hidden_nodes = [n for (n, t) in true_entities]
+    true_nodes = set()
+    for (n, t) in true_entities:
+        assert t == 0 or t == 1
+        if t == 1:
+            true_nodes.add(n)
 
     if type(orig_colors[0]) is list:
         orig_partitions = orig_colors
@@ -73,7 +78,7 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
             neighbors = [set(nc) for nc in neighbors_collections]
     graph = (neighbors_collections, neighbors)
 
-    total_iterations = num_nodes
+    total_iterations = len(hidden_nodes)
     full_observed_nodes = total_iterations
 
     if use_py_iso and not __USE_RF_FOR_FULL_GRAPH__:
@@ -110,7 +115,7 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
 
         args = [(i, k, graph, directed, has_edge_types, \
                  int((total_iterations + np * ntpp - 1) / (np * ntpp)), \
-                 true_nodes, num_nodes, \
+                 true_nodes, hidden_nodes, num_nodes, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  use_py_iso, hash_reps, \
@@ -143,7 +148,7 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
         # num_processes = 1. Avoid copying data.
         arg = (0, k, graph, directed, has_edge_types, \
                  int((total_iterations + ntpp - 1) / ntpp), \
-                 true_nodes, num_nodes, \
+                 true_nodes, hidden_nodes, num_nodes, \
                  orig_colors, next_orig_color, \
                  orbit_colors, orbit_partitions, \
                  use_py_iso, hash_reps, \
@@ -176,7 +181,7 @@ def get_k_hop_info_classes_for_node_pred(neighbors_collections, orig_colors, \
 
 def __parallel_proc_func__(arg):
     (proc_idx, k, graph, directed, has_edge_types, \
-     avg_num_tasks, true_nodes, num_nodes, \
+     avg_num_tasks, true_nodes, hidden_nodes, num_nodes, \
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      use_py_iso, hash_reps, \
@@ -189,7 +194,7 @@ def __parallel_proc_func__(arg):
     args = [\
         (proc_idx + num_processes * i, k, \
          graph, directed, has_edge_types, \
-         avg_num_tasks, true_nodes, num_nodes, \
+         avg_num_tasks, true_nodes, hidden_nodes, num_nodes, \
          list(orig_colors), \
          next_orig_color, \
          list(orbit_colors), [list(o) for o in orbit_partitions], \
@@ -217,7 +222,7 @@ def __thread_collection_overlay__(arg_array, result_array, idx):
 def __parallel_collection_function__(arg):
 
     (proc_thread_idx, k, graph, directed, has_edge_types, \
-     avg_num_tasks, true_nodes, num_nodes, \
+     avg_num_tasks, true_nodes, hidden_nodes, num_nodes, \
      orig_colors, next_orig_color, \
      orbit_colors, orbit_partitions, \
      use_py_iso, hash_reps, \
@@ -253,7 +258,7 @@ def __parallel_collection_function__(arg):
     observed_nodes = 0
     iteration = 0
     percent_done = 0
-    for a in range(0, num_nodes):
+    for a in hidden_nodes:
         if a % parallelism != proc_thread_idx:
             continue
 
