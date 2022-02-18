@@ -201,7 +201,10 @@ if __name__ == "__main__":
                         true_entities[edge] = 0
                     true_entities[edge] += 1
                 if len(removed_edges[0]) == 2:
-                    true_entities = [(a, c, b) for (a, b), c in true_entities.items()]
+                    if set([c for _, c in true_entities.items()]) != set([1]):
+                        print("NOTE: True edges were repeated. This " + \
+                              "repitition is being ignored.")
+                    true_entities = [(a, b) for (a, b), c in true_entities.items()]
                 else:
                     true_entities = [(a, (t, c), b) for (a, t, b), c in true_entities.items()]
 
@@ -285,7 +288,10 @@ if __name__ == "__main__":
                     true_entities[edge] = 0
                 true_entities[edge] += 1
             if len(removed_edges[0]) == 2:
-                true_entities = [(a, c, b) for (a, b), c in true_entities.items()]
+                if set([c for _, c in true_entities.items()]) != set([1]):
+                    print("NOTE: True edges were repeated. This " + \
+                          "repitition is being ignored.")
+                true_entities = [(a, b) for (a, b), c in true_entities.items()]
             else:
                 true_entities = [(a, (t, c), b) for (a, t, b), c in true_entities.items()]
 
