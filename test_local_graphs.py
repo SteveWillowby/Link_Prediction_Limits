@@ -162,6 +162,7 @@ if __name__ == "__main__":
                            edge_remover=None)
 
         true_entities = read_edges(test_edge_list, directed)
+        ente = len(true_entities)
 
     if fraction_of_entities == "auto":
         if test_edge_list is not None:
