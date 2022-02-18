@@ -117,6 +117,13 @@ def get_max_ROC(class_info, observed_edges):
     return ROC
 
 def estimate_min_frac_for_AUPR(class_info, desired_stdev):
+
+    refined_class_info = []
+    for (t, p) in class_info:
+        if p > 0:
+            refined_class_info.append((t, p))
+    class_info = refined_class_info
+
     FULL_AUPR = get_max_AUPR(class_info)
 
     MARGIN_EXP = 10
