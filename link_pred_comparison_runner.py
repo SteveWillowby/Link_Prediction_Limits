@@ -28,9 +28,9 @@ if __name__ == "__main__":
                 "options for graph name are:\n" + \
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
-                "college_28_predict_any, citeseer, cora, highschool," + \
+                "college_28_predict_any, citeseer, cora, highschool, " + \
                 "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki" + \
-                " and polblogs")
+                " powergrid, and polblogs")
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
@@ -89,7 +89,7 @@ if __name__ == "__main__":
                           "convote", "celegans_m", "foodweb", "innovation", \
                           "college_10_predict_end", "college_10_predict_any", \
                           "college_28_predict_end", "college_28_predict_any", \
-                          "polblogs"]
+                          "powergrid", "polblogs"]
 
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
@@ -116,13 +116,16 @@ if __name__ == "__main__":
                   "celegans_m": ("celegans_metabolic.g", False), \
                   "foodweb": ("maayan-foodweb.g", True), \
                   "innovation": ("moreno_innovation.g", True), \
+                  "powergrid": ("opsahl-powergrid.g", False), \
                   "polblogs": ("pol_blogs.g", \
                                "pol_blogs_node_labels.txt", True)}[graph_name]
+
+    print("\"Ours\" %s" % graph_name)
 
     if len(graph_info) == 4:
         fraction_of_removed_edges = "NA"
 
-    raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
+    raw_output_filename = "test_results/spiked_%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
                             (graph_name, k, fraction_of_removed_edges, \
                              fraction_of_entities, str(hash_endpoints).lower())
     raw_output_file = open(raw_output_filename, "w")
@@ -435,6 +438,23 @@ if __name__ == "__main__":
                         condensed_class_info[CI] = 0
                     condensed_class_info[CI] += 1
                 condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
+
+                uniqueness_classes = []
+                prev_size = 0
+                for ((t, p), c, _) in condensed_class_info:
+                    if t > prev_size:
+                        prev_size = t
+                        uniqueness_classes.append([0, 0])
+                    uniqueness_classes[-1][0] += t * c
+                    uniqueness_classes[-1][1] += p * c
+                uniqueness_classes = [(x[0], x[1]) for x in uniqueness_classes]
+                Uniqueness_ROC = get_ROC(uniqueness_classes, observed_edges=OE)
+                Alternate_ROC = get_ROC(alt_classes, observed_edges=OE)
+                Uniqueness_AUPR = get_AUPR(uniqueness_classes)
+                Alternate_AUPR = get_AUPR(alt_classes)
+                print("\n\nk-%d ROC:  Ours vs. Triadic Closure: %f vs %f" % (sub_k, Uniqueness_ROC, Alternate_ROC))
+                print("k-%d AUPR: Ours vs. Triadic Closure: %f vs %f\n\n" % (sub_k, Uniqueness_AUPR, Alternate_AUPR))
+
                 raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
 
                 if sub_k == 1 and hash_endpoints:

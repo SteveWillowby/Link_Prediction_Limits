@@ -27,9 +27,9 @@ if __name__ == "__main__":
                 "options for graph name are:\n" + \
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
-                "college_28_predict_any, citeseer, cora, highschool," + \
+                "college_28_predict_any, citeseer, cora, highschool, " + \
                 "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki" + \
-                " and polblogs")
+                " powergrid, and polblogs")
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
@@ -88,7 +88,7 @@ if __name__ == "__main__":
                           "convote", "celegans_m", "foodweb", "innovation", \
                           "college_10_predict_end", "college_10_predict_any", \
                           "college_28_predict_end", "college_28_predict_any", \
-                          "polblogs"]
+                          "powergrid", "polblogs"]
 
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
@@ -115,6 +115,7 @@ if __name__ == "__main__":
                   "celegans_m": ("celegans_metabolic.g", False), \
                   "foodweb": ("maayan-foodweb.g", True), \
                   "innovation": ("moreno_innovation.g", True), \
+                  "powergrid": ("opsahl-powergrid.g", False), \
                   "polblogs": ("pol_blogs.g", \
                                "pol_blogs_node_labels.txt", True)}[graph_name]
 
