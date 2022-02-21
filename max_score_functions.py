@@ -22,15 +22,18 @@ def get_max_AUPR(class_info, mention_errors=True):
 
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
-    class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
-    P = sum([x[0] for x in class_info])
-    T = sum([x[1] for x in class_info])
+    class_info = [(x[2], x[1]) for x in class_info]  # Total Size, Positives
+    return get_AUPR(class_info, mention_errors=mention_errors)
+
+def get_AUPR(class_info, mention_errors=True):
+    P = sum([x[1] for x in class_info])
+    T = sum([x[0] for x in class_info])
     N = T - P
 
     b = 0.0
     d = 0.0
     AUPR = 0.0
-    for (a, c) in class_info:
+    for (c, a) in class_info:
         a = float(a)
         c = float(c)
         if a == 0.0:
@@ -80,10 +83,13 @@ def get_max_ROC(class_info, observed_edges):
 
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
-    class_info = [(x[1], x[2]) for x in class_info]  # Positives, Total Size
-    P = sum([x[0] for x in class_info])  # P is the same as "observed P"
-    # T = sum([x[1] for x in class_info])
-    # N = T - P
+    class_info = [(x[2], x[1]) for x in class_info]  # Total Size, Positives
+
+    return get_ROC(class_info, observed_edges)
+
+def get_ROC(class_info, observed_edges):
+
+    P = sum([x[1] for x in class_info])  # P is the same as "observed P"
     observed_N = observed_edges - P
     assert P > 0
     n_acc = 0
@@ -91,7 +97,7 @@ def get_max_ROC(class_info, observed_edges):
     # I chose to add the corners.
     TPR = [0.0]  # Goes up from 0 to 1
     FPR = [0.0]  # Goes up from 0 to 1
-    for (p, t) in class_info:
+    for (t, p) in class_info:
         p_acc += p
         n_acc += t - p
 
