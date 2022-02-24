@@ -352,6 +352,7 @@ if __name__ == "__main__":
                 condensed_class_info[CI] += 1
             condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
             raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
+            raw_output_file.flush()
 
             if not hash_endpoints:
                 sub_k = 1
@@ -391,6 +392,7 @@ if __name__ == "__main__":
                     condensed_class_info[CI] += 1
                 condensed_class_info = sorted([(CI, c, CI[0] * c) for CI, c in condensed_class_info.items()])
                 raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
+                raw_output_file.flush()
 
             # Second, interpolate using the hashed subgraphs.
             print("-- Now Hashing Subgraphs --")
@@ -439,6 +441,7 @@ if __name__ == "__main__":
                 if sub_k == 1 and hash_endpoints:
                     raw_output_file.write("k=%s\n" % sub_k)
                     raw_output_file.write("raw_classes=%s\n" % (condensed_class_info))
+                    raw_output_file.flush()
 
                 sub_k += 1
 
