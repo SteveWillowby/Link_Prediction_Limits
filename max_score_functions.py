@@ -9,10 +9,9 @@ import statistics
 # where `class_info` is a collection of triples:
 #   (class_label, class_size, num_positives_in_class)
 
-def get_max_AUPR(class_info, mention_errors=True):
-
-    if len(class_info) == 0:
-        return 1.0  # TODO: should this be zero instead of one?
+# Removes classes without positives, sorts classes by density, and lumps classes
+#   of equal density together.
+def refine_class_info(class_info):
 
     refined_class_info = []
     for (t, p) in class_info:
@@ -22,7 +21,26 @@ def get_max_AUPR(class_info, mention_errors=True):
 
     class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
     class_info.sort()
-    class_info = [(x[2], x[1]) for x in class_info]  # Total Size, Positives
+    refined_class_info = [[class_info[0][2], class_info[0][1]]]
+    for i in range(1, len(class_info)):
+        prev_t = refined_class_info[-1][0]
+        prev_p = refined_class_info[-1][1]
+        (_, p, t) = class_info[i]
+        if p * prev_t == t * prev_p:
+            # Ratios are the same.
+            refined_class_info[-1][0] += t
+            refined_class_info[-1][1] += p
+        else:
+            refined_class_info.append([t, p])
+    return refined_class_info
+
+def get_max_AUPR(class_info, mention_errors=True):
+
+    if len(class_info) == 0:
+        return 1.0  # TODO: should this be zero instead of one?
+
+    class_info = refine_class_info(class_info)
+
     return get_AUPR(class_info, mention_errors=mention_errors)
 
 def get_AUPR(class_info, mention_errors=True):
@@ -75,15 +93,7 @@ def get_max_ROC(class_info, observed_edges):
     if len(class_info) == 0:
         return 1.0  # TODO: should this be zero instead of one?
 
-    refined_class_info = []
-    for (t, p) in class_info:
-        if p > 0:
-            refined_class_info.append((t, p))
-    class_info = refined_class_info
-
-    class_info = [(float(x[0]) / x[1], x[1], x[0]) for x in class_info]
-    class_info.sort()
-    class_info = [(x[2], x[1]) for x in class_info]  # Total Size, Positives
+    class_info = refine_class_info(class_info)
 
     return get_ROC(class_info, observed_edges)
 
