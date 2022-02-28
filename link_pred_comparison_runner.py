@@ -128,7 +128,7 @@ if __name__ == "__main__":
                   "jazz_collab": ("jazz_collaboration.g", False), \
                   "linux_calls": ("linux_call_graph.g", True), \
                   "mysql_calls": ("mysql_call_graph.g", True), \
-                  "thesaurus": ("roget_thesaurus.g", True), \
+                  "roget_thesaurus": ("roget_thesaurus.g", True), \
                   "roman_roads": ("roman_roads_1999.g", True), \
                   "roman_roads_p": ("roman_roads_1999_partitioned.g", True), \
                   "roman_roads_u": ("roman_roads_1999_unweighted.g", True), \
