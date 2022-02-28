@@ -24,12 +24,19 @@ if __name__ == "__main__":
                 "k, py_iso,\npercent of removed/hidden entities, " + \
                 "percent of (non)entities looked at,\n" + \
                 "number of runs, hash endpoints, graph name.\n" + \
-                "options for graph name are:\n" + \
+                "options for graph name are:\n\n" + \
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
                 "college_28_predict_any, citeseer, cora, highschool, " + \
-                "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki" + \
-                " powergrid, and polblogs")
+                "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki," + \
+                " powergrid, polblogs, y2h_ppi, collins_yeast,\n" + \
+                "faculty_business, faculty_comp_sci, faculty_history, " + \
+                "GR_coauth, jazz_collab,\nlinux_calls, mysql_calls, " + \
+                "roget_thesaurus, roman_roads, roman_roads_p,\n" + \
+                "roman_roads_u, species_1_brain, US_airports_2010, " + \
+                "US_airports_2010_l, US_airports_2010_u,\n" + \
+                "US_500_airports, US_500_airports_l, US_500_airports_u" \
+                )
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
     #   k-inf performance in order to stop.
@@ -83,13 +90,6 @@ if __name__ == "__main__":
 
     graph_name = argv[9]
 
-    assert graph_name in ["karate", "eucore", "citeseer", \
-                          "cora", "FB15k", "wiki", "highschool", \
-                          "convote", "celegans_m", "foodweb", "innovation", \
-                          "college_10_predict_end", "college_10_predict_any", \
-                          "college_28_predict_end", "college_28_predict_any", \
-                          "powergrid", "polblogs"]
-
     graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
                   "college_10_predict_end": \
@@ -117,7 +117,31 @@ if __name__ == "__main__":
                   "innovation": ("moreno_innovation.g", True), \
                   "powergrid": ("opsahl-powergrid.g", False), \
                   "polblogs": ("pol_blogs.g", \
-                               "pol_blogs_node_labels.txt", True)}[graph_name]
+                               "pol_blogs_node_labels.txt", True), \
+                  "y2h_ppi": ("CCSB_Y2H_PPI_Network.g", False), \
+                  "collins_yeast": ("collins_yeast_interactome.g", False), \
+                  "faculty_business": ("faculty_hiring_business.g", True), \
+                  "faculty_comp_sci": ("faculty_hiring_comp_sci.g", True), \
+                  "faculty_history": ("faculty_hiring_history.g", True), \
+                  "GR_coauth": ("GR_coauthorship.g", False), \
+                  "jazz_collab": ("jazz_collaboration.g", False), \
+                  "linux_calls": ("linux_call_graph.g", True), \
+                  "mysql_calls": ("mysql_call_graph.g", True), \
+                  "thesaurus": ("roget_thesaurus.g", True), \
+                  "roman_roads": ("roman_roads_1999.g", True), \
+                  "roman_roads_p": ("roman_roads_1999_partitioned.g", True), \
+                  "roman_roads_u": ("roman_roads_1999_unweighted.g", True), \
+                  "species_1_brain": ("species_brain_1.g", True), \
+                  "US_airports_2010": ("US_airports_2010.g", True), \
+                  "US_airports_2010_l": ("US_airports_2010_log2_weights.g", True), \
+                  "US_airports_2010_u": ("US_airports_2010_unweighted.g", True), \
+                  "US_500_airports": ("US_top_500_airports_2002.g", True), \
+                  "US_500_airports_l": ("US_top_500_airports_2002_log2_weights.g", True), \
+                  "US_500_airports_u": ("US_top_500_airports_2002_undirected.g", True) \
+                    }
+
+    assert graph_name in graph_info
+    graph_info = graph_info[graph_name]
 
     if len(graph_info) == 4:
         fraction_of_removed_edges = "NA"

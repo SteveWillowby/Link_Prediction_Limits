@@ -1,0 +1,86 @@
+Faculty Hiring Networks:
+
+"Systematic inequality and hierarchy in faculty hiring networks." Science Advances
+
+relabels = {"Asst-M": 0, "Asst-F": 1, "Assoc-M": 2, "Assoc-F": 3, "Full-M": 4, "Full-F": 5}
+
+Directed and includes multi-edges.
+
+
+Jazz:
+
+P. Gleiser and L. Danon, "Community Structure in Jazz." Advances in Complex Systems
+
+Undirected
+
+
+CA Coauthorship:
+
+J. Leskovec, J. Kleinberg and C. Faloutsos. Graph Evolution: Densification and Shrinking Diameters. ACM Transactions on Knowledge Discovery from Data
+
+Collaboration network of Arxiv General Relativity category (there is an edge if authors coauthored at least one paper)
+
+Undirected
+
+
+Roget's Thesaurus Concepts Network:
+
+D.E. Knuth, "The Stanford GraphBase: A Platform for Combinatorial Computing."
+
+Directed
+
+
+Linux and MySQL CallGraphs:
+
+C.R. Myers, "Software systems as complex networks: Structure, function, and evolvability of software collaboration graphs."
+
+Directed
+
+
+(Top?) 500 US Airports in 2002:
+
+Colizza, V., Pastor-Satorras, R., Vespignani, A., 2007. Reaction-diffusion processes and metapopulation models in heterogeneous networks. Nature Physics 3, 276-282.
+
+The flight weight amounts had the log2 taken in one version.
+
+Directed -- often has bidirected edges
+
+
+US Airports in 2010:
+
+SOURCE UNKNOWN
+
+The flight weight amounts had the log2 taken in one version.
+
+Directed -- often has bidirected edges
+
+
+
+Roman Roads:
+Directed road network of the city of Rome (1999)
+Edge costs are physical distances in meters
+Contributed by: 
+    Gianni Storchi, Univ. Rome "La Sapienza"
+    Paolo Dell'Olmo, Univ. Rome "La Sapienza"
+    Monica Gentili, Univ. Salerno
+
+The "partitioned" version divides the distances by 50.
+
+
+Collins Yeast Interactome:
+
+Toward a comprehensive atlas of the physical interactome of Saccharomyces cerevisiae.
+
+Either Undirected (likely) or has zero bidirected edges
+
+
+CCSB_Y2H_PPI_Network:
+
+"High-Quality Binary Protein Interaction Map of the Yeast Interactome Network" Yu et al Science 2008.
+
+Either Undirected (likely) or has zero bidirected edges
+
+
+Mixed Species Brain Graph
+
+Uh..... the species that is first on the list of wherever I got this network.
