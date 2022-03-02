@@ -1,7 +1,5 @@
 #! /bin/bash
 
-time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=GR_coauth
-
 time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=jazz_collab
 
 time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=linux_calls
@@ -14,3 +12,5 @@ time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 n
 time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=US_500_airports_u
 
 time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=US_airports_2010_l
+
+time python3 test_local_graphs.py np=58 ntpp=1 k=all py_iso=false repercent=10 nepercent=100 num_runs=2 hash_endpoints=true g=GR_coauth
