@@ -120,10 +120,13 @@ def read_results_file(filename):
 
 def basic_plots(filename):
 
-    plot_name = filename.split("/")[1].split(".")[0]
-    graph_name = plot_name.split("_")[0]
-    frac_missing_edges = \
-        int(float(plot_name.split("_ref-")[1].split("_")[0]) * 100.0)
+    plot_name = filename.split("/")[1]
+    pn = plot_name.split(".")
+    plot_name = plot_name[:-len(pn[-1])]
+
+    graph_name = plot_name.split("_k-")[0]
+    frac_missing_edges = plot_name.split("_ref-")[1].split("_")[0]
+    frac_missing_edges = int(float(frac_missing_edges) * 100.0)
 
     table_dir = "plots/data/"
 
