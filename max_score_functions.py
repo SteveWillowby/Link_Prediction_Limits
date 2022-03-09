@@ -211,6 +211,7 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
             max_frac = frac
         else:
             min_frac = frac
+            # print("A danger case for the stdev usage.")
 
     return (max_frac + min_frac) / 2.0
 
