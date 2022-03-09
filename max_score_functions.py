@@ -148,20 +148,20 @@ def estimate_min_frac_for_AUPR(class_info, desired_stdev):
     PROB_A_TRUE_IS_INCLUDED = 0.99999
     PROB_NO_TRUE_IS_INCLUDED = 1.0 - PROB_A_TRUE_IS_INCLUDED
 
-    T = sum([x[0] for x in class_info])
+    P = sum([x[1] for x in class_info])
 
-    # Set min_frac so that the probability ALL T elements are excluded is
+    # Set min_frac so that the probability ALL P elements are excluded is
     #   <= PROB_NO_TRUE_IS_INCLUDED
     #
     # I.e.
-    #   (1.0 - min_frac)^T <= PROB_NO_TRUE_IS_INCLUDED
+    #   (1.0 - min_frac)^P <= PROB_NO_TRUE_IS_INCLUDED
     #   -->
-    #       log_2(1.0 - min_frac) <= log_2(PROB_NO_TRUE_IS_INCLUDED) / T
+    #       log_2(1.0 - min_frac) <= log_2(PROB_NO_TRUE_IS_INCLUDED) / P
     #   -->
-    #       1.0 - min_frac <= 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / T)
+    #       1.0 - min_frac <= 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / P)
     #   -->
-    #       min_frac >= 1.0 - 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / T)
-    min_frac = 1.0 - 2.0 ** (math.log2(PROB_NO_TRUE_IS_INCLUDED) / float(T))
+    #       min_frac >= 1.0 - 2.0 ^ (log_2(PROB_NO_TRUE_IS_INCLUDED) / P)
+    min_frac = 1.0 - 2.0 ** (math.log2(PROB_NO_TRUE_IS_INCLUDED) / float(P))
     # print("Initial min_frac: %f" % min_frac)
 
     if min_frac >= 1.0:
