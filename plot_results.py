@@ -5,20 +5,13 @@ import random
 import statistics
 import sys
 
-if __name__ == "__main__":
-
-    #################### Read the Results ####################
-
-    filename = sys.argv[1]
-    plot_name = filename.split("/")[1].split(".")[0]
-    graph_name = plot_name.split("_")[0]
-
-    table_dir = "plots/data/"
+def read_results_file(filename):
 
     ROC_endpoints = [[], []]
     ROC_between_points = []
     AUPR_endpoints = [[], []]
     AUPR_between_points = []
+
     with open(filename, "r") as f:
         lines = f.readlines()
 
@@ -119,6 +112,27 @@ if __name__ == "__main__":
                              math.sqrt(float(len(l)))) \
                            for l in AUPR_endpoints]
 
+    return (ROC_max_k, AUPR_max_k, \
+            ROC_endpoints, ROC_between_points, \
+            AUPR_endpoints, AUPR_between_points, \
+            ROC_avg_endpoints, ROC_avg_between_points, \
+            AUPR_avg_endpoints, AUPR_avg_between_points)
+
+def basic_plots(filename):
+
+    plot_name = filename.split("/")[1].split(".")[0]
+    graph_name = plot_name.split("_")[0]
+    frac_missing_edges = \
+        int(float(plot_name.split("_ref-")[1].split("_")[0]) * 100.0)
+
+    table_dir = "plots/data/"
+
+    (ROC_max_k, AUPR_max_k, \
+       ROC_endpoints, ROC_between_points, \
+       AUPR_endpoints, AUPR_between_points, \
+       ROC_avg_endpoints, ROC_avg_between_points, \
+       AUPR_avg_endpoints,AUPR_avg_between_points) = read_results_file(filename)
+
     #################### Create Plots ####################
 
     ############## Also Export Values to pgfplots Tables ############
@@ -193,7 +207,10 @@ if __name__ == "__main__":
                         "AUROCrawpoints}")
     f1.close()
 
-    plt.title("Maximum Possible Link Prediction ROC Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
+    plt.title("Maximum Possible Link Prediction ROC Scores\n" + \
+              "for %s Graph with %d%% Missing Edges" % \
+                (graph_name, frac_missing_edges))
+
     plt.xlabel("number of hops (\"k\") of information")
     plt.ylabel("AUROC")
     plt.xticks(x)
@@ -271,7 +288,9 @@ if __name__ == "__main__":
                         "AUPRrawpoints}")
     f1.close()
 
-    plt.title("Maximum Possible Link Prediction AUPR Scores\nfor %s Graph with 10%% Missing Edges" % graph_name)
+    plt.title("Maximum Possible Link Prediction AUPR Scores\n" + \
+              "for %s Graph with %d%% Missing Edges" % \
+                (graph_name, frac_missing_edges))
     plt.xlabel("number of hops (\"k\") of information")
     plt.ylabel("AUPR")
     plt.xticks(x)
@@ -279,3 +298,9 @@ if __name__ == "__main__":
     plt.ylim([-margin, 1 + margin])
     plt.legend()
     plt.show()
+    
+
+if __name__ == "__main__":
+
+    filename = sys.argv[1]
+    basic_plots(filename)
