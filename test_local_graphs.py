@@ -1,3 +1,4 @@
+from generate_ER_graph import ER
 from graph_loader import read_graph, read_edges, random_coin
 from link_pred_class_info import get_k_hop_info_classes_for_link_pred
 from node_pred_class_info import get_k_hop_info_classes_for_node_pred
@@ -35,7 +36,8 @@ if __name__ == "__main__":
                 "roget_thesaurus, roman_roads, roman_roads_p,\n" + \
                 "roman_roads_u, species_1_brain, US_airports_2010, " + \
                 "US_airports_2010_l, US_airports_2010_u,\n" + \
-                "US_500_airports, US_500_airports_l, US_500_airports_u" \
+                "US_500_airports, US_500_airports_l, US_500_airports_u,\n" + \
+                "ER_<n>_<m>" \
                 )
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
@@ -90,7 +92,20 @@ if __name__ == "__main__":
 
     graph_name = argv[9]
 
-    graph_info = {"karate": ("karate.g", False), \
+    generate_graph = graph_name[:2] == "ER"
+
+    if generate_graph:
+        properties = graph_name.split("_")[1:]
+        GEN_n = int(properties[0])
+        GEN_m = int(properties[1])
+        directed = False
+        has_edge_types = False
+        has_self_loops = False
+        node_coloring = [0 for _ in range(0, GEN_n)]
+
+        test_edge_list = None
+    else:
+        graph_info = {"karate": ("karate.g", False), \
                   "eucore": ("eucore.g", True), \
                   "college_10_predict_end": \
                         ("college-temporal_10-periods_train-and-valid.txt", \
@@ -140,11 +155,11 @@ if __name__ == "__main__":
                   "US_500_airports_u": ("US_top_500_airports_2002_undirected.g", True) \
                     }
 
-    assert graph_name in graph_info
-    graph_info = graph_info[graph_name]
+        assert graph_name in graph_info
+        graph_info = graph_info[graph_name]
 
-    if len(graph_info) == 4:
-        fraction_of_removed_edges = "NA"
+        if len(graph_info) == 4:
+            fraction_of_removed_edges = "NA"
 
     raw_output_filename = "test_results/%s_k-%s_ref-%s_nef-%s_he-%s_raw.txt" % \
                             (graph_name, k, fraction_of_removed_edges, \
@@ -154,40 +169,41 @@ if __name__ == "__main__":
     mode = "Link Pred"
     main_function = get_k_hop_info_classes_for_link_pred
 
-    if len(graph_info) == 2:
-        (name, directed) = graph_info
-        edge_list = "real_world_graphs/%s" % name
-        node_list = None
-        test_edge_list = None
+    if not generate_graph:
+        if len(graph_info) == 2:
+            (name, directed) = graph_info
+            edge_list = "real_world_graphs/%s" % name
+            node_list = None
+            test_edge_list = None
 
-    elif len(graph_info) == 3:
-        (name, node_name, directed) = graph_info
-        edge_list = "real_world_graphs/%s" % name
-        node_list = "real_world_graphs/%s" % node_name
-        test_edge_list = None
+        elif len(graph_info) == 3:
+            (name, node_name, directed) = graph_info
+            edge_list = "real_world_graphs/%s" % name
+            node_list = "real_world_graphs/%s" % node_name
+            test_edge_list = None
 
-        mode = "Node Classification"
-        main_function = get_k_hop_info_classes_for_node_pred
-        assert fraction_of_entities != "auto"
+            mode = "Node Classification"
+            main_function = get_k_hop_info_classes_for_node_pred
+            assert fraction_of_entities != "auto"
 
-    elif len(graph_info) == 4:
-        (name, node_name, test_name, directed) = graph_info
-        edge_list = "real_world_graphs/%s" % name
-        node_list = "real_world_graphs/%s" % node_name
-        test_edge_list = "real_world_graphs/%s" % test_name
-    else:
-        assert "Error is" == "not here"
+        elif len(graph_info) == 4:
+            (name, node_name, test_name, directed) = graph_info
+            edge_list = "real_world_graphs/%s" % name
+            node_list = "real_world_graphs/%s" % node_name
+            test_edge_list = "real_world_graphs/%s" % test_name
+        else:
+            assert "Error is" == "not here"
 
-    if test_edge_list is not None:
-        print("Loading %s" % edge_list)
-        ((directed, has_edge_types, nodes, neighbors_collections), \
-            node_coloring, removed_edges, \
-            hidden_nodes, new_node_color_to_orig_color) = \
-                read_graph(edge_list, directed, node_list_filename=node_list, \
-                           edge_remover=None)
+        if test_edge_list is not None:
+            print("Loading %s" % edge_list)
+            ((directed, has_edge_types, nodes, neighbors_collections), \
+                node_coloring, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color) = \
+                    read_graph(edge_list, directed, node_list_filename=node_list, \
+                               edge_remover=None)
 
-        true_entities = read_edges(test_edge_list, directed)
-        ente = len(true_entities)
+            true_entities = read_edges(test_edge_list, directed)
+            ente = len(true_entities)
 
     if fraction_of_entities == "auto":
         if test_edge_list is not None:
@@ -210,7 +226,19 @@ if __name__ == "__main__":
 
                 true_entities = hidden_nodes  # techincally only half are "true entities"
                 assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
-                
+
+            elif generate_graph:
+                print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+                nodes = [i for i in range(0, GEN_n)]
+                (neighbors_collections, removed_edges, node_coloring) = \
+                    ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                       directed=directed, has_self_loops=has_self_loops)
+                if node_coloring is None:
+                    node_coloring = [0 for _ in range(0, GEN_n)]
+                else:
+                    node_coloring = [int(v) for v in node_coloring]
+                true_entities = removed_edges
+ 
             elif test_edge_list is None:
                 print("(Re)Loading %s and randomly removing edges." % edge_list)
                 ((directed, has_edge_types, nodes, neighbors_collections), \
@@ -298,6 +326,19 @@ if __name__ == "__main__":
             true_entities = hidden_nodes  # techincally only half are "true entities"
             ente = sum([t for (n, t) in hidden_nodes])
             assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
+
+        elif generate_graph:
+            print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+            nodes = [i for i in range(0, GEN_n)]
+            (neighbors_collections, removed_edges, node_coloring) = \
+                ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                   directed=directed, has_self_loops=has_self_loops)
+            if node_coloring is None:
+                node_coloring = [0 for _ in range(0, GEN_n)]
+            else:
+                node_coloring = [int(v) for v in node_coloring]
+            true_entities = removed_edges
+            ente = len(true_entities)
 
         elif test_edge_list is None:
             print("(Re)Loading %s and randomly removing edges." % edge_list)
