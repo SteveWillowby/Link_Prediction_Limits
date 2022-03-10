@@ -1,0 +1,92 @@
+Based on initial estimate ([0.0013700158226744126, 0.0013704213807822006, 0.0013727266088157763]),
+using 0.137105 percent of all non-edges.
+################ New Run ###############
+full_T=13468
+observed_T=16
+k=inf
+raw_classes=[((1, 0), 1, 1), ((1, 1), 15, 15)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 15, 15)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 15, 15)]
+################ New Run ###############
+full_T=13472
+observed_T=22
+k=inf
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+################ New Run ###############
+full_T=13191
+observed_T=9
+k=inf
+raw_classes=[((1, 1), 9, 9)]
+k=1
+raw_classes=[((1, 1), 9, 9)]
+k=1
+raw_classes=[((1, 1), 9, 9)]
+################ New Run ###############
+full_T=13401
+observed_T=22
+k=inf
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 21, 21)]
+################ New Run ###############
+full_T=13431
+observed_T=25
+k=inf
+raw_classes=[((1, 0), 1, 1), ((1, 1), 24, 24)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 24, 24)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 24, 24)]
+################ New Run ###############
+full_T=13328
+observed_T=28
+k=inf
+raw_classes=[((1, 0), 2, 2), ((1, 1), 26, 26)]
+k=1
+raw_classes=[((1, 0), 2, 2), ((1, 1), 26, 26)]
+k=1
+raw_classes=[((1, 0), 2, 2), ((1, 1), 26, 26)]
+################ New Run ###############
+full_T=13571
+observed_T=19
+k=inf
+raw_classes=[((1, 0), 1, 1), ((1, 1), 18, 18)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 18, 18)]
+k=1
+raw_classes=[((1, 0), 1, 1), ((1, 1), 18, 18)]
+################ New Run ###############
+full_T=13354
+observed_T=20
+k=inf
+raw_classes=[((1, 1), 20, 20)]
+k=1
+raw_classes=[((1, 1), 20, 20)]
+k=1
+raw_classes=[((1, 1), 20, 20)]
+################ New Run ###############
+full_T=13228
+observed_T=25
+k=inf
+raw_classes=[((1, 1), 25, 25)]
+k=1
+raw_classes=[((1, 1), 25, 25)]
+k=1
+raw_classes=[((1, 1), 25, 25)]
+################ New Run ###############
+full_T=13245
+observed_T=14
+k=inf
+raw_classes=[((1, 1), 14, 14)]
+k=1
+raw_classes=[((1, 1), 14, 14)]
+k=1
+raw_classes=[((1, 1), 14, 14)]
