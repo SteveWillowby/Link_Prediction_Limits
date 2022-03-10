@@ -562,7 +562,7 @@ def __parallel_collection_function__(arg):
                                        new_colors, orig_colors, orig_color_pair, \
                                        observed_edge_types, \
                                        directed, has_edge_types, \
-                                       use_py_iso)
+                                       use_py_iso, proc_thread_idx)
 
                     orig_colors[a] = old_a_color
                     orig_colors[b] = old_b_color
@@ -729,7 +729,7 @@ class __ALREADY_HASHED__:
 
 def __canon_rep__(new_node_to_old, g, new_colors, old_colors, orig_color_pair, \
                   observed_edge_types, directed, has_edge_types, \
-                  use_py_iso):
+                  use_py_iso, proc_thread_idx):
     num_nodes = len(g)
 
     if use_py_iso:
