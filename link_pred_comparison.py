@@ -743,6 +743,7 @@ def __canon_rep__(new_node_to_old, g, new_colors, old_colors, orig_color_pair, \
                                        neighbors_collections=g, \
                                        only_one_call=True, \
                                        kill_py_graph=False, \
+                                       tmp_file_augment="%d" % proc_thread_idx, \
                                        mode="Traces")
 
     session.set_colors_by_partitions(new_colors)
