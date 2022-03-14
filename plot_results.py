@@ -348,10 +348,8 @@ def ER_progression_plot(first_filename, subsequent_Ms):
         ll = float(m_values[-2])
         lll = float(m_values[-3])
 
-        # If dividing makes the gaps closer to relatively equal (i.e. closer to
-        #   1.0) than subtracting does, then assume it's log scale.
-        if abs(1.0 - (ll / lll) / (l / ll)) < \
-                abs(1.0 - (ll - lll) / (l - ll)):
+        relative_gaps = (l - ll) / (ll - lll)
+        if relative_gaps > 1.2:
             log_scale = True
     print("Log Scale? %s" % log_scale)
 
