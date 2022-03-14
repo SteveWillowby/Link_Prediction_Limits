@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-from max_score_functions import get_max_AUPR, get_max_ROC
+from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__
 import random
 import statistics
 import sys
@@ -12,6 +12,8 @@ import sys
 # python3 plot_results.py test_results/ER_513_512_k-all_....txt 4096
 
 def read_results_file(filename):
+
+    AUPR_MAX_FUNC = get_max_AUPR
 
     ROC_endpoints = [[], []]
     ROC_between_points = []
@@ -55,7 +57,7 @@ def read_results_file(filename):
                         class_info.append((t, p))
 
             ROC_value = get_max_ROC(class_info, observed_edges=observed_T)
-            AUPR_value = get_max_AUPR(class_info)
+            AUPR_value = AUPR_MAX_FUNC(class_info)
 
             if phase == KINF:
                 ROC_endpoints[1].append(ROC_value)
