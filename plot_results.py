@@ -5,6 +5,12 @@ import random
 import statistics
 import sys
 
+# Example calls:
+#
+# python3 plot_results.py test_results/powergrid_k-all_....txt
+#
+# python3 plot_results.py test_results/ER_513_512_k-all_....txt 4096
+
 def read_results_file(filename):
 
     ROC_endpoints = [[], []]
@@ -301,9 +307,117 @@ def basic_plots(filename):
     plt.ylim([-margin, 1 + margin])
     plt.legend()
     plt.show()
-    
+
+def str_patch(str_arr, connector):
+    s = str_arr[0]
+    for i in range(1, len(str_arr)):
+        s += connector
+        s += str_arr[i]
+    return s
+
+def ER_progression_plot(first_filename, end_M):
+
+    base_dir = str_patch(first_filename.split("/")[:-1], "/")
+    plot_name = first_filename.split("/")[-1]
+    file_extension = "." + plot_name.split(".")[-1]
+    plot_name = str_patch(plot_name.split(".")[:-1], ".")
+
+    _split = plot_name.split("_")
+    start_M = int(_split[2])
+    N = int(_split[1])
+    plot_name_beginning = str_patch(_split[:2], "_")
+    plot_name_ending = str_patch(_split[3:], "_")
+
+    # graph_name = plot_name.split("_k-")[0]
+    frac_missing_edges = plot_name.split("_ref-")[1].split("_")[0]
+    frac_missing_edges = int(float(frac_missing_edges) * 100.0)
+
+    table_dir = "plots/data/"
+
+    M = start_M
+
+    m_values = []
+    max_ks = []
+    avg_endpoints = []
+    avg_between_points = []
+
+    while M <= end_M:
+
+        filename = base_dir + "/" + \
+            str_patch([plot_name_beginning, str(M), plot_name_ending], "_") + \
+            file_extension
+
+        print("Loading %s" % filename)
+
+        (ROC_max_k, AUPR_max_k, \
+           ROC_endpoints, ROC_between_points, \
+           AUPR_endpoints, AUPR_between_points, \
+           ROC_avg_endpoints, ROC_avg_between_points, \
+           AUPR_avg_endpoints,AUPR_avg_between_points) = \
+                            read_results_file(filename)
+
+        m_values.append(M)
+        max_ks.append(AUPR_max_k)
+        avg_endpoints.append(AUPR_avg_endpoints)
+        avg_between_points.append(AUPR_avg_between_points)
+
+        M *= 2
+
+    max_k = max(max_ks)
+    points_by_k = [[] for _ in range(0, max_k + 2)]
+
+    for i in range(0, len(m_values)):
+        sub_max_k = max_ks[i]
+        sub_avg_ends = avg_endpoints[i]
+        sub_avg_middles = avg_between_points[i]
+
+        for k in range(1, sub_max_k + 1):
+            points_by_k[k].append((m_values[i], sub_avg_middles[k][0], \
+                                                sub_avg_middles[k][1]))
+
+        points_by_k[max_k + 1].append((m_values[i], sub_avg_ends[1][0], \
+                                                    sub_avg_ends[1][1]))
+
+    color_wheel = ["", "red", "blue", "teal", "brown"] + \
+                    ["black" for _ in range(4, max_k)] + ["orange"]
+    legend = [""] + ["k = %d" % k for k in range(1, max_k + 1)] + ["k = inf"]
+
+    LW = 2
+    NUM_K_TO_SHOW = 7
+
+    for k in [v for v in range(1, min(NUM_K_TO_SHOW, max_k + 1))] + [max_k + 1]:
+        x_axis = [int(math.log2(m)) for (m, _, __) in points_by_k[k]]
+        y_axis = [y for (_, y, __) in points_by_k[k]]
+        y_err = [ye for (_, __, ye) in points_by_k[k]]
+        color = color_wheel[k]
+        label = legend[k]
+        plt.errorbar(x_axis, y_axis, yerr=y_err, color=color, linewidth=LW, label=label)
+
+    plt.title("Maximum Possible Link Prediction AUPR Scores for\n" + \
+              "Erdos-Renyi Graphs on %d Nodes with %d%% Missing Edges" % \
+                (N, frac_missing_edges))
+
+    plt.xlabel("Num Edges in Original Graph = 2^x")
+    plt.ylabel("AUPR Max")
+    plt.xticks([int(math.log2(m)) for m in m_values])
+    margin = 0.05
+    plt.ylim([-margin, 1 + margin])
+    plt.legend()
+    plt.show()
 
 if __name__ == "__main__":
 
-    filename = sys.argv[1]
-    basic_plots(filename)
+    assert len(sys.argv) > 1
+
+    argv = sys.argv[1:]
+    if len(argv) == 1:
+        filename = argv[0]
+        basic_plots(filename)
+        exit(0)
+
+    assert len(argv) == 2
+    first_filename = argv[0]
+    last_edge_number = int(argv[1])
+    assert "ER_" in first_filename
+
+    ER_progression_plot(first_filename, last_edge_number)
