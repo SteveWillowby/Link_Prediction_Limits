@@ -20,7 +20,7 @@ from threading import Thread
 # NOTE: This version treats true edges of different kinds and/or different
 #   multiplicity as different prediction tasks (separate classes).
 
-__USE_RF_FOR_FULL_GRAPH__ = True
+__USE_RF_FOR_FULL_GRAPH__ = False
 
 def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
