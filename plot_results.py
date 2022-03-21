@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-from max_score_functions import get_max_AUPR, get_max_ROC
+from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__
 import random
 import statistics
 import sys
@@ -12,6 +12,8 @@ import sys
 # python3 plot_results.py test_results/ER_513_512_k-all_....txt 4096
 
 def read_results_file(filename):
+
+    AUPR_MAX_FUNC = get_max_AUPR
 
     ROC_endpoints = [[], []]
     ROC_between_points = []
@@ -55,7 +57,7 @@ def read_results_file(filename):
                         class_info.append((t, p))
 
             ROC_value = get_max_ROC(class_info, observed_edges=observed_T)
-            AUPR_value = get_max_AUPR(class_info)
+            AUPR_value = AUPR_MAX_FUNC(class_info)
 
             if phase == KINF:
                 ROC_endpoints[1].append(ROC_value)
@@ -315,7 +317,7 @@ def str_patch(str_arr, connector):
         s += str_arr[i]
     return s
 
-def ER_progression_plot(first_filename, end_M):
+def ER_progression_plot(first_filename, subsequent_Ms):
 
     base_dir = str_patch(first_filename.split("/")[:-1], "/")
     plot_name = first_filename.split("/")[-1]
@@ -334,15 +336,24 @@ def ER_progression_plot(first_filename, end_M):
 
     table_dir = "plots/data/"
 
-    M = start_M
-
-    m_values = []
     max_ks = []
     avg_endpoints = []
     avg_between_points = []
 
-    while M <= end_M:
+    m_values = [start_M] + subsequent_Ms
 
+    log_scale = False
+    if len(m_values) > 2:
+        l = float(m_values[-1])
+        ll = float(m_values[-2])
+        lll = float(m_values[-3])
+
+        relative_gaps = (l - ll) / (ll - lll)
+        if relative_gaps > 1.2:
+            log_scale = True
+    print("Log Scale? %s" % log_scale)
+
+    for M in m_values:
         filename = base_dir + "/" + \
             str_patch([plot_name_beginning, str(M), plot_name_ending], "_") + \
             file_extension
@@ -356,12 +367,9 @@ def ER_progression_plot(first_filename, end_M):
            AUPR_avg_endpoints,AUPR_avg_between_points) = \
                             read_results_file(filename)
 
-        m_values.append(M)
         max_ks.append(AUPR_max_k)
         avg_endpoints.append(AUPR_avg_endpoints)
         avg_between_points.append(AUPR_avg_between_points)
-
-        M *= 2
 
     max_k = max(max_ks)
     points_by_k = [[] for _ in range(0, max_k + 2)]
@@ -386,7 +394,11 @@ def ER_progression_plot(first_filename, end_M):
     NUM_K_TO_SHOW = 7
 
     for k in [v for v in range(1, min(NUM_K_TO_SHOW, max_k + 1))] + [max_k + 1]:
-        x_axis = [int(math.log2(m)) for (m, _, __) in points_by_k[k]]
+        if log_scale:
+            x_axis = [int(math.log2(m)) for (m, _, __) in points_by_k[k]]
+        else:
+            x_axis = [m for (m, _, __) in points_by_k[k]]
+
         y_axis = [y for (_, y, __) in points_by_k[k]]
         y_err = [ye for (_, __, ye) in points_by_k[k]]
         color = color_wheel[k]
@@ -397,9 +409,13 @@ def ER_progression_plot(first_filename, end_M):
               "Erdos-Renyi Graphs on %d Nodes with %d%% Missing Edges" % \
                 (N, frac_missing_edges))
 
-    plt.xlabel("Num Edges in Original Graph = 2^x")
     plt.ylabel("AUPR Max")
-    plt.xticks([int(math.log2(m)) for m in m_values])
+    if log_scale:
+        plt.xticks([int(math.log2(m)) for m in m_values])
+        plt.xlabel("Log2 of the Number of Edges")
+    else:
+        plt.xticks(m_values)
+        plt.xlabel("Number of Edges")
     margin = 0.05
     plt.ylim([-margin, 1 + margin])
     plt.legend()
@@ -415,9 +431,8 @@ if __name__ == "__main__":
         basic_plots(filename)
         exit(0)
 
-    assert len(argv) == 2
     first_filename = argv[0]
-    last_edge_number = int(argv[1])
+    further_edge_numbers = [int(v) for v in argv[1:]]
     assert "ER_" in first_filename
 
-    ER_progression_plot(first_filename, last_edge_number)
+    ER_progression_plot(first_filename, further_edge_numbers)

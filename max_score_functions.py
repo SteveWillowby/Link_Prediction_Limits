@@ -72,10 +72,10 @@ def get_AUPR(class_info, mention_errors=True):
             assert_margin = 0.0001
             if addition + assert_margin < (a * a) / c and mention_errors:
                 print("Err1 -- [for context: a = %f, b = %f, c = %f, d = %f]" % (a,b,c,d))
-            if addition - assert_margin > a * (((a + b) / (c + d)) + (b / c)) / 2.0 \
-                    and mention_errors:
+            # if addition - assert_margin > a * (((a + b) / (c + d)) + (b / c)) / 2.0 \
+            #         and mention_errors:
                 # TODO: Check: Why did former me consider this an error?
-                print("Err2 -- [for context: a = %f, b = %f, c = %f, d = %f]" % (a,b,c,d))
+                # print("Err2 -- [for context: a = %f, b = %f, c = %f, d = %f]" % (a,b,c,d))
 
         assert addition >= 0.0
         # print("a: %f, b: %f, c: %f, d: %f -----> %f" % (a, b, c, d, addition))
