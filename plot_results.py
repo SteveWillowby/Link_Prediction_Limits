@@ -126,11 +126,19 @@ def read_results_file(filename):
             ROC_avg_endpoints, ROC_avg_between_points, \
             AUPR_avg_endpoints, AUPR_avg_between_points)
 
-def basic_plots(filename):
+def basic_plots(filename, write_exact_k1=False):
 
     plot_name = filename.split("/")[1]
     pn = plot_name.split(".")
-    plot_name = plot_name[:-len(pn[-1])]
+    plot_name = plot_name[:-(len(pn[-1]) + 1)]
+
+    sanitized_plot_name = plot_name
+    for (s, t) in [("_", ""), ("-", ""), (".", ""), \
+                   ("0", "Oh"), ("1", "One"), ("2", "Two"), \
+                   ("3", "Three"), ("4", "Four"), ("5", "Five"), \
+                   ("6", "Six"), ("7", "Seven"), ("8", "Eight"), \
+                   ("9", "Nine")]:
+        sanitized_plot_name = sanitized_plot_name.replace(s, t)
 
     graph_name = plot_name.split("_k-")[0]
     frac_missing_edges = plot_name.split("_ref-")[1].split("_")[0]
@@ -164,7 +172,8 @@ def basic_plots(filename):
     x_start = [x[0] - STARTPOINT_SHIFTS]
     y_start = [ROC_avg_endpoints[0][0]]
     yerr_start = [ROC_avg_endpoints[0][1]]
-    plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
+    if write_exact_k1:
+        plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
     x_end = [x[-1] + ENDPOINT_SHIFT]
     y_end = [ROC_avg_endpoints[1][0]]
     yerr_end = [ROC_avg_endpoints[1][1]]
@@ -174,12 +183,12 @@ def basic_plots(filename):
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
     f1.write("k\tAUROC\tconfintwidth\tlabel\n")
-    f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
+    if write_exact_k1:
+        f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
     f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
-    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
-                        "AUROCaveragepoints}")
+    f1.write("}{\\" + sanitized_plot_name + "AUROCaveragepoints}")
     f1.close()
 
     scatterpoint_table_file = table_dir + plot_name + "_AUROC_raw_points.tex"
@@ -190,10 +199,11 @@ def basic_plots(filename):
     sub_y = ROC_endpoints[0]
     sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
 
-    for i in range(0, len(sub_y)):
-        f1.write("%f\t%f\t%d\n" % (sub_x[i], sub_y[i], 0))
+    if write_exact_k1:
+        for i in range(0, len(sub_y)):
+            f1.write("%f\t%f\t%d\n" % (sub_x[i], sub_y[i], 0))
 
-    plt.scatter(sub_x, sub_y, color="brown", alpha=A)
+        plt.scatter(sub_x, sub_y, color="brown", alpha=A)
 
     # Add the raw points.
     for x_val in x:
@@ -214,8 +224,7 @@ def basic_plots(filename):
 
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
-    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
-                        "AUROCrawpoints}")
+    f1.write("}{\\" + sanitized_plot_name + "AUROCrawpoints}")
     f1.close()
 
     plt.title("Maximum Possible Link Prediction ROC Scores\n" + \
@@ -245,7 +254,8 @@ def basic_plots(filename):
     x_start = [x[0] - STARTPOINT_SHIFTS]
     y_start = [AUPR_avg_endpoints[0][0]]
     yerr_start = [AUPR_avg_endpoints[0][1]]
-    plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
+    if write_exact_k1:
+        plt.errorbar(x_start, y_start, yerr=yerr_start, color="brown", linewidth=LW, label="k = 1")
     x_end = [x[-1] + ENDPOINT_SHIFT]
     y_end = [AUPR_avg_endpoints[1][0]]
     yerr_end = [AUPR_avg_endpoints[1][1]]
@@ -255,12 +265,12 @@ def basic_plots(filename):
     f1 = open(avg_points_table_file, "w")
     f1.write("\\pgfplotstableread{\n")
     f1.write("k\tAUPR\tconfintwidth\tlabel\n")
-    f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
+    if write_exact_k1:
+        f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
     f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
-    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
-                        "AUPRaveragepoints}")
+    f1.write("}{\\" + sanitized_plot_name + "AUPRaveragepoints}")
     f1.close()
 
     scatterpoint_table_file = table_dir + plot_name + "_AUPR_raw_points.tex"
@@ -271,10 +281,11 @@ def basic_plots(filename):
     sub_y = AUPR_endpoints[0]
     sub_x = [1 + STARTPOINT_SHIFTS + JITTER_WIDTH * (random.random() - 0.5) for _ in sub_y]
 
-    for i in range(0, len(sub_y)):
-        f1.write("%f\t%f\t%d\n" % (sub_x[i], sub_y[i], 0))
+    if write_exact_k1:
+        for i in range(0, len(sub_y)):
+            f1.write("%f\t%f\t%d\n" % (sub_x[i], sub_y[i], 0))
 
-    plt.scatter(sub_x, sub_y, color="brown", alpha=A)
+        plt.scatter(sub_x, sub_y, color="brown", alpha=A)
 
     # Add the raw points.
     for x_val in x:
@@ -295,8 +306,7 @@ def basic_plots(filename):
 
     plt.scatter(sub_x, sub_y, color="orange", alpha=A)
 
-    f1.write("}{\\" + plot_name.replace("_", "").replace("-", "") + \
-                        "AUPRrawpoints}")
+    f1.write("}{\\" + sanitized_plot_name + "AUPRrawpoints}")
     f1.close()
 
     plt.title("Maximum Possible Link Prediction AUPR Scores\n" + \
