@@ -37,7 +37,8 @@ if __name__ == "__main__":
                 "roman_roads_u, species_1_brain, US_airports_2010, " + \
                 "US_airports_2010_l, US_airports_2010_u,\n" + \
                 "US_500_airports, US_500_airports_l, US_500_airports_u,\n" + \
-                "ER_<n>_<m>_<d/u>, WS_<n>_<k>_<beta>" \
+                "ER_<n>_<m>_<d/u>, WS_<n>_<k>_<beta>; can add rand_ in " + \
+                "front of a real graph to run\non a null model."
                 )
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
@@ -94,10 +95,11 @@ if __name__ == "__main__":
 
     ER_gen = (graph_name[:3] == "ER_")
     WS_gen = (graph_name[:3] == "WS_")
+    Null_Model_gen = (graph_name[:5] == "rand_")
 
-    generate_graph = ER_gen or WS_gen
+    generate_graph = ER_gen or WS_gen or Null_Model_gen
 
-    if generate_graph:
+    if ER_gen or WS_gen:
         properties = graph_name.split("_")[1:]
         assert len(properties) == 3
         if ER_gen:
@@ -166,8 +168,14 @@ if __name__ == "__main__":
                   "US_500_airports_u": ("US_top_500_airports_2002_unweighted.g", True) \
                     }
 
-        assert graph_name in graph_info
-        graph_info = graph_info[graph_name]
+        if Null_Model_gen:
+            key = graph_name[5:]
+        else:
+            key = graph_name
+
+        assert key in graph_info
+
+        graph_info = graph_info[key]
 
         if len(graph_info) == 4:
             fraction_of_removed_edges = "NA"
@@ -180,7 +188,7 @@ if __name__ == "__main__":
     mode = "Link Pred"
     main_function = get_k_hop_info_classes_for_link_pred
 
-    if not generate_graph:
+    if (not generate_graph) or Null_Model_gen:
         if len(graph_info) == 2:
             (name, directed) = graph_info
             edge_list = "real_world_graphs/%s" % name
@@ -196,6 +204,9 @@ if __name__ == "__main__":
             mode = "Node Classification"
             main_function = get_k_hop_info_classes_for_node_pred
             assert fraction_of_entities != "auto"
+            if Null_Model_gen:
+                raise ValueError("Error! Currently unprepared for null " + \
+                                 "model gen on node classification graphs.")
 
         elif len(graph_info) == 4:
             (name, node_name, test_name, directed) = graph_info
@@ -215,6 +226,37 @@ if __name__ == "__main__":
 
             true_entities = read_edges(test_edge_list, directed)
             ente = len(true_entities)
+
+    if mode == "Link Pred" and Null_Model_gen:
+
+        has_self_loops = False  # Might have self loops via the _loaded_ colors
+
+        if test_edge_list is not None:
+            ((directed, has_edge_types, nodes, neighbors_collections), \
+                node_coloring, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color) = \
+                    read_graph(edge_list, directed, \
+                               node_list_filename=node_list, \
+                               edge_remover=None)
+
+            GEN_n = len(nodes)
+            GEN_m = sum([len(c) for c in neighbors_collections])
+            if not directed:
+                GEN_m = int(GEN_m / 2)
+
+        else:
+            ((directed, has_edge_types, nodes, neighbors_collections), \
+                node_coloring, removed_edges, \
+                hidden_nodes, new_node_color_to_orig_color) = \
+                    read_graph(edge_list, directed, \
+                               node_list_filename=node_list, \
+                               edge_remover=None)
+
+            GEN_n = len(nodes)
+            GEN_m = sum([len(c) for c in neighbors_collections])
+            if not directed:
+                GEN_m = int(GEN_m / 2)
+            
 
     if fraction_of_entities == "auto":
         if test_edge_list is not None:
@@ -240,7 +282,12 @@ if __name__ == "__main__":
 
             elif generate_graph:
                 nodes = [i for i in range(0, GEN_n)]
-                if ER_gen:
+                if Null_Model_gen:
+                    print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+                    (neighbors_collections, removed_edges, __) = \
+                        ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                            directed=directed, has_self_loops=has_self_loops)
+                elif ER_gen:
                     print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
                     (neighbors_collections, removed_edges, node_coloring) = \
                         ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
@@ -346,7 +393,12 @@ if __name__ == "__main__":
 
         elif generate_graph:
             nodes = [i for i in range(0, GEN_n)]
-            if ER_gen:
+            if Null_Model_gen:
+                print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+                (neighbors_collections, removed_edges, __) = \
+                    ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                        directed=directed, has_self_loops=has_self_loops)
+            elif ER_gen:
                 print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
                 (neighbors_collections, removed_edges, node_coloring) = \
                     ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
