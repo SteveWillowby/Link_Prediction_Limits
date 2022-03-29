@@ -369,9 +369,13 @@ def read_edges(edge_list_filename, directed):
     return edges
 
 def random_coin(p):
-    if p <= 0.0 or p >= 1.0:
-        raise ValueError("Error! p must be in the range (0, 1) for " + \
+    if p < 0.0 or p > 1.0:
+        raise ValueError("Error! p must be in the range [0, 1] for " + \
                          "random_coin(). It was %f" % p)
+    if p == 0.0:
+        return (lambda y: False)
+    elif p == 1.0:
+        return (lambda y: True)
 
     return (lambda x: (lambda y: random.random() < x))(p)
 
