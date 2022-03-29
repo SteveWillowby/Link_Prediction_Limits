@@ -236,10 +236,10 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
             __parallel_proc_func__(arg)
 
 
-    print("#")
-    print("#  %d Edge Classes for %d Observed Edges" % \
+    print(")")
+    print(")  %d Edge Classes for %d Observed Edges" % \
                     (len(basic_edge_classes), observed_edges))
-    print("#")
+    print(")")
 
     EC_with_positives = set()
     full_edge_classes = []

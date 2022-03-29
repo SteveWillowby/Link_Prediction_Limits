@@ -476,7 +476,7 @@ if __name__ == "__main__":
             inf_ROC = get_max_ROC(class_info, observed_edges=OE)
             inf_AUPR = get_max_AUPR(class_info)
             print("Max ROC: %f" % inf_ROC)
-            print("Max AUPR: %f" % inf_AUPR)
+            print("#Max AUPR: %f" % inf_AUPR)
             sys.stdout.flush()
 
             raw_output_file.write("################ New Run ###############\n")
@@ -520,7 +520,7 @@ if __name__ == "__main__":
                 k1_ROC = get_max_ROC(class_info, observed_edges=OE)
                 k1_AUPR = get_max_AUPR(class_info)
                 print("K1 ROC: %f" % k1_ROC)
-                print("K1 AUPR: %f" % k1_AUPR)
+                print("#K1 AUPR: %f" % k1_AUPR)
                 sys.stdout.flush()
 
                 raw_output_file.write("k=1\n")
@@ -565,7 +565,7 @@ if __name__ == "__main__":
                 k_ROC = get_max_ROC(class_info, observed_edges=OE)
                 k_AUPR = get_max_AUPR(class_info)
                 print("Max ROC: %f" % k_ROC)
-                print("Max AUPR: %f" % k_AUPR)
+                print("#Max AUPR: %f" % k_AUPR)
                 sys.stdout.flush()
 
                 raw_output_file.write("k=%s\n" % sub_k)
