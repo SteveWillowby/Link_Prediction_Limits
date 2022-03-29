@@ -37,7 +37,7 @@ if __name__ == "__main__":
                 "roman_roads_u, species_1_brain, US_airports_2010, " + \
                 "US_airports_2010_l, US_airports_2010_u,\n" + \
                 "US_500_airports, US_500_airports_l, US_500_airports_u,\n" + \
-                "ER_<n>_<m>" \
+                "ER_<n>_<m>, WS_<n>_<k>_<beta>" \
                 )
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
@@ -92,12 +92,21 @@ if __name__ == "__main__":
 
     graph_name = argv[9]
 
-    generate_graph = graph_name[:2] == "ER"
+    ER_gen = (graph_name[:3] == "ER_")
+    WS_gen = (graph_name[:3] == "WS_")
+
+    generate_graph = ER_gen or WS_gen
 
     if generate_graph:
         properties = graph_name.split("_")[1:]
-        GEN_n = int(properties[0])
-        GEN_m = int(properties[1])
+        if ER_gen:
+            GEN_n = int(properties[0])
+            GEN_m = int(properties[1])
+        elif WS_gen:
+            GEN_n = int(properties[0])
+            GEN_k = int(properties[1])
+            GEN_beta = float(properties[2])
+
         directed = False
         has_edge_types = False
         has_self_loops = False
@@ -228,15 +237,21 @@ if __name__ == "__main__":
                 assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
 
             elif generate_graph:
-                print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
                 nodes = [i for i in range(0, GEN_n)]
-                (neighbors_collections, removed_edges, node_coloring) = \
-                    ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
-                       directed=directed, has_self_loops=has_self_loops)
+                if ER_gen:
+                    print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+                    (neighbors_collections, removed_edges, node_coloring) = \
+                        ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                            directed=directed, has_self_loops=has_self_loops)
+                elif WS_gen:
+                    print("Generating an %d, %d, %f WS graph." % (GEN_n, GEN_k, GEN_beta))
+                    (neighbors_collections, removed_edges) = \
+                        Watts_Strogatz(GEN_n, GEN_k, GEN_beta, \
+                                       frac_hidden=fraction_of_removed_edges)
+
                 if node_coloring is None:
                     node_coloring = [0 for _ in range(0, GEN_n)]
-                else:
-                    node_coloring = [int(v) for v in node_coloring]
+
                 true_entities = removed_edges
  
             elif test_edge_list is None:
@@ -328,15 +343,21 @@ if __name__ == "__main__":
             assert set([t for (n, t) in hidden_nodes]) == set([0, 1])
 
         elif generate_graph:
-            print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
             nodes = [i for i in range(0, GEN_n)]
-            (neighbors_collections, removed_edges, node_coloring) = \
-                ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
-                   directed=directed, has_self_loops=has_self_loops)
+            if ER_gen:
+                print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+                (neighbors_collections, removed_edges, node_coloring) = \
+                    ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+                        directed=directed, has_self_loops=has_self_loops)
+            elif WS_gen:
+                print("Generating an %d, %d, %f WS graph." % (GEN_n, GEN_k, GEN_beta))
+                (neighbors_collections, removed_edges) = \
+                    Watts_Strogatz(GEN_n, GEN_k, GEN_beta, \
+                                   frac_hidden=fraction_of_removed_edges)
+
             if node_coloring is None:
                 node_coloring = [0 for _ in range(0, GEN_n)]
-            else:
-                node_coloring = [int(v) for v in node_coloring]
+
             true_entities = removed_edges
             ente = len(true_entities)
 

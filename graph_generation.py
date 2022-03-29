@@ -175,12 +175,13 @@ def Watts_Strogatz(N, K, beta, frac_hidden=0.1):
             neighbors_collections[i].remove(l)
             neighbors_collections[l].remove(i)
             while True:
-                l = random.randint(0, N - 1)
+                l = random.randint(0, (N - 1) - 1)
                 if l >= i:
                     l += 1
                 if l not in neighbors_collections[i]:
                     neighbors_collections[i].add(l)
                     neighbors_collections[l].add(i)
+                    break
 
     # Edge Hiding
     hidden_edges = set()
