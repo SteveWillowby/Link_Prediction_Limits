@@ -156,6 +156,46 @@ def coin_toss_for_edges(n, p, frac_hidden=0.1, directed=False, has_self_loops=Fa
 
     return (m, neighbors_collections, hidden_edges, self_loops)
 
+def Watts_Strogatz(N, K, beta, frac_hidden=0.1):
+    neighbors_collections = [set() for _ in range(0, N)]
+
+    # Initial Lattice
+    for i in range(0, N):
+        for j in range(i + 1, i + 1 + K):
+            l = j % N
+            neighbors_collections[i].add(l)
+            neighbors_collections[l].add(i)
+
+    # Rewiring
+    for i in range(0, N):
+        for j in range(i + 1, i + 1 + K):
+            if random.random() >= beta:
+                continue
+            l = j % N
+            neighbors_collections[i].remove(l)
+            neighbors_collections[l].remove(i)
+            while True:
+                l = random.randint(0, N - 1)
+                if l >= i:
+                    l += 1
+                if l not in neighbors_collections[i]:
+                    neighbors_collections[i].add(l)
+                    neighbors_collections[l].add(i)
+
+    # Edge Hiding
+    hidden_edges = set()
+    for i in range(0, N):
+        neighbors = list(neighbors_collections[i])
+        for n in neighbors:
+            if n < i:
+                continue
+            if random.random() < frac_hidden:
+                neighbors_collections[i].remove(n)
+                neighbors_collections[n].remove(i)
+                hidden_edges.add((i, n))
+
+    return (neighbors_collections, hidden_edges)
+
 if __name__ == "__main__":
     import time
 

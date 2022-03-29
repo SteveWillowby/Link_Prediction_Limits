@@ -1,3 +1,4 @@
+from graph_generation import ER, Watts_Strogatz
 from graph_loader import read_graph, read_edges, random_coin
 import sys
 
@@ -135,6 +136,13 @@ if __name__ == "__main__":
                            node_label_hider=\
                              random_coin(fraction_of_removed_edges))
 
+    elif generate_graph:
+        print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
+        nodes = [i for i in range(0, GEN_n)]
+        (neighbors_collections, removed_edges, node_coloring) = \
+            ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
+               directed=directed, has_self_loops=has_self_loops)
+
     elif test_edge_list is not None:
         print("Loading %s" % edge_list)
         ((directed, has_edge_types, nodes, neighbors_collections), \
@@ -152,10 +160,3 @@ if __name__ == "__main__":
                            node_list_filename=node_list, \
                            edge_remover=\
                              random_coin(fraction_of_removed_edges))
-
-    elif generate_graph:
-        print("Generating an %d, %d ER graph." % (GEN_n, GEN_m))
-        nodes = [i for i in range(0, GEN_n)]
-        (neighbors_collections, removed_edges, node_coloring) = \
-            ER(GEN_n, GEN_m, frac_hidden=fraction_of_removed_edges, \
-               directed=directed, has_self_loops=has_self_loops)

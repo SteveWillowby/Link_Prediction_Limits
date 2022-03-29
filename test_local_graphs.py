@@ -1,4 +1,4 @@
-from generate_ER_graph import ER
+from graph_generation import ER, Watts_Strogatz
 from graph_loader import read_graph, read_edges, random_coin
 from link_pred_class_info import get_k_hop_info_classes_for_link_pred
 from node_pred_class_info import get_k_hop_info_classes_for_node_pred
