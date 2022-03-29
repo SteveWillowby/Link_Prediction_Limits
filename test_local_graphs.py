@@ -37,7 +37,7 @@ if __name__ == "__main__":
                 "roman_roads_u, species_1_brain, US_airports_2010, " + \
                 "US_airports_2010_l, US_airports_2010_u,\n" + \
                 "US_500_airports, US_500_airports_l, US_500_airports_u,\n" + \
-                "ER_<n>_<m>, WS_<n>_<k>_<beta>" \
+                "ER_<n>_<m>_<d/u>, WS_<n>_<k>_<beta>" \
                 )
 
     # STOP_MARGIN is how close the k-hop performance has to be to the observed
@@ -99,15 +99,17 @@ if __name__ == "__main__":
 
     if generate_graph:
         properties = graph_name.split("_")[1:]
+        assert len(properties) == 3
         if ER_gen:
             GEN_n = int(properties[0])
             GEN_m = int(properties[1])
+            directed = properties[2] in ["d", "true", "True"]
         elif WS_gen:
             GEN_n = int(properties[0])
             GEN_k = int(properties[1])
             GEN_beta = float(properties[2])
+            directed = False
 
-        directed = False
         has_edge_types = False
         has_self_loops = False
         node_coloring = [0 for _ in range(0, GEN_n)]
