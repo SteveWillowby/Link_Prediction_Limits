@@ -138,7 +138,7 @@ if __name__ == "__main__":
                   "US_airports_2010_u": ("US_airports_2010_unweighted.g", True), \
                   "US_500_airports": ("US_top_500_airports_2002.g", True), \
                   "US_500_airports_l": ("US_top_500_airports_2002_log2_weights.g", True), \
-                  "US_500_airports_u": ("US_top_500_airports_2002_undirected.g", True) \
+                  "US_500_airports_u": ("US_top_500_airports_2002_unweighted.g", True) \
                     }
 
     assert graph_name in graph_info
