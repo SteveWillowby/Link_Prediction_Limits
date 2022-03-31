@@ -20,7 +20,13 @@ from threading import Thread
 # NOTE: This version treats true edges of different kinds and/or different
 #   multiplicity as different prediction tasks (separate classes).
 
-__USE_RF_FOR_FULL_GRAPH__ = False
+
+# These flags can override py_iso=true in certain contexts
+#
+# Use RF session for initial orbits calculation
+__USE_RF_FOR_INITIAL_GRAPH__ = True
+# Use RF for subsequent full-graph NT calls
+__USE_RF_FOR_FULL_GRAPH__ = True
 
 def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
                                          directed, \
@@ -156,7 +162,8 @@ def get_k_hop_info_classes_for_link_pred(neighbors_collections, orig_colors, \
     else:
         full_observed_edges = total_iterations
 
-    if use_py_iso and not __USE_RF_FOR_FULL_GRAPH__:
+    if use_py_iso and (not __USE_RF_FOR_FULL_GRAPH__) and \
+                      (not __USE_RF_FOR_INITIAL_GRAPH__):
         session = PyNTSession(directed=directed, \
                               has_edge_types=has_edge_types, \
                               neighbors_collections=neighbors_collections, \
