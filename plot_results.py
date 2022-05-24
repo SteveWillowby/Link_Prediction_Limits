@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__
+from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__, get_max_AP
 import random
 import statistics
 import sys

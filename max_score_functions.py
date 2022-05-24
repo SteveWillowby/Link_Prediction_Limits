@@ -43,6 +43,14 @@ def get_max_AUPR(class_info, mention_errors=True):
 
     return get_AUPR(class_info, mention_errors=mention_errors)
 
+def get_max_AP(class_info):
+    if len(class_info) == 0:
+        return 1.0
+
+    class_info = refine_class_info(class_info)
+
+    return get_AP(class_info)
+
 def get_AUPR(class_info, mention_errors=True):
     P = sum([x[1] for x in class_info])
     T = sum([x[0] for x in class_info])
@@ -88,6 +96,26 @@ def get_AUPR(class_info, mention_errors=True):
 
     AUPR /= float(P)
     return AUPR
+
+def get_AP(class_info):
+
+    P = sum([x[1] for x in class_info])  # P is the same as "observed P"
+
+    ap = 0.0
+    prev_recall = 0.0
+
+    t_cum = 0
+    p_cum = 0
+
+    for (t, p) in class_info:
+        t_cum += t
+        p_cum += p
+        curr_precision = p_cum / float(t_cum)
+        curr_recall = p_cum / float(P)
+        ap += curr_precision * (curr_recall - prev_recall)
+        prev_recall = curr_recall
+
+    return ap
 
 def get_max_ROC(class_info, observed_edges):
 
@@ -246,18 +274,27 @@ def __manual_AUPR_checker__(class_info):
 
 if __name__ == "__main__":
     test_class_info = [(5, 4), (7, 2), (10, 10)]
+    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
+            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
 
     test_class_info = [(500, 400), (700, 200), \
                        (10, 10), (1000, 10)]
+    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
+            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
 
     test_class_info = [(500, 40), (700, 20), \
                        (10, 2), (1000, 10)]
+    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
+            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
