@@ -29,7 +29,9 @@ if __name__ == "__main__":
                 "karate, eucore, college_10_predict_end, " + \
                 "college_10_predict_any, college_28_predict_end,\n" + \
                 "college_28_predict_any, citeseer, cora, highschool, " + \
-                "convote, FB15k, celegans_m,\nfoodweb, innovation, wiki," + \
+                "convote, FB15k, celegans_m,\n" + \
+                "gcn_cora, gcn_citeseer, gcn_pubmed," + \
+                " foodweb, innovation,\nwiki," + \
                 " powergrid, polblogs, y2h_ppi, collins_yeast,\n" + \
                 "faculty_business, faculty_comp_sci, faculty_history, " + \
                 "GR_coauth, jazz_collab,\nlinux_calls, mysql_calls, " + \
@@ -134,6 +136,9 @@ if __name__ == "__main__":
                         ("college-temporal_28-weeks.g", True), \
                   "citeseer": ("citeseer.g", True), \
                   "cora": ("cora.g", True), \
+                  "gcn_cora": ("gcn_cora_nosl_edgelist.txt", False), \
+                  "gcn_citeseer": ("gcn_citeseer_nosl_edgelist.txt", False), \
+                  "gcn_pubmed": ("gcn_pubmed_nosl_edgelist.txt", False), \
                   "FB15k": ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
                             "FB15k-237/FB15k-237_nodes.txt", \
                             "FB15k-237/FB15k-237_test_edges.txt", True), \
