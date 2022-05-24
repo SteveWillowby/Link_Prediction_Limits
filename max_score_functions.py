@@ -274,8 +274,9 @@ def __manual_AUPR_checker__(class_info):
 
 if __name__ == "__main__":
     test_class_info = [(5, 4), (7, 2), (10, 10)]
-    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
-            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+    print("For %s, we get max_AP = %f vs. max_ROC = %f" % \
+            (test_class_info, get_max_AP(test_class_info), \
+             get_max_ROC(test_class_info, observed_edges=sum([t for (t,p) in test_class_info]))))
 
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
@@ -283,8 +284,9 @@ if __name__ == "__main__":
 
     test_class_info = [(500, 400), (700, 200), \
                        (10, 10), (1000, 10)]
-    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
-            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+    print("For %s, we get max_AP = %f vs. max_ROC = %f" % \
+            (test_class_info, get_max_AP(test_class_info), \
+             get_max_ROC(test_class_info, observed_edges=sum([t for (t,p) in test_class_info]))))
 
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
@@ -292,8 +294,9 @@ if __name__ == "__main__":
 
     test_class_info = [(500, 40), (700, 20), \
                        (10, 2), (1000, 10)]
-    print("For %s, we get max_AP = %f vs. max_AUPR = %f" % \
-            (test_class_info, get_max_AP(test_class_info), get_max_AUPR(test_class_info)))
+    print("For %s, we get max_AP = %f vs. max_ROC = %f" % \
+            (test_class_info, get_max_AP(test_class_info), \
+             get_max_ROC(test_class_info, observed_edges=sum([t for (t,p) in test_class_info]))))
 
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
