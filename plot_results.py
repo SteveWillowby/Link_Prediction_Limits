@@ -1,6 +1,7 @@
 import math
 import matplotlib.pyplot as plt
 from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__, get_max_AP
+from numpy import random as nprandom
 import random
 import statistics
 import sys
@@ -11,7 +12,7 @@ import sys
 #
 # python3 plot_results.py test_results/ER_513_512_k-all_....txt 4096
 
-def read_results_file(filename):
+def read_results_file(filename, fake_to_real_ratio=None):
 
     AUPR_MAX_FUNC = get_max_AUPR
 
@@ -29,8 +30,13 @@ def read_results_file(filename):
     phase = KBET
     observed_T = None
     for l in lines:
+        if len(l) > 7 and l[:7] == "full_T=":
+            full_T = int(l.strip()[7:])
+            print("full_T = %d" % full_T)
+
         if len(l) > 11 and l[:11] == "observed_T=":
             observed_T = int(l.strip()[11:])
+            print("observed_T = %d" % observed_T)
 
         if len(l) > 2 and "k=" == l[:2]:
             k = l.strip()[2:]
@@ -46,6 +52,8 @@ def read_results_file(filename):
             elif type(k) is str and k == "inf":
                 phase = KINF
 
+            print("k = %s" % k)
+
         if len(l) > 12 and l[:12] == "raw_classes=":
             l = l.strip()[14:-2].split("), (")
             l = [x.split(", ") for x in l]
@@ -56,7 +64,43 @@ def read_results_file(filename):
                     for __ in range(0, occ):
                         class_info.append((t, p))
 
-            ROC_value = get_max_ROC(class_info, observed_edges=observed_T)
+            OE = observed_T
+
+            if fake_to_real_ratio != None:
+                filtered_class_info = []
+
+                listed_T = sum([t for (t, p) in class_info])
+                if full_T != observed_T and observed_T != listed_T:
+                    assert observed_T > listed_T
+                    class_info.append((observed_T - listed_T, 0))
+                elif full_T != listed_T:
+                    # print("Note! sum(t) in raw_classes != 'full_T' ---- (%d vs %d)" % (listed_T, full_T))
+                    assert full_T > listed_T
+                    class_info.append((full_T - listed_T, 0))
+                    # print(class_info)
+
+                relevant_T = sum([t for (t, p) in class_info])
+                relevant_P = sum([p for (t, p) in class_info])
+                # print("relevant_P = %d" % relevant_P)
+                relevant_N = relevant_T - relevant_P
+                desired_N = fake_to_real_ratio * relevant_P
+
+                if desired_N < relevant_N:
+                    prob_an_N_stays = desired_N / relevant_N
+
+                    for (t, p) in class_info:
+                        n = t - p
+                        if n > 0:
+                            filtered_n = nprandom.binomial(n=n, p=prob_an_N_stays, size=1)[0]
+                            # print([n, filtered_n])
+                        else:
+                            filtered_n = 0
+                        filtered_class_info.append((p + filtered_n, p))
+
+                    class_info = filtered_class_info
+                    OE = sum([t for (t, p) in class_info])
+
+            ROC_value = get_max_ROC(class_info, observed_edges=OE)
             AUPR_value = AUPR_MAX_FUNC(class_info)
 
             if phase == KINF:
@@ -126,7 +170,7 @@ def read_results_file(filename):
             ROC_avg_endpoints, ROC_avg_between_points, \
             AUPR_avg_endpoints, AUPR_avg_between_points)
 
-def basic_plots(filename, write_exact_k1=False):
+def basic_plots(filename, write_exact_k1=False, fake_to_real_ratio=None):
 
     plot_name = filename.split("/")[1]
     pn = plot_name.split(".")
@@ -150,7 +194,7 @@ def basic_plots(filename, write_exact_k1=False):
        ROC_endpoints, ROC_between_points, \
        AUPR_endpoints, AUPR_between_points, \
        ROC_avg_endpoints, ROC_avg_between_points, \
-       AUPR_avg_endpoints,AUPR_avg_between_points) = read_results_file(filename)
+       AUPR_avg_endpoints,AUPR_avg_between_points) = read_results_file(filename, fake_to_real_ratio)
 
     #################### Create Plots ####################
 
@@ -375,7 +419,7 @@ def ER_progression_plot(first_filename, subsequent_Ms):
            AUPR_endpoints, AUPR_between_points, \
            ROC_avg_endpoints, ROC_avg_between_points, \
            AUPR_avg_endpoints,AUPR_avg_between_points) = \
-                            read_results_file(filename)
+                            read_results_file(filename, fake_to_real_ratio=None)
 
         max_ks.append(AUPR_max_k)
         avg_endpoints.append(AUPR_avg_endpoints)
@@ -438,11 +482,18 @@ if __name__ == "__main__":
     argv = sys.argv[1:]
     if len(argv) == 1:
         filename = argv[0]
-        basic_plots(filename)
+        basic_plots(filename, fake_to_real_ratio=None)
         exit(0)
 
-    first_filename = argv[0]
-    further_edge_numbers = [int(v) for v in argv[1:]]
-    assert "ER_" in first_filename
+    if "ER_" not in argv[0]:
+        assert len(argv) == 2
+        filename = argv[0]
+        basic_plots(filename, fake_to_real_ratio=float(argv[1]))
 
-    ER_progression_plot(first_filename, further_edge_numbers)
+    if "ER_" in argv[0]:
+
+        first_filename = argv[0]
+        further_edge_numbers = [int(v) for v in argv[1:]]
+
+        ER_progression_plot(first_filename, further_edge_numbers)
+        exit(0)
