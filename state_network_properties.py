@@ -68,7 +68,7 @@ if __name__ == "__main__":
                   "citeseer": ("citeseer.g", True), \
                   "cora": ("cora.g", True), \
                   "gcn_cora": ("gcn_cora_nosl_edgelist.txt", False), \
-                  "gcn_citeseer": ("gcn_citeseer_nosl_edgelist.txt", False), \
+                  "gcn_citeseer": ("gcn_citeseer_allsl_edgelist.txt", False), \
                   "gcn_pubmed": ("gcn_pubmed_nosl_edgelist.txt", False), \
                   "FB15k": ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
                             "FB15k-237/FB15k-237_nodes.txt", \
