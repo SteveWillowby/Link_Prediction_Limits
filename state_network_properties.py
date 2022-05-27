@@ -68,7 +68,8 @@ if __name__ == "__main__":
                   "citeseer": ("citeseer.g", True), \
                   "cora": ("cora.g", True), \
                   "gcn_cora": ("gcn_cora_nosl_edgelist.txt", False), \
-                  "gcn_citeseer": ("gcn_citeseer_allsl_edgelist.txt", False), \
+                  "gcn_citeseer": ("gcn_citeseer_nosl_edgelist.txt", \
+                                   "gcn_citeseer_nosl_nodelist.txt", False), \
                   "gcn_pubmed": ("gcn_pubmed_nosl_edgelist.txt", False), \
                   "FB15k": ("FB15k-237/FB15k-237_train_and_valid_edges.txt", \
                             "FB15k-237/FB15k-237_nodes.txt", \
@@ -80,8 +81,7 @@ if __name__ == "__main__":
                   "foodweb": ("maayan-foodweb.g", True), \
                   "innovation": ("moreno_innovation.g", True), \
                   "powergrid": ("opsahl-powergrid.g", False), \
-                  "polblogs": ("pol_blogs.g", \
-                               "pol_blogs_node_labels.txt", True), \
+                  "polblogs": ("pol_blogs.g", True), \
                   "y2h_ppi": ("CCSB_Y2H_PPI_Network.g", False), \
                   "collins_yeast": ("collins_yeast_interactome.g", False), \
                   "faculty_business": ("faculty_hiring_business.g", True), \
@@ -103,6 +103,7 @@ if __name__ == "__main__":
                   "US_500_airports_l": ("US_top_500_airports_2002_log2_weights.g", True), \
                   "US_500_airports_u": ("US_top_500_airports_2002_unweighted.g", True) \
                     }
+        # "pol_blogs_node_labels.txt" -- currently not accessed
 
         assert graph_name in graph_info
         graph_info = graph_info[graph_name]
@@ -120,9 +121,9 @@ if __name__ == "__main__":
             node_list = "real_world_graphs/%s" % node_name
             test_edge_list = None
 
-            mode = "Node Classification"
-            main_function = get_k_hop_info_classes_for_node_pred
-            assert fraction_of_entities != "auto"
+            # mode = "Node Classification"
+            # main_function = get_k_hop_info_classes_for_node_pred
+            # assert fraction_of_entities != "auto"
 
         elif len(graph_info) == 4:
             (name, node_name, test_name, directed) = graph_info
