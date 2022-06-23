@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__, get_max_AP
+from max_score_functions import get_max_AUPR, get_max_ROC, __manual_AUPR_checker__, get_max_AP, refine_class_info
 from numpy import random as nprandom
 import random
 import statistics
@@ -20,6 +20,7 @@ def read_results_file(filename, fake_to_real_ratio=None):
     ROC_between_points = []
     AUPR_endpoints = [[], []]
     AUPR_between_points = []
+    AUPR_endpoints_curves = [[], []]
 
     with open(filename, "r") as f:
         lines = f.readlines()
@@ -32,11 +33,11 @@ def read_results_file(filename, fake_to_real_ratio=None):
     for l in lines:
         if len(l) > 7 and l[:7] == "full_T=":
             full_T = int(l.strip()[7:])
-            print("full_T = %d" % full_T)
+            # print("full_T = %d" % full_T)
 
         if len(l) > 11 and l[:11] == "observed_T=":
             observed_T = int(l.strip()[11:])
-            print("observed_T = %d" % observed_T)
+            # print("observed_T = %d" % observed_T)
 
         if len(l) > 2 and "k=" == l[:2]:
             k = l.strip()[2:]
@@ -52,7 +53,7 @@ def read_results_file(filename, fake_to_real_ratio=None):
             elif type(k) is str and k == "inf":
                 phase = KINF
 
-            print("k = %s" % k)
+            # print("k = %s" % k)
 
         if len(l) > 12 and l[:12] == "raw_classes=":
             l = l.strip()[14:-2].split("), (")
@@ -106,11 +107,13 @@ def read_results_file(filename, fake_to_real_ratio=None):
             if phase == KINF:
                 ROC_endpoints[1].append(ROC_value)
                 AUPR_endpoints[1].append(AUPR_value)
+                AUPR_endpoints_curves[1].append(AUPR_curve_points(class_info))
             elif phase == K1:
                 ROC_endpoints[0].append(ROC_value)
                 ROC_between_points.append([])
                 AUPR_endpoints[0].append(AUPR_value)
                 AUPR_between_points.append([])
+                AUPR_endpoints_curves[0].append(AUPR_curve_points(class_info))
             else:
                 ROC_between_points[-1].append(ROC_value)
                 AUPR_between_points[-1].append(AUPR_value)
@@ -168,7 +171,31 @@ def read_results_file(filename, fake_to_real_ratio=None):
             ROC_endpoints, ROC_between_points, \
             AUPR_endpoints, AUPR_between_points, \
             ROC_avg_endpoints, ROC_avg_between_points, \
-            AUPR_avg_endpoints, AUPR_avg_between_points)
+            AUPR_avg_endpoints, AUPR_avg_between_points, \
+            AUPR_endpoints_curves)
+
+def AUPR_curve_points(class_info):
+    refined_class_info = refine_class_info(class_info)
+
+    POINTS = 50
+
+    curve = []
+    T = sum([t for (t, p) in refined_class_info])
+    P = sum([p for (t, p) in refined_class_info])
+    t_acc = 0
+    p_acc = 0
+    for (t, p) in refined_class_info:
+        for i in range(1, POINTS + 1):
+            alpha = float(i) / POINTS
+            t_curr = t_acc + alpha * t
+            p_curr = p_acc + alpha * p
+            precision = p_curr / t_curr
+            recall = p_curr / P
+            curve.append((recall, precision))
+        t_acc += t
+        p_acc += p
+
+    return curve
 
 def basic_plots(filename, write_exact_k1=False, fake_to_real_ratio=None):
 
@@ -194,9 +221,29 @@ def basic_plots(filename, write_exact_k1=False, fake_to_real_ratio=None):
        ROC_endpoints, ROC_between_points, \
        AUPR_endpoints, AUPR_between_points, \
        ROC_avg_endpoints, ROC_avg_between_points, \
-       AUPR_avg_endpoints,AUPR_avg_between_points) = read_results_file(filename, fake_to_real_ratio)
+       AUPR_avg_endpoints,AUPR_avg_between_points, \
+       AUPR_endpoints_curves) = read_results_file(filename, fake_to_real_ratio)
+
+    print("ROC min and max max's (k1 and kinf)")
+    print(ROC_avg_endpoints)
+    print("AUPR (or AP) min and max max's (k1 and kinf)")
+    print(AUPR_avg_endpoints)
 
     #################### Create Plots ####################
+
+    k_values = ["1", "inf"]
+    for i in range(0, 2):
+        for curve in AUPR_endpoints_curves[i]:
+            x = [x for (x, y) in curve]
+            y = [y for (x, y) in curve]
+            plt.plot(x, y)
+        plt.xlabel("Recall")
+        plt.ylabel("Precision")
+        plt.title(("Maximum Possible AUPR Curves at k=%s\n" % k_values[i]) + \
+                  "for %s Graph with %d%% Missing Edges" % \
+                    (graph_name, frac_missing_edges))
+        plt.show()
+        plt.close()
 
     ############## Also Export Values to pgfplots Tables ############
 
@@ -418,8 +465,8 @@ def ER_progression_plot(first_filename, subsequent_Ms):
            ROC_endpoints, ROC_between_points, \
            AUPR_endpoints, AUPR_between_points, \
            ROC_avg_endpoints, ROC_avg_between_points, \
-           AUPR_avg_endpoints,AUPR_avg_between_points) = \
-                            read_results_file(filename, fake_to_real_ratio=None)
+           AUPR_avg_endpoints,AUPR_avg_between_points, \
+           AUPR_endpoints_curves) = read_results_file(filename, fake_to_real_ratio=None)
 
         max_ks.append(AUPR_max_k)
         avg_endpoints.append(AUPR_avg_endpoints)
