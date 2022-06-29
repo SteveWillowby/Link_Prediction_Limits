@@ -301,3 +301,12 @@ if __name__ == "__main__":
     print("Error: %f" % (__manual_AUPR_checker__(test_class_info) - \
                 get_max_AUPR(test_class_info)))
     print(estimate_min_frac_for_AUPR(test_class_info, desired_stdev=0.01))
+
+    print("Proof that AP is not always maximized by descending order.")
+    print("AP vs. AUPR")
+    class_info_A = [(10, 10), (4, 2), (16, 9)]
+    class_info_B = [(10, 10), (16, 9), (4, 2)]
+    class_info_C = [(16, 9), (4, 2), (10, 10)]
+    print("%f vs. %f" % (get_AP(class_info_A), get_AUPR(class_info_A)))
+    print("%f vs. %f" % (get_AP(class_info_B), get_AUPR(class_info_B)))
+    print("%f vs. %f" % (get_AP(class_info_C), get_AUPR(class_info_C)))

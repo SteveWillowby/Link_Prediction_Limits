@@ -360,7 +360,8 @@ def basic_plots(filename, write_exact_k1=False, fake_to_real_ratio=None):
         f1.write("%f\t%f\t%f\t%d\n" % (x_start[0], y_start[0], yerr_start[0], 0))
     for i in range(0, len(x_plotted)):
         f1.write("%f\t%f\t%f\t%d\n" % (x_plotted[i], y[i], yerr[i], 1))
-    f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
+    # f1.write("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))  # Not putting out the endpoints.
+    print("%f\t%f\t%f\t%d\n" % (x_end[0], y_end[0], yerr_end[0], 2))
     f1.write("}{\\" + sanitized_plot_name + "AUPRaveragepoints}")
     f1.close()
 
