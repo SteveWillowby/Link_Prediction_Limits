@@ -1,7 +1,7 @@
 # ROC and AUPR Limits for Link Prediction
 
 This repository contains the code associated with the paper
-"Inherent Limits on Topology-Based Link Prediction," published in Transactions on Machine Learning Research (TMLR).
+"Inherent Limits on Topology-Based Link Prediction," under review at Transactions on Machine Learning Research (TMLR).
 
 ## How to Run
 
